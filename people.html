@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>People — Chronomic Medicine Group</title>
+    <meta name="description" content="Meet the members of the Chronomic Medicine Group at the University of Cambridge.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=Outfit:wght@200;300;400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <style>
+        /* ─── PI Card ─── */
+        .pi-card {
+            display: grid;
+            grid-template-columns: 140px 1fr;
+            gap: 2rem;
+            background: linear-gradient(135deg, rgba(212,160,64,0.04), rgba(212,160,64,0.01));
+            border: 1px solid rgba(212,160,64,0.08);
+            border-radius: 4px;
+            padding: 2.5rem;
+            margin-bottom: 3rem;
+            align-items: start;
+        }
+        .pi-info h3 { font-family: var(--serif); font-size: 1.5rem; font-weight: 400; color: var(--white); margin-bottom: 0.25rem; }
+        .pi-role { color: var(--amber); font-size: 0.7rem; letter-spacing: 0.1em; text-transform: uppercase; font-weight: 500; margin-bottom: 0.75rem; }
+        .pi-info p { font-size: 0.88rem; color: var(--muted); line-height: 1.7; }
+        .pi-links { display: flex; gap: 0.75rem; margin-top: 1rem; flex-wrap: wrap; }
+        .pi-link { font-size: 0.78rem; color: var(--amber); text-decoration: none; display: flex; align-items: center; gap: 0.3rem; }
+        .pi-link:hover { opacity: 0.7; }
+
+        /* ─── Member Grid ─── */
+        .group-label { font-size: 0.68rem; font-weight: 500; letter-spacing: 0.14em; text-transform: uppercase; color: var(--amber); margin: 2.5rem 0 1rem; padding-bottom: 0.5rem; border-bottom: 1px solid rgba(212,160,64,0.08); }
+        .member-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+            gap: 1.25rem;
+        }
+        .member-card {
+            cursor: pointer;
+            text-align: center;
+            padding: 1.25rem 0.75rem;
+            border-radius: 4px;
+            transition: background 0.3s;
+        }
+        .member-card:hover { background: rgba(148,163,184,0.03); }
+        .member-card:hover img { border-color: rgba(212,160,64,0.2) !important; }
+        .member-card:hover div[style*="border-radius: 50%"] { border-color: rgba(212,160,64,0.2) !important; }
+        .member-name { font-size: 0.88rem; color: var(--light); line-height: 1.35; }
+        .member-role { font-size: 0.72rem; color: var(--muted); margin-top: 0.15rem; }
+
+        /* ─── Modal ─── */
+        .modal-overlay {
+            display: none;
+            position: fixed; inset: 0; z-index: 2000;
+            background: rgba(6,10,20,0.85);
+            backdrop-filter: blur(12px);
+            justify-content: center; align-items: center;
+            padding: 2rem;
+        }
+        .modal-overlay.open { display: flex; }
+        .modal {
+            background: var(--deep);
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            max-width: 540px; width: 100%;
+            padding: 2.5rem;
+            position: relative;
+            max-height: 85vh;
+            overflow-y: auto;
+        }
+        .modal-close {
+            position: absolute; top: 1.25rem; right: 1.25rem;
+            background: none; border: none;
+            color: var(--muted); font-size: 1.5rem;
+            cursor: pointer; line-height: 1;
+            transition: color 0.3s;
+        }
+        .modal-close:hover { color: var(--white); }
+        .modal-top { display: flex; gap: 1.5rem; align-items: start; margin-bottom: 1.5rem; }
+        .modal-name { font-family: var(--serif); font-size: 1.4rem; font-weight: 400; color: var(--white); margin-bottom: 0.2rem; }
+        .modal-role { font-size: 0.7rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--amber); font-weight: 500; }
+        .modal-body h4 { font-size: 0.68rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--amber); font-weight: 500; margin: 1.25rem 0 0.4rem; }
+        .modal-body p { font-size: 0.88rem; color: var(--muted); line-height: 1.7; }
+        .modal-interests { display: flex; flex-wrap: wrap; gap: 0.35rem; }
+        .modal-interests span { font-size: 0.72rem; color: var(--muted); background: rgba(148,163,184,0.06); border: 1px solid var(--border); padding: 0.2rem 0.6rem; border-radius: 2px; }
+        .modal-links { display: flex; gap: 0.75rem; margin-top: 1rem; flex-wrap: wrap; }
+        .modal-link { font-size: 0.78rem; color: var(--amber); text-decoration: none; border-bottom: 1px solid rgba(212,160,64,0.2); }
+        .modal-link:hover { border-color: var(--amber); }
+
+        /* ─── Former list ─── */
+        .former-list { margin-top: 1rem; }
+        .former-item {
+            display: flex; align-items: center; gap: 0.75rem;
+            padding: 0.5rem 0;
+            border-bottom: 1px solid var(--border);
+        }
+        .former-item:first-child { border-top: 1px solid var(--border); }
+        .former-name { font-size: 0.88rem; color: var(--light); }
+        .former-role { font-size: 0.75rem; color: var(--muted); }
+
+        @media (max-width: 768px) {
+            .pi-card { grid-template-columns: 1fr; justify-items: center; text-align: center; }
+            .member-grid { grid-template-columns: repeat(auto-fill, minmax(130px, 1fr)); gap: 0.75rem; }
+            .modal { padding: 2rem 1.5rem; }
+            .modal-top { flex-direction: column; align-items: center; text-align: center; }
+        }
+    </style>
+</head>
+<body>
+
+<nav id="mainNav" class="nav-solid">
+    <a href="index.html" class="nav-brand">Chronomic Medicine</a>
+    <ul class="nav-links" id="navLinks">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="index.html#about">About</a></li>
+        <li><a href="people.html" class="active">People</a></li>
+        <li><a href="research.html">Research</a></li>
+        <li><a href="index.html#news">News</a></li>
+        <li><a href="index.html#contact">Contact</a></li>
+    </ul>
+    <button class="nav-toggle" id="navToggle" aria-label="Menu"><span></span><span></span><span></span></button>
+</nav>
+
+<div class="page-header reveal">
+    <p class="section-label">People</p>
+    <h1>Group Members</h1>
+    <p class="section-intro">Our team brings together expertise in genetics, genomics, bioinformatics and clinical medicine.</p>
+</div>
+
+<div class="section" style="padding-top:0">
+    <div id="piCard"></div>
+    <div id="currentMembers"></div>
+    <div id="formerMembers"></div>
+</div>
+
+<!-- Modal -->
+<div class="modal-overlay" id="modalOverlay">
+    <div class="modal" id="modalContent">
+        <button class="modal-close" id="modalClose" aria-label="Close">&times;</button>
+        <div id="modalBody"></div>
+    </div>
+</div>
+
+<footer>
+    <div class="footer-links">
+        <a href="https://github.com/comparativechrono/" target="_blank" rel="noopener">GitHub</a>
+        <a href="mailto:tjh70@cam.ac.uk">Email</a>
+    </div>
+    <p>&copy; <span id="yr"></span> Chronomic Medicine Group · University of Cambridge</p>
+</footer>
+
+<script src="shared.js"></script>
+<script>
+const PHOTO_DIR = 'photos/';
+
+function esc(str) {
+    return str.replace(/&/g,'&amp;').replace(/'/g,'&#39;').replace(/"/g,'&quot;').replace(/</g,'&lt;');
+}
+
+function initialsEl(name, size, round) {
+    const initials = getInitials(name);
+    const radius = round ? '50%' : '4px';
+    const fontSize = Math.max(0.8, size / 55);
+    return `<div style="width:${size}px;height:${size}px;border-radius:${radius};background:var(--slate);border:${round?'2':'1'}px solid var(--border);display:flex;align-items:center;justify-content:center;font-family:var(--serif);font-size:${fontSize}rem;color:var(--muted);flex-shrink:0">${initials}</div>`;
+}
+
+function photoEl(photo, name, size, round) {
+    if (!photo) return initialsEl(name, size, round);
+    const radius = round ? '50%' : '4px';
+    const id = 'img-' + Math.random().toString(36).substr(2, 8);
+    // Schedule fallback listener after DOM update
+    setTimeout(() => {
+        const img = document.getElementById(id);
+        if (!img) return;
+        const handleError = function() {
+            this.outerHTML = initialsEl(name, size, round);
+        };
+        img.addEventListener('error', handleError, { once: true });
+        // If image already failed before listener was attached
+        if (img.complete && img.naturalWidth === 0) {
+            handleError.call(img);
+        }
+    }, 0);
+    return `<img id="${id}" src="${PHOTO_DIR}${esc(photo)}.jpg" alt="${esc(name)}" style="width:${size}px;height:${size}px;border-radius:${radius};object-fit:cover;background:var(--slate);border:${round?'2':'1'}px solid var(--border);flex-shrink:0">`;
+}
+
+let members = [];
+
+async function init() {
+    members = await loadCSV('data/members.csv');
+
+    const pi = members.filter(m => m.level === 'pi' && m.status === 'current');
+    const current = members.filter(m => m.level !== 'pi' && m.status === 'current');
+    const former = members.filter(m => m.status === 'former');
+
+    // PI
+    if (pi.length) {
+        const p = pi[0];
+        document.getElementById('piCard').innerHTML = `
+            <div class="pi-card reveal">
+                ${photoEl(p.photo, p.name, 140, false)}
+                <div class="pi-info">
+                    <h3>${p.name}</h3>
+                    <div class="pi-role">${p.role}</div>
+                    <p>${p.description || ''}</p>
+                    <div class="pi-links">
+                        ${p.email ? `<a href="mailto:${p.email}" class="pi-link">${p.email}</a>` : ''}
+                        ${p.github ? `<a href="https://github.com/${p.github}" target="_blank" rel="noopener" class="pi-link">GitHub</a>` : ''}
+                        ${p.orcid ? `<a href="https://orcid.org/${p.orcid}" target="_blank" rel="noopener" class="pi-link">ORCID</a>` : ''}
+                    </div>
+                </div>
+            </div>
+        `;
+    }
+
+    // Group current by level
+    const groups = {};
+    const levelLabels = { phd: 'PhD Students', grad: 'Graduate Students', visiting: 'Visiting Scientists', postdoc: 'Postdoctoral Researchers' };
+    current.forEach(m => {
+        const label = levelLabels[m.level] || 'Researchers';
+        if (!groups[label]) groups[label] = [];
+        groups[label].push(m);
+    });
+
+    let html = '';
+    for (const [label, list] of Object.entries(groups)) {
+        html += `<div class="group-label">${label}</div>`;
+        html += '<div class="member-grid">';
+        list.forEach((m, i) => {
+            html += `
+                <div class="member-card reveal" tabindex="0" role="button" onclick="openModal(${members.indexOf(m)})" onkeydown="if(event.key==='Enter')openModal(${members.indexOf(m)})" data-idx="${members.indexOf(m)}">
+                    ${photoEl(m.photo, m.name, 90, true)}
+                    <div class="member-name">${m.name}</div>
+                    <div class="member-role">${m.role}</div>
+                </div>`;
+        });
+        html += '</div>';
+    }
+    document.getElementById('currentMembers').innerHTML = html;
+
+    // Former
+    if (former.length) {
+        let fHtml = '<div class="group-label" style="margin-top:3rem">Alumni</div><div class="former-list">';
+        former.forEach(m => {
+            fHtml += `<div class="former-item"><span class="former-name">${m.name}</span><span class="former-role">${m.role}</span></div>`;
+        });
+        fHtml += '</div>';
+        document.getElementById('formerMembers').innerHTML = fHtml;
+    }
+
+    initReveal();
+}
+
+// Modal
+function openModal(idx) {
+    const m = members[idx];
+    if (!m) return;
+    const interests = (m.interests || '').split(',').map(s => s.trim()).filter(Boolean);
+    document.getElementById('modalBody').innerHTML = `
+        <div class="modal-top">
+            ${photoEl(m.photo, m.name, 100, false)}
+            <div>
+                <div class="modal-name">${m.name}</div>
+                <div class="modal-role">${m.role}</div>
+            </div>
+        </div>
+        <div class="modal-body">
+            ${m.description ? `<h4>About</h4><p>${m.description}</p>` : ''}
+            ${interests.length ? `<h4>Research Interests</h4><div class="modal-interests">${interests.map(i => `<span>${i}</span>`).join('')}</div>` : ''}
+            <div class="modal-links">
+                ${m.email ? `<a href="mailto:${m.email}" class="modal-link">${m.email}</a>` : ''}
+                ${m.github ? `<a href="https://github.com/${m.github}" target="_blank" rel="noopener" class="modal-link">GitHub</a>` : ''}
+                ${m.orcid ? `<a href="https://orcid.org/${m.orcid}" target="_blank" rel="noopener" class="modal-link">ORCID</a>` : ''}
+                ${m.scholar ? `<a href="https://scholar.google.com/citations?user=${m.scholar}" target="_blank" rel="noopener" class="modal-link">Scholar</a>` : ''}
+            </div>
+        </div>
+    `;
+    document.getElementById('modalOverlay').classList.add('open');
+    document.body.style.overflow = 'hidden';
+}
+
+document.getElementById('modalClose').addEventListener('click', closeModal);
+document.getElementById('modalOverlay').addEventListener('click', e => {
+    if (e.target === document.getElementById('modalOverlay')) closeModal();
+});
+document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModal(); });
+
+function closeModal() {
+    document.getElementById('modalOverlay').classList.remove('open');
+    document.body.style.overflow = '';
+}
+
+init();
+</script>
+</body>
+</html>
