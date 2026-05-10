@@ -58,8 +58,7 @@ nav.scrolled {
     box-shadow: 0 1px 0 var(--border);
 }
 nav.nav-solid {
-    background: rgba(6, 10, 20, 0.9);
-    backdrop-filter: blur(24px) saturate(1.4);
+    background: #060a14;
     box-shadow: 0 1px 0 var(--border);
 }
 .nav-brand {
