@@ -183,7 +183,7 @@ function photoEl(photo, name, size, round) {
             handleError.call(img);
         }
     }, 0);
-    return `<img id="${id}" src="${PHOTO_DIR}${esc(photo)}.jpg" alt="${esc(name)}" style="width:${size}px;height:${size}px;border-radius:${radius};object-fit:cover;background:var(--slate);border:${round?'2':'1'}px solid var(--border);flex-shrink:0">`;
+    return `<img id="${id}" src="${PHOTO_DIR}${esc(photo)}" alt="${esc(name)}" style="width:${size}px;height:${size}px;border-radius:${radius};object-fit:cover;background:var(--slate);border:${round?'2':'1'}px solid var(--border);flex-shrink:0">`;
 }
 
 let members = [];
