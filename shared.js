@@ -59,16 +59,24 @@ function formatDate(d) {
 }
 
 /* ─── News (homepage cards and the News page) ─── */
-// Links to other sites open in a new tab
+// A translated story has a language code in the language column (fr → "French")
+function languageName(code) {
+    try { return new Intl.DisplayNames(['en'], { type: 'language' }).of(code) || code; }
+    catch { return code; }
+}
+// Links to other sites open in a new tab. A translated title is marked with its
+// language so that screen readers pronounce it properly.
 function newsLink(n, text) {
-    if (!n.link) return esc(text);
+    const title = n.language ? `<span lang="${esc(n.language)}">${esc(text)}</span>` : esc(text);
+    if (!n.link) return title;
     const external = /^https?:\/\//i.test(n.link) && !/^https?:\/\/(www\.)?comparativechrono\.org/i.test(n.link);
-    return `<a href="${esc(n.link)}"${external ? ' target="_blank" rel="noopener"' : ''}>${esc(text)}` +
+    return `<a href="${esc(n.link)}"${external ? ' target="_blank" rel="noopener"' : ''}>${title}` +
         (external ? '<span class="news-ext" aria-hidden="true">↗</span><span class="visually-hidden"> (opens in a new tab)</span>' : '') + '</a>';
 }
 function newsMeta(n) {
     return `<p class="news-meta"><time datetime="${esc(n.date)}">${esc(formatDate(n.date))}</time>` +
-        (n.tag ? `<span class="news-tag">${esc(n.tag)}</span>` : '') + '</p>';
+        (n.tag ? `<span class="news-tag">${esc(n.tag)}</span>` : '') +
+        (n.language ? `<span class="news-lang">In ${esc(languageName(n.language))}</span>` : '') + '</p>';
 }
 function newsEntry(n) {
     return `<article class="news-entry">${newsMeta(n)}<h3 class="news-entry-title">${newsLink(n, n.title)}</h3>` +

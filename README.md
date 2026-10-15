@@ -122,8 +122,9 @@ Publications are grouped by year, newest first, on the Publications page. The ye
 | summary | Short description |
 | link | URL (optional; makes the headline a link — links to other sites open in a new tab) |
 | tag | Kind of story, e.g. `Paper`, `The Conversation`, `Event`, `Lab news` (optional; shown as a label, and the News page has a filter button for each tag) |
+| language | Only for a story in another language, such as a translation of an article: its language code, e.g. `fr`, `id` (Indonesian) or `pt` (optional; leave empty for English). The story is labelled “In French” and so on |
 
-Stories can be in any order in the file: they are sorted by date. The homepage shows the three most recent as cards, and the News page shows them all, grouped by year.
+Stories can be in any order in the file: they are sorted by date. The homepage shows the three most recent as cards (leaving out stories with a language, since those are translations of articles already listed), and the News page shows them all, grouped by year.
 
 ### Software: `data/software.csv`
 

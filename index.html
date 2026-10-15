@@ -300,9 +300,12 @@
     requestAnimationFrame(tick);
 })();
 
-// News: the three most recent stories
+// News: the three most recent stories. Translations of earlier articles are left
+// out here; they are listed on the News page.
 (async function () {
-    const news = (await loadCSV('data/news.csv')).sort((a, b) => (b.date || '').localeCompare(a.date || ''));
+    const news = (await loadCSV('data/news.csv'))
+        .filter(n => !n.language)
+        .sort((a, b) => (b.date || '').localeCompare(a.date || ''));
     if (!news.length) return;
     document.getElementById('newsList').innerHTML = news.slice(0, 3).map(newsCard).join('');
 })();

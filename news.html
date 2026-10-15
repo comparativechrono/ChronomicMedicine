@@ -61,7 +61,7 @@
     <div class="join-band reveal">
         <h2>Tim on The Conversation</h2>
         <p>Tim writes about sleep, body clocks and genetics for The Conversation, a news site where academics write for the public.</p>
-        <a href="https://theconversation.com/profiles/timothy-hearn-1439589" class="cta-btn" target="_blank" rel="noopener">All Tim’s articles</a>
+        <a href="https://theconversation.com/profiles/timothy-hearn-1439589/articles" class="cta-btn" target="_blank" rel="noopener">All Tim’s articles</a>
     </div>
 </main>
 
@@ -109,7 +109,7 @@ function render() {
 async function init() {
     news = (await loadCSV('data/news.csv')).sort((a, b) => (b.date || '').localeCompare(a.date || ''));
     if (!news.length) {
-        document.getElementById('newsList').innerHTML = '<p class="pub-note">Add news to data/news.csv (columns: date, title, summary, link, tag).</p>';
+        document.getElementById('newsList').innerHTML = '<p class="pub-note">Add news to data/news.csv (columns: date, title, summary, link, tag, language).</p>';
         return;
     }
     document.getElementById('newsTools').hidden = false;
