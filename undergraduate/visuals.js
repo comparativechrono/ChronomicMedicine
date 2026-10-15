@@ -67,12 +67,6 @@
         const mm = Math.round((q - hh) * 60);
         return `${String(hh).padStart(2, '0')}:${String(mm).padStart(2, '0')}`;
     }
-    function mixHex(a, b, t) {
-        const pa = parseInt(a.slice(1), 16), pb = parseInt(b.slice(1), 16);
-        const ch = (p, s) => (p >> s) & 255;
-        const m = (s) => Math.round(ch(pa, s) + (ch(pb, s) - ch(pa, s)) * t);
-        return `rgb(${m(16)}, ${m(8)}, ${m(0)})`;
-    }
     // Apply a state change without CSS transitions (used when a scene re-enters)
     function snap(el, fn) {
         el.classList.add('is-snapping');
@@ -113,13 +107,13 @@
             f1: $('.hc-front.s1', svg), f2: $('.hc-front.s2', svg),
         };
         const rungLayer = $('.hc-rungs', svg);
-        const colours = ['#e8c36e', '#5ed6c0', '#7fb4ff', '#ff8a9a'];
+        // Base-pair colours come from CSS (.hc-rung.b0–b3) so they follow the light/dark theme
         const r = rng(opts.seed || 11);
         const rungs = [];
         for (let j = 0; j < RUNGS; j++) {
             rungs.push({
                 theta: (j + 0.5) / RUNGS * TAU,
-                line: svgEl('line', { class: 'hc-rung', stroke: colours[Math.floor(r() * 4)] }, rungLayer),
+                line: svgEl('line', { class: 'hc-rung b' + Math.floor(r() * 4) }, rungLayer),
             });
         }
         const handEl = $('.hc-hand', svg);
@@ -683,7 +677,9 @@
                     const z = (i - 8) / 3.1;
                     const n = Math.round(13.5 * Math.exp(-z * z / 2));
                     for (let k = 0; k < n; k++) {
-                        const c = svgEl('circle', { cx: 80 + i * 40, cy: 408 - k * 20.5, r: 8.5, class: 'hr-dot is-up', fill: mixHex('#e8c36e', '#b8a2ff', i / (cols - 1)) }, hg);
+                        const c = svgEl('circle', { cx: 80 + i * 40, cy: 408 - k * 20.5, r: 8.5, class: 'hr-dot is-up' }, hg);
+                        // morning-type colour on the left blending to evening-type colour on the right (theme-aware)
+                        c.style.fill = `color-mix(in srgb, var(--lark) ${Math.round(100 - 100 * i / (cols - 1))}%, var(--owl))`;
                         hist.push({ c, i, k });
                     }
                 }
@@ -719,7 +715,7 @@
                         pairBits.clockVars.push(c);
                     });
                     svgEl('text', { x: p.cx, y: 360, class: 'hr-text-muted', 'text-anchor': 'middle' }, g).textContent =
-                        p.icon === 'sun' ? 'a morning lark' : 'a night owl';
+                        p.icon === 'sun' ? 'morning type' : 'evening type';
                 });
 
                 // Gene panel tiles
@@ -781,7 +777,7 @@
             }
             cells.forEach((c, i) => { c.phi = TAU * (order[i] + r()) / cells.length; c.reset = false; });
             btnLabel.textContent = 'Add a hormone pulse';
-            caption.textContent = 'Out of step, the cells’ rhythms cancel out.';
+            caption.textContent = 'Out of step, the cells’ rhythms cancel each other out.';
         }
         function pulse() {
             if (pulseAt !== null) return;
@@ -789,7 +785,7 @@
             rippleStart = performance.now();
             cells.forEach((c) => { c.reset = false; });
             btnLabel.textContent = 'Start again';
-            caption.textContent = 'One pulse and they tick together: now each clock gene can be timed.';
+            caption.textContent = 'After the pulse the cells are in step, so their rhythm can be measured.';
         }
         const levelOf = (c, t) => (1 + Math.cos(c.phi + TAU * t / c.period)) / 2;
         function step(dtSim, rippleR) {
@@ -888,7 +884,7 @@
                 }
                 placed.forEach(([x, y]) => {
                     const g = svgEl('g', { transform: `translate(${f1(x)} ${f1(y)}) rotate(${Math.round(pr() * 180)})` }, layer);
-                    const el = svgEl('ellipse', { rx: f1(12.5 + pr() * 4.5), ry: f1(9 + pr() * 3.5), class: 'cl-cell', fill: '#5ed6c0' }, g);
+                    const el = svgEl('ellipse', { rx: f1(12.5 + pr() * 4.5), ry: f1(9 + pr() * 3.5), class: 'cl-cell' }, g);
                     svgEl('circle', { r: 4.2, cx: f1((pr() - 0.5) * 4), class: 'cl-nucleus' }, g);
                     cells.push({ el, dist: Math.hypot(x - CX, y - CY), period: 24 + 1.1 * gauss(pr), phi: 0, reset: false });
                 });
@@ -933,7 +929,7 @@
             ['✓', 'quality control: tool, version and settings recorded'],
             ['✓', 'alignment: reference genome and parameters recorded'],
             ['✓', 'variant calling: output files checksummed'],
-            ['✓', 'run record saved: rerun it anywhere for the same result'],
+            ['✓', 'run record saved'],
         ];
         const CYCLE = 14;
         let t = 0;

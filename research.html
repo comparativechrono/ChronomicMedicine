@@ -4,244 +4,187 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Research — Chronomic Medicine Group</title>
-    <meta name="description" content="Research projects, publications and open data from the Chronomic Medicine Group.">
+    <meta name="description" content="Research projects, publications and open data from the Chronomic Medicine Group, Department of Genomic Medicine, University of Cambridge.">
+    <meta name="theme-color" content="#060a14">
+    <meta name="color-scheme" content="dark light">
+    <script>
+    /* Colour theme: light 07:00–19:00 local time, dark otherwise, unless the visitor has chosen one (see theme.js) */
+    (function(d){var p=null;try{p=localStorage.getItem('cm-theme')}catch(e){}var h=new Date().getHours();d.setAttribute('data-theme',p==='light'||p==='dark'?p:(h>=7&&h<19?'light':'dark'))})(document.documentElement);
+    </script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=Outfit:wght@200;300;400;500;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=Outfit:wght@200..600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
     <link rel="icon" href="favicon.svg" type="image/svg+xml">
-    <style>
-        /* ─── Project cards ─── */
-        .project-card {
-            background: var(--deep);
-            border: 1px solid var(--border);
-            border-radius: 4px;
-            padding: 1.75rem;
-            margin-bottom: 1rem;
-            transition: border-color 0.3s;
-            cursor: pointer;
-        }
-        .project-card:hover { border-color: var(--border-hover); }
-        .project-header { display: flex; justify-content: space-between; align-items: start; gap: 1rem; }
-        .project-title { font-family: var(--serif); font-size: 1.08rem; font-weight: 400; color: var(--white); line-height: 1.4; }
-        .project-badges { display: flex; gap: 0.4rem; flex-wrap: wrap; flex-shrink: 0; }
-        .project-summary { font-size: 0.82rem; color: var(--muted); margin-top: 0.5rem; line-height: 1.6; }
-        .project-detail {
-            display: none;
-            margin-top: 1rem; padding-top: 1rem;
-            border-top: 1px solid var(--border);
-            font-size: 0.85rem; color: var(--muted); line-height: 1.7;
-        }
-        .project-card.expanded .project-detail { display: block; }
-        .project-toggle {
-            display: inline-block; margin-top: 0.75rem;
-            font-size: 0.72rem; color: var(--amber);
-            cursor: pointer; letter-spacing: 0.06em;
-        }
-
-        /* ─── Completed projects list ─── */
-        .completed-item {
-            padding: 0.75rem 0;
-            border-bottom: 1px solid var(--border);
-            display: flex; justify-content: space-between; align-items: center; gap: 1rem;
-        }
-        .completed-item:first-child { border-top: 1px solid var(--border); }
-        .completed-title { font-size: 0.88rem; color: var(--light); }
-
-        /* ─── Publications ─── */
-        .pub-item { padding: 1.25rem 0; border-bottom: 1px solid var(--border); }
-        .pub-item:first-child { border-top: 1px solid var(--border); }
-        .pub-year { font-size: 0.68rem; color: var(--amber); font-weight: 500; letter-spacing: 0.08em; }
-        .pub-title { font-family: var(--serif); font-size: 1.02rem; color: var(--white); margin: 0.2rem 0; line-height: 1.4; }
-        .pub-authors { font-size: 0.78rem; color: var(--muted); }
-        .pub-journal { font-size: 0.78rem; color: var(--muted); font-style: italic; }
-        .pub-badges { display: flex; gap: 0.35rem; margin-top: 0.5rem; flex-wrap: wrap; }
-        .pub-badge {
-            display: inline-flex; align-items: center; gap: 0.25rem;
-            font-size: 0.62rem; letter-spacing: 0.06em; text-transform: uppercase;
-            color: var(--amber); background: var(--amber-glow);
-            padding: 0.2rem 0.5rem; border-radius: 2px;
-            text-decoration: none; font-weight: 500; transition: background 0.3s;
-        }
-        .pub-badge:hover { background: var(--amber-glow-strong); }
-        .pub-note { font-size: 0.82rem; color: var(--muted); font-style: italic; padding-top: 1.25rem; }
-
-        /* ─── Tools ─── */
-        .tool-card {
-            background: var(--deep); border: 1px solid var(--border);
-            border-radius: 4px; padding: 1.5rem;
-            transition: border-color 0.3s;
-        }
-        .tool-card:hover { border-color: var(--border-hover); }
-        .tool-type { font-size: 0.6rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--amber); font-weight: 500; margin-bottom: 0.4rem; }
-        .tool-name { font-family: var(--serif); font-size: 1rem; color: var(--white); margin-bottom: 0.3rem; }
-        .tool-desc { font-size: 0.8rem; color: var(--muted); margin-bottom: 0.6rem; }
-        .tool-link { font-size: 0.75rem; color: var(--amber); text-decoration: none; border-bottom: 1px solid rgba(212,160,64,0.2); }
-        .tool-lang { font-size: 0.62rem; color: var(--muted); background: rgba(148,163,184,0.06); padding: 0.15rem 0.45rem; border-radius: 2px; margin-left: 0.4rem; }
-        .tools-grid { display: grid; grid-template-columns: repeat(auto-fill,minmax(280px,1fr)); gap: 1rem; margin-top: 1.5rem; }
-
-        /* ─── Sub-nav ─── */
-        .page-nav {
-            display: flex; gap: 1.5rem; margin-top: 1.5rem;
-        }
-        .page-nav a {
-            font-size: 0.78rem; color: var(--muted);
-            text-decoration: none; letter-spacing: 0.04em;
-            padding-bottom: 0.4rem;
-            border-bottom: 1px solid transparent;
-            transition: all 0.3s;
-        }
-        .page-nav a:hover { color: var(--amber); border-color: var(--amber); }
-
-        @media (max-width: 768px) {
-            .project-header { flex-direction: column; }
-            .project-badges { margin-top: 0.5rem; }
-        }
-    </style>
 </head>
 <body>
 
-<nav id="mainNav" class="nav-solid">
+<a class="skip-link" href="#main">Skip to content</a>
+
+<nav id="mainNav" class="nav-solid" aria-label="Main">
     <a href="index.html" class="nav-brand">Chronomic Medicine</a>
     <ul class="nav-links" id="navLinks">
         <li><a href="index.html">Home</a></li>
         <li><a href="index.html#about">About</a></li>
         <li><a href="people.html">People</a></li>
-        <li><a href="research.html" class="active">Research</a></li>
+        <li><a href="research.html" class="active" aria-current="page">Research</a></li>
         <li><a href="undergraduate/">Undergraduates</a></li>
         <li><a href="index.html#news">News</a></li>
         <li><a href="index.html#contact">Contact</a></li>
     </ul>
-    <button class="nav-toggle" id="navToggle" aria-label="Menu"><span></span><span></span><span></span></button>
+    <div class="nav-tools">
+        <button class="theme-toggle" type="button" data-theme-toggle aria-label="Switch between light and dark mode">
+            <svg class="icon-sun" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="4.2"/><path d="M12 2.5v2.2M12 19.3v2.2M2.5 12h2.2M19.3 12h2.2M5.3 5.3l1.6 1.6M17.1 17.1l1.6 1.6M5.3 18.7l1.6-1.6M17.1 6.9l1.6-1.6"/></svg>
+            <svg class="icon-moon" viewBox="0 0 24 24" aria-hidden="true"><path d="M20 14.6A8.4 8.4 0 0 1 9.4 4a8.4 8.4 0 1 0 10.6 10.6z"/></svg>
+        </button>
+        <button class="nav-toggle" id="navToggle" type="button" aria-label="Menu" aria-expanded="false" aria-controls="navLinks"><span></span><span></span><span></span></button>
+    </div>
 </nav>
 
-<div class="page-header reveal">
-    <p class="section-label">Research</p>
-    <h1>Projects, Publications &amp; Data</h1>
-    <p class="section-intro">Our work spans cardiac arrhythmias, chrono-pharmacogenomics, cancer and rare disease.</p>
-    <div class="page-nav">
-        <a href="#projects">Projects</a>
-        <a href="#publications">Publications</a>
-        <a href="#tools">Open Research</a>
+<main id="main">
+    <div class="page-header reveal">
+        <p class="section-label">Research</p>
+        <h1>Projects, publications and data</h1>
+        <p class="section-intro">Our work covers cardiac arrhythmias, chrono-pharmacogenomics, cancer and rare disease.</p>
+        <div class="page-nav">
+            <a href="#projects">Projects</a>
+            <a href="#publications">Publications</a>
+            <a href="#tools">Open research</a>
+            <a href="undergraduate/">Undergraduate projects</a>
+        </div>
     </div>
-</div>
 
-<!-- PROJECTS -->
-<section id="projects" class="section reveal" style="padding-top:2rem">
-    <h2>Current Projects</h2>
-    <p class="section-intro" style="margin-bottom:1.5rem">Click any project to read the full description.</p>
-    <div id="currentProjects"></div>
+    <!-- PROJECTS (from data/projects.csv) -->
+    <section id="projects" class="section section--tight-top reveal">
+        <h2>Current projects</h2>
+        <p class="section-intro section-intro--spaced">Select a project to read the full description.</p>
+        <div id="currentProjects"></div>
+        <div id="completedSection" class="completed-section" hidden>
+            <h3>Completed projects</h3>
+            <div id="completedProjects"></div>
+        </div>
+    </section>
 
-    <div id="completedSection" style="display:none;margin-top:3rem">
-        <h2 style="font-size:1.4rem;margin-bottom:1rem">Completed Projects</h2>
-        <div id="completedProjects"></div>
-    </div>
-</section>
+    <div class="divider"><div class="divider-line"></div></div>
 
-<div class="divider"><div class="divider-line"></div></div>
+    <!-- PUBLICATIONS (from data/publications.csv) -->
+    <section id="publications" class="section reveal">
+        <h2>Publications</h2>
+        <div id="pubList"></div>
+    </section>
 
-<!-- PUBLICATIONS -->
-<section id="publications" class="section reveal">
-    <h2>Publications</h2>
-    <div id="pubList"></div>
-</section>
+    <div class="divider"><div class="divider-line"></div></div>
 
-<div class="divider"><div class="divider-line"></div></div>
-
-<!-- OPEN RESEARCH -->
-<section id="tools" class="section reveal">
-    <h2>Open Research</h2>
-    <p class="section-intro">Analysis scripts, datasets and tools are publicly available.</p>
-    <div class="tools-grid" id="toolsList"></div>
-</section>
+    <!-- OPEN RESEARCH (from data/tools.csv) -->
+    <section id="tools" class="section reveal">
+        <h2>Open research</h2>
+        <p class="section-intro">Analysis scripts, datasets and tools are publicly available.</p>
+        <div class="tools-grid" id="toolsList"></div>
+    </section>
+</main>
 
 <footer>
     <div class="footer-links">
         <a href="https://github.com/comparativechrono/" target="_blank" rel="noopener">GitHub</a>
         <a href="mailto:tjh70@cam.ac.uk">Email</a>
     </div>
-    <p>&copy; <span id="yr"></span> Chronomic Medicine Group · University of Cambridge</p>
+    <div class="appearance" role="group" aria-label="Colour theme">
+        <span class="appearance-label">Theme</span>
+        <button type="button" data-theme-choice="auto" aria-pressed="true">Auto</button>
+        <button type="button" data-theme-choice="light" aria-pressed="false">Light</button>
+        <button type="button" data-theme-choice="dark" aria-pressed="false">Dark</button>
+    </div>
+    <p class="appearance-note">Auto follows your local time: light from 07:00, dark from 19:00.</p>
+    <p>&copy; <span id="yr"></span> Chronomic Medicine Group, Department of Genomic Medicine, University of Cambridge</p>
 </footer>
 
+<script src="theme.js"></script>
 <script src="shared.js"></script>
 <script>
+const TYPE_LABELS = { article: 'Article', review: 'Review', abstract: 'Conference abstract', commentary: 'Commentary', preprint: 'Preprint', chapter: 'Book chapter' };
+
 async function init() {
     // Projects
     const projects = await loadCSV('data/projects.csv');
     const current = projects.filter(p => p.status === 'current');
     const completed = projects.filter(p => p.status === 'completed');
 
-    const cEl = document.getElementById('currentProjects');
-    cEl.innerHTML = current.map((p, i) => `
-        <div class="project-card reveal" tabindex="0" role="button" onclick="toggleProject(this)" onkeydown="if(event.key==='Enter')toggleProject(this)">
-            <div class="project-header">
-                <div class="project-title">${p.title}</div>
-                <div class="project-badges">
-                    ${p.registry_id ? `<span class="badge badge-amber">GEL #${p.registry_id}</span>` : ''}
-                    ${p.pillar ? `<span class="badge badge-muted">${p.pillar}</span>` : ''}
-                </div>
-            </div>
-            <div class="project-summary">${p.summary || ''}</div>
-            ${p.description ? `<div class="project-detail">${p.description}</div><span class="project-toggle">Read more ›</span>` : ''}
-        </div>
-    `).join('');
+    document.getElementById('currentProjects').innerHTML = current.map((p, i) => `
+        <div class="project-card reveal">
+            <button type="button" class="project-head" ${p.description ? `aria-expanded="false" aria-controls="project-${i}"` : ''}>
+                <span class="project-header">
+                    <span class="project-title">${esc(p.title)}</span>
+                    <span class="project-badges">
+                        ${p.registry_id ? `<span class="badge badge-amber">GEL #${esc(p.registry_id)}</span>` : ''}
+                        ${p.pillar ? `<span class="badge badge-muted">${esc(p.pillar)}</span>` : ''}
+                    </span>
+                </span>
+                <span class="project-summary">${esc(p.summary)}</span>
+                ${p.description ? '<span class="project-toggle">Read more ›</span>' : ''}
+            </button>
+            ${p.description ? `<div class="project-detail" id="project-${i}" hidden>${esc(p.description)}</div>` : ''}
+        </div>`).join('');
+
+    document.querySelectorAll('.project-head[aria-controls]').forEach(btn => {
+        btn.addEventListener('click', () => {
+            const open = btn.getAttribute('aria-expanded') !== 'true';
+            btn.setAttribute('aria-expanded', String(open));
+            document.getElementById(btn.getAttribute('aria-controls')).hidden = !open;
+            btn.querySelector('.project-toggle').textContent = open ? '‹ Read less' : 'Read more ›';
+        });
+    });
 
     if (completed.length) {
-        document.getElementById('completedSection').style.display = 'block';
+        document.getElementById('completedSection').hidden = false;
         document.getElementById('completedProjects').innerHTML = completed.map(p => `
             <div class="completed-item">
-                <span class="completed-title">${p.title}</span>
-                ${p.registry_id ? `<span class="badge badge-amber">GEL #${p.registry_id}</span>` : ''}
-            </div>
-        `).join('');
+                <span class="completed-title">${esc(p.title)}</span>
+                ${p.registry_id ? `<span class="badge badge-amber">GEL #${esc(p.registry_id)}</span>` : ''}
+            </div>`).join('');
     }
 
-    // Publications
+    // Publications, newest year first
     const pubs = await loadCSV('data/publications.csv');
     const pubEl = document.getElementById('pubList');
     if (pubs.length) {
-        pubEl.innerHTML = pubs.map(p => `
-            <div class="pub-item">
-                <div class="pub-year">${p.year}</div>
-                <div class="pub-title">${p.title}</div>
-                <div class="pub-authors">${p.authors}</div>
-                ${p.journal ? `<div class="pub-journal">${p.journal}</div>` : ''}
-                <div class="pub-badges">
-                    ${p.doi ? `<a href="https://doi.org/${p.doi}" target="_blank" rel="noopener" class="pub-badge">DOI</a>` : ''}
-                    ${p.pdf ? `<a href="${p.pdf}" target="_blank" rel="noopener" class="pub-badge">PDF</a>` : ''}
-                    ${p.github ? `<a href="${p.github}" target="_blank" rel="noopener" class="pub-badge">Code</a>` : ''}
-                    ${p.preprint ? `<a href="${p.preprint}" target="_blank" rel="noopener" class="pub-badge">Preprint</a>` : ''}
+        const years = [...new Set(pubs.map(p => p.year))].sort((a, b) => b.localeCompare(a));
+        pubEl.innerHTML = years.map(y => `
+            <div class="pub-year-group">
+                <div class="pub-year-heading">${esc(y)}</div>
+                <div>
+                    ${pubs.filter(p => p.year === y).map(p => `
+                        <div class="pub-item">
+                            ${p.type ? `<div class="pub-type">${esc(TYPE_LABELS[p.type] || p.type)}</div>` : ''}
+                            <div class="pub-title">${esc(p.title)}</div>
+                            <div class="pub-authors">${esc(p.authors)}</div>
+                            ${p.journal ? `<div class="pub-journal">${esc(p.journal)}</div>` : ''}
+                            <div class="pub-badges">
+                                ${p.doi ? `<a href="https://doi.org/${esc(p.doi)}" target="_blank" rel="noopener" class="pub-badge">DOI</a>` : ''}
+                                ${p.pdf ? `<a href="${esc(p.pdf)}" target="_blank" rel="noopener" class="pub-badge">PDF</a>` : ''}
+                                ${p.github ? `<a href="${esc(p.github)}" target="_blank" rel="noopener" class="pub-badge">Code</a>` : ''}
+                                ${p.preprint ? `<a href="${esc(p.preprint)}" target="_blank" rel="noopener" class="pub-badge">Preprint</a>` : ''}
+                            </div>
+                        </div>`).join('')}
                 </div>
-            </div>
-        `).join('') + '<p class="pub-note">Update data/publications.csv to add entries.</p>';
+            </div>`).join('');
     } else {
-        pubEl.innerHTML = '<p class="pub-note">Add publications to data/publications.csv — columns: year, authors, title, journal, doi, pdf, github, preprint, type.</p>';
+        pubEl.innerHTML = '<p class="pub-note">Add publications to data/publications.csv (columns: year, authors, title, journal, doi, pdf, github, preprint, type).</p>';
     }
 
     // Tools
     const tools = await loadCSV('data/tools.csv');
-    const toolsEl = document.getElementById('toolsList');
     if (tools.length) {
-        toolsEl.innerHTML = tools.map(t => `
+        document.getElementById('toolsList').innerHTML = tools.map(t => `
             <div class="tool-card">
-                <div class="tool-type">${t.type || 'resource'}</div>
-                <div class="tool-name">${t.name}</div>
-                <div class="tool-desc">${t.description || ''}</div>
-                ${t.url ? `<a href="${t.url}" target="_blank" rel="noopener" class="tool-link">View ›</a>` : ''}
-                ${t.language ? `<span class="tool-lang">${t.language}</span>` : ''}
-            </div>
-        `).join('');
+                <div class="tool-type">${esc(t.type || 'resource')}</div>
+                <div class="tool-name">${esc(t.name)}</div>
+                <div class="tool-desc">${esc(t.description)}</div>
+                ${t.url ? `<a href="${esc(t.url)}" target="_blank" rel="noopener" class="tool-link">View ›</a>` : ''}
+                ${t.language ? `<span class="tool-lang">${esc(t.language)}</span>` : ''}
+            </div>`).join('');
     }
 
     initReveal();
-}
-
-function toggleProject(card) {
-    card.classList.toggle('expanded');
-    const toggle = card.querySelector('.project-toggle');
-    if (toggle) {
-        toggle.textContent = card.classList.contains('expanded') ? '‹ Read less' : 'Read more ›';
-    }
 }
 
 init();

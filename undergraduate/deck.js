@@ -360,6 +360,9 @@
             case 'f': case 'F': case 'F5': toggleFullscreen(); break;
             case 'b': case 'B': case '.': toggleBlackout(); break;
             case 't': case 'T': toggleTimer(e.shiftKey); break;
+            case 'd': case 'D':
+                if (window.CMTheme) { if (e.shiftKey) CMTheme.choose('auto'); else CMTheme.toggle(); }
+                break;
             default: return;
         }
         e.preventDefault();

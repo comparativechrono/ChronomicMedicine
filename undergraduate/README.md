@@ -16,6 +16,7 @@ Open the page, press **F** for full screen, then use a clicker or the arrow keys
 | F | Full screen |
 | B or . | Black screen (any key brings it back) |
 | T | Talk timer next to the dial: turns amber at 8 minutes and red at 10. Shift+T restarts it |
+| D | Switch between light and dark (also the sun/moon button, top right). Shift+D goes back to automatic |
 | Home · End | First or last screen |
 | ? | Shortcut list |
 | Esc | Close a panel |
@@ -43,7 +44,8 @@ Every project has a **Details and reading** button that opens the full descripti
 
 ### Before the talk
 
-- It needs an internet connection for the fonts and the Genomics England logo (if the logo can’t load, its name appears instead). Everything else is in this folder.
+- It needs an internet connection for the fonts and the Genomics England logo (if the logo can’t load, its name appears instead). Everything else is in this folder, apart from `../theme.js`, which it shares with the rest of the site.
+- **Light or dark:** like the rest of the site, it opens in the light theme between 07:00 and 19:00 on the presenting computer and dark otherwise, unless someone has chosen a theme in that browser. It never switches by itself during the talk. Press **D** to change it; pick whichever reads better on the projector.
 - Do a quick run-through on the lecture-theatre computer. If the projector is unusually small or a 4:3 shape, the layout adapts, but it’s worth a look.
 - The page respects the “reduce motion” accessibility setting; if that is switched on, animations show their final state instead.
 
@@ -52,7 +54,7 @@ Every project has a **Details and reading** button that opens the full descripti
 | File | What it is |
 | --- | --- |
 | `index.html` | All the screens and their text. Each `<section class="scene">` is one screen, in order |
-| `deck.css` | Styles. Colours and fonts match `../style.css` |
+| `deck.css` | Styles. The colours for both themes are the variables at the top (dark first, then light); fonts match `../style.css` |
 | `deck.js` | Navigation, clock-wipe transitions, build steps, the dial, overview and details panel. No need to edit this to change content |
 | `visuals.js` | The animated diagrams, one block per screen, keyed by the screen’s `id` |
 | `qr.svg` | QR code for `https://comparativechrono.org/undergraduate/` (the address doesn’t change, so this can stay) |
@@ -76,5 +78,6 @@ Every project has a **Details and reading** button that opens the full descripti
    A new project has no animation until you add one: either reuse an existing diagram, put an image in its `<figure class="scene-visual">`, or add a block to `visuals.js` with `Deck.register('your-id', { init(scene) {…}, frame(dt) {…} })`.
 6. **Dissertations** are the cards in the `dissertations` screen. Copy a `<article class="ds-card">` to add one; its `data-option="dissertation"` makes it appear on the menu dial automatically.
 7. **Build steps:** `data-steps="2"` gives a screen two extra steps; `data-autoplay="2000"` plays them every 2 seconds, `data-autoplay="off"` waits for a key press. Inside the screen, `data-show-at="1"` shows an element from step 1 onwards and `data-step-only="1"` shows it on step 1 only.
+8. **Both themes:** check any change in light and dark (press **D**). Give new diagrams colours with the variables at the top of `deck.css` (`var(--accent)`, `var(--c-comp)`, `var(--c-lab)`, `var(--c-diss)`, `var(--text)`…) rather than fixed colours. An image that only works on one background needs two versions: give the one for dark backgrounds `class="only-dark"` and the one for light backgrounds `class="only-light"`, as with the Genomics England logo.
 
 Facts on the genomic medicine screen are referenced in its **Sources** panel; check they are still current each year.

@@ -4,111 +4,30 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Chronomic Medicine Group — University of Cambridge</title>
-    <meta name="description" content="Combining Genomic Medicine and Chronobiology. Department of Genomic Medicine, University of Cambridge.">
+    <meta name="description" content="Combining genomic medicine and chronobiology. The Chronomic Medicine Group, Department of Genomic Medicine, University of Cambridge.">
+    <meta name="theme-color" content="#060a14">
+    <meta name="color-scheme" content="dark light">
+    <script>
+    /* Colour theme: light 07:00–19:00 local time, dark otherwise, unless the visitor has chosen one (see theme.js) */
+    (function(d){var p=null;try{p=localStorage.getItem('cm-theme')}catch(e){}var h=new Date().getHours();d.setAttribute('data-theme',p==='light'||p==='dark'?p:(h>=7&&h<19?'light':'dark'))})(document.documentElement);
+    </script>
+    <meta property="og:title" content="Chronomic Medicine Group — University of Cambridge">
+    <meta property="og:description" content="Combining genomic medicine and chronobiology.">
+    <meta property="og:url" content="https://comparativechrono.org/">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=Outfit:wght@200;300;400;500;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=Outfit:wght@200..600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
     <link rel="icon" href="favicon.svg" type="image/svg+xml">
-    <style>
-        /* Hero */
-        .hero {
-            min-height: 100vh;
-            display: flex; flex-direction: column;
-            justify-content: center; align-items: center;
-            text-align: center; padding: 2rem;
-            position: relative; overflow: hidden;
-        }
-        .hero::before {
-            content: '';
-            position: absolute; inset: -40%;
-            background:
-                radial-gradient(ellipse at 25% 15%, rgba(212,160,64,0.04) 0%, transparent 55%),
-                radial-gradient(ellipse at 75% 85%, rgba(59,130,246,0.025) 0%, transparent 45%);
-            animation: drift 30s ease-in-out infinite alternate;
-        }
-        @keyframes drift { to { transform: translate(1%,-1.5%) scale(1.02); } }
-        @media (prefers-reduced-motion: reduce) { .hero::before { animation: none; } }
-
-        .clock-container { position: relative; width: 220px; height: 220px; margin-bottom: 2.5rem; z-index: 1; }
-        .clock-svg { width: 100%; height: 100%; }
-        .clock-ring { fill: none; stroke: rgba(212,160,64,0.1); stroke-width: 0.4; }
-        .clock-tick { stroke: var(--amber); stroke-width: 1; opacity: 0.25; }
-        .clock-tick-major { stroke: var(--amber); stroke-width: 1.5; opacity: 0.5; }
-        .clock-hand-h { stroke: var(--amber); stroke-width: 2; stroke-linecap: round; opacity: 0.7; transform-origin: 110px 110px; }
-        .clock-hand-m { stroke: rgba(212,160,64,0.35); stroke-width: 1; stroke-linecap: round; transform-origin: 110px 110px; }
-        .clock-center { fill: var(--amber); filter: drop-shadow(0 0 10px rgba(212,160,64,0.4)); }
-        .clock-label { fill: var(--amber); font-family: var(--sans); font-size: 6.5px; font-weight: 400; letter-spacing: 0.15em; text-transform: uppercase; text-anchor: middle; opacity: 0.4; }
-
-        .hero h1 {
-            font-family: var(--serif);
-            font-size: clamp(2.8rem,7vw,5rem);
-            font-weight: 300; color: var(--white);
-            line-height: 1.08; letter-spacing: -0.02em;
-            margin-bottom: 1rem; z-index: 1; position: relative;
-        }
-        .hero h1 em { font-style: italic; color: var(--amber); }
-        .hero .tagline { font-size: 1.05rem; font-weight: 200; color: var(--muted); max-width: 440px; z-index: 1; position: relative; margin-bottom: 0.5rem; }
-        .hero .affiliation { font-size: 0.68rem; color: rgba(138,150,168,0.45); letter-spacing: 0.12em; text-transform: uppercase; z-index: 1; position: relative; }
-
-        /* Pillars */
-        .pillars { display: grid; grid-template-columns: repeat(3,1fr); gap: 1px; margin-top: 2.5rem; background: var(--border); border: 1px solid var(--border); border-radius: 3px; overflow: hidden; }
-        .pillar { background: var(--deep); padding: 2.25rem 1.75rem; text-align: center; transition: background 0.3s; }
-        .pillar:hover { background: var(--slate); }
-        .pillar h3 { font-family: var(--serif); font-size: 1.1rem; font-weight: 400; color: var(--white); margin-bottom: 0.6rem; }
-        .pillar p { font-size: 0.8rem; color: var(--muted); line-height: 1.6; }
-
-        /* News compact */
-        .news-item { padding: 1rem 0; border-bottom: 1px solid var(--border); }
-        .news-item:first-child { border-top: 1px solid var(--border); }
-        .news-date { font-size: 0.7rem; color: var(--amber); font-weight: 400; }
-        .news-title { font-family: var(--serif); font-size: 1rem; color: var(--white); margin: 0.2rem 0; }
-        .news-summary { font-size: 0.8rem; color: var(--muted); }
-
-        /* Join CTA */
-        .join-band {
-            background: linear-gradient(135deg, rgba(212,160,64,0.04), rgba(212,160,64,0.01));
-            border-top: 1px solid rgba(212,160,64,0.06);
-            border-bottom: 1px solid rgba(212,160,64,0.06);
-            text-align: center; padding: 4rem 2rem;
-        }
-        .join-band h2 { font-family: var(--serif); font-size: clamp(1.6rem,3vw,2.2rem); font-weight: 300; color: var(--white); margin-bottom: 0.75rem; }
-        .join-band p { color: var(--muted); font-size: 0.92rem; max-width: 500px; margin: 0 auto 1.5rem; }
-        .cta-btn {
-            display: inline-block; padding: 0.65rem 2rem;
-            border: 1px solid rgba(212,160,64,0.3); border-radius: 3px;
-            color: var(--amber); text-decoration: none;
-            font-size: 0.8rem; font-weight: 500; letter-spacing: 0.06em;
-            transition: all 0.3s;
-        }
-        .cta-btn:hover { background: var(--amber-glow); border-color: var(--amber); }
-
-        /* Contact */
-        .contact-email {
-            display: inline-block; margin: 0.25rem 0 1.5rem;
-            color: var(--amber); text-decoration: none; font-size: 0.95rem;
-            border-bottom: 1px solid rgba(212,160,64,0.2); transition: border-color 0.3s;
-        }
-        .contact-email:hover { border-color: var(--amber); }
-        .locations { display: grid; grid-template-columns: repeat(auto-fit,minmax(220px,1fr)); gap: 1rem; }
-        .loc-card { padding: 1.25rem; background: var(--deep); border: 1px solid var(--border); border-radius: 3px; transition: border-color 0.3s; }
-        .loc-card:hover { border-color: var(--border-hover); }
-        .loc-card h4 { font-family: var(--serif); font-size: 0.92rem; font-weight: 400; color: var(--white); margin-bottom: 0.3rem; }
-        .loc-card p { font-size: 0.78rem; color: var(--muted); }
-        .loc-card a { display: inline-block; margin-top: 0.4rem; color: var(--amber); text-decoration: none; font-size: 0.72rem; border-bottom: 1px solid rgba(212,160,64,0.2); }
-
-        @media (max-width: 768px) {
-            .pillars { grid-template-columns: 1fr; }
-            .clock-container { width: 170px; height: 170px; }
-        }
-    </style>
 </head>
 <body>
 
-<nav id="mainNav">
+<a class="skip-link" href="#main">Skip to content</a>
+
+<nav id="mainNav" aria-label="Main">
     <a href="index.html" class="nav-brand">Chronomic Medicine</a>
     <ul class="nav-links" id="navLinks">
-        <li><a href="index.html" class="active">Home</a></li>
+        <li><a href="index.html" class="active" aria-current="page">Home</a></li>
         <li><a href="#about">About</a></li>
         <li><a href="people.html">People</a></li>
         <li><a href="research.html">Research</a></li>
@@ -116,15 +35,26 @@
         <li><a href="#news">News</a></li>
         <li><a href="#contact">Contact</a></li>
     </ul>
-    <button class="nav-toggle" id="navToggle" aria-label="Menu"><span></span><span></span><span></span></button>
+    <div class="nav-tools">
+        <button class="theme-toggle" type="button" data-theme-toggle aria-label="Switch between light and dark mode">
+            <svg class="icon-sun" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="4.2"/><path d="M12 2.5v2.2M12 19.3v2.2M2.5 12h2.2M19.3 12h2.2M5.3 5.3l1.6 1.6M17.1 17.1l1.6 1.6M5.3 18.7l1.6-1.6M17.1 6.9l1.6-1.6"/></svg>
+            <svg class="icon-moon" viewBox="0 0 24 24" aria-hidden="true"><path d="M20 14.6A8.4 8.4 0 0 1 9.4 4a8.4 8.4 0 1 0 10.6 10.6z"/></svg>
+        </button>
+        <button class="nav-toggle" id="navToggle" type="button" aria-label="Menu" aria-expanded="false" aria-controls="navLinks"><span></span><span></span><span></span></button>
+    </div>
 </nav>
 
-<!-- HERO -->
+<main id="main">
+
+<!-- HERO: a 24-hour clock showing the visitor's local time.
+     The coloured rim marks the hours the site uses the light theme (07:00–19:00). -->
 <header class="hero">
-    <div class="clock-container">
-        <svg class="clock-svg" viewBox="0 0 220 220" id="clockSvg">
+    <div class="clock-container" data-sweep-centre>
+        <svg class="clock-svg" viewBox="0 0 220 220" id="clockSvg" role="img" aria-label="A 24-hour clock showing your local time">
             <circle cx="110" cy="110" r="103" class="clock-ring"/>
-            <circle cx="110" cy="110" r="78" class="clock-ring" style="stroke-width:0.3"/>
+            <circle cx="110" cy="110" r="78" class="clock-ring clock-ring--inner"/>
+            <path class="clock-arc clock-arc--night" id="arcNight"/>
+            <path class="clock-arc clock-arc--day" id="arcDay"/>
             <text x="110" y="20" class="clock-label">00</text>
             <text x="200" y="114" class="clock-label">06</text>
             <text x="110" y="200" class="clock-label">12</text>
@@ -136,36 +66,36 @@
         </svg>
     </div>
     <h1>Chronomic<br><em>Medicine</em></h1>
-    <p class="tagline">Combining Genomic Medicine and Chronobiology</p>
-    <p class="affiliation">Department of Medical Genetics · University of Cambridge</p>
+    <p class="tagline">Combining genomic medicine and chronobiology</p>
+    <p class="affiliation">Department of Genomic Medicine, University of Cambridge</p>
 </header>
 
 <!-- ABOUT -->
 <section id="about" class="section reveal">
     <p class="section-label">About</p>
-    <h2>We discover how circadian clocks contribute to genetic disease</h2>
-    <p class="section-intro" style="margin-bottom:1.25rem">The Chronomic Medicine group takes a comparative biology approach — spanning humans, zebrafish and plants — to investigate how chronobiology impacts human health and disease.</p>
-    <p style="color:var(--muted);font-size:0.92rem;max-width:680px;margin-bottom:1rem">We coined the term <strong style="color:var(--white)">"Chronomic Medicine"</strong> for the application of chronobiology to genomic medicine. With 52% of disease-causing genes predicted to oscillate across the day, there is vast unexplored potential for the clock in rare disease, variable phenotypes and therapeutic timing.</p>
-    <p style="color:var(--muted);font-size:0.92rem;max-width:680px">Our PI's lead involvement in the <strong style="color:var(--white)">Cambridge Genomic Medicine Programme</strong> gives a unique opportunity to realise this. We take MPhil and MSt students each year and welcome clinical collaborators.</p>
+    <h2>We study how circadian clocks contribute to genetic disease</h2>
+    <p class="section-intro">The Chronomic Medicine Group takes a comparative biology approach, working across humans, zebrafish and plants, to understand how chronobiology affects human health and disease.</p>
+    <p class="prose">We coined the term <strong>chronomic medicine</strong> for the application of chronobiology to genomic medicine. With 52% of disease-causing genes predicted to oscillate across the day, the body clock is likely to matter in rare disease, in why the same condition varies between patients, and in when treatments should be given.</p>
+    <p class="prose">Tim has a leading role in the <strong>Cambridge Genomic Medicine Programme</strong>, and we take MPhil and MSt students from it each year. We also welcome clinical collaborators.</p>
 </section>
 
 <!-- PILLARS -->
-<div class="section reveal" style="padding-top:0">
+<div class="section section--flush-top reveal">
     <div class="pillars">
         <div class="pillar reveal reveal-d1">
-            <h3>Circadian Clocks &amp; Cardiac Disease</h3>
-            <p>How circadian timing influences cardiac arrhythmias, Long QT syndrome and UBR4 pathways.</p>
+            <h3>Circadian clocks and cardiac disease</h3>
+            <p>How circadian timing affects cardiac arrhythmias, Long QT syndrome and UBR4 pathways.</p>
         </div>
         <div class="pillar reveal reveal-d2">
-            <h3>Immunity, Cancer &amp; Rare Disease</h3>
-            <p>Circadian gene networks in Lynch Syndrome cancers, rheumatoid arthritis and adrenal hyperplasia.</p>
+            <h3>Immunity, cancer and rare disease</h3>
+            <p>Circadian gene networks in Lynch syndrome cancers, rheumatoid arthritis and congenital adrenal hyperplasia.</p>
         </div>
         <div class="pillar reveal reveal-d3">
-            <h3>Chrono-Pharmacogenomics</h3>
-            <p>Genetic variants that alter drug responses across the circadian cycle — time-aware precision medicine.</p>
+            <h3>Chrono-pharmacogenomics</h3>
+            <p>Genetic variants that change how a patient responds to a drug depending on the time of day it is taken.</p>
         </div>
     </div>
-    <p style="margin-top:1.5rem"><a href="research.html" class="link-arrow">View all projects ›</a></p>
+    <p class="pillars-more"><a href="research.html" class="link-arrow">All our projects ›</a></p>
 </div>
 
 <!-- UNDERGRADUATE PROJECTS (update the year and counts each autumn; the presentation lives in undergraduate/) -->
@@ -175,88 +105,107 @@
     <a href="undergraduate/" class="cta-btn">See the projects</a>
 </div>
 
-<div class="divider"><div class="divider-line"></div></div>
-
-<!-- NEWS -->
+<!-- NEWS (from data/news.csv, newest first) -->
 <section id="news" class="section reveal">
     <p class="section-label">News</p>
-    <h2>Latest Updates</h2>
+    <h2>Latest updates</h2>
     <div id="newsList"></div>
 </section>
 
-<!-- JOIN CTA -->
+<!-- JOIN -->
 <div class="join-band reveal">
     <h2>Interested in joining?</h2>
-    <p>We welcome enquiries from prospective students, visiting scientists and clinical collaborators at all levels.</p>
+    <p>We welcome enquiries from prospective students, visiting scientists and clinical collaborators at any stage of their career.</p>
     <a href="mailto:tjh70@cam.ac.uk" class="cta-btn">Get in touch</a>
 </div>
 
 <!-- CONTACT -->
 <section id="contact" class="section reveal">
     <p class="section-label">Contact</p>
-    <h2>Find Us</h2>
+    <h2>Find us</h2>
     <a href="mailto:tjh70@cam.ac.uk" class="contact-email">tjh70@cam.ac.uk</a>
     <div class="locations">
         <div class="loc-card">
-            <h4>Laboratory</h4>
-            <p>Dept of Medical Genetics, Level 6, Addenbrooke's Treatment Centre</p>
-            <a href="https://www.google.com/maps/search/?api=1&query=52.1744614,0.1388401" target="_blank" rel="noopener">Map ›</a>
+            <h3>Laboratory</h3>
+            <p>Department of Genomic Medicine, Level 6, Addenbrooke’s Treatment Centre</p>
+            <a href="https://www.google.com/maps/search/?api=1&amp;query=52.1744614,0.1388401" target="_blank" rel="noopener">Map ›</a>
         </div>
         <div class="loc-card">
-            <h4>Lab Meetings</h4>
+            <h3>Lab meetings</h3>
             <p>School of Clinical Medicine</p>
         </div>
         <div class="loc-card">
-            <h4>PI Office</h4>
+            <h3>PI office</h3>
             <p>The Pightle, Newnham College</p>
-            <a href="https://www.google.com/maps/search/?api=1&query=52.19957533065727,0.10984277213972048" target="_blank" rel="noopener">Map ›</a>
+            <a href="https://www.google.com/maps/search/?api=1&amp;query=52.19957533065727,0.10984277213972048" target="_blank" rel="noopener">Map ›</a>
         </div>
     </div>
 </section>
+
+</main>
 
 <footer>
     <div class="footer-links">
         <a href="https://github.com/comparativechrono/" target="_blank" rel="noopener">GitHub</a>
         <a href="mailto:tjh70@cam.ac.uk">Email</a>
     </div>
-    <p>&copy; <span id="yr"></span> Chronomic Medicine Group · Department of Medical Genetics · University of Cambridge</p>
+    <div class="appearance" role="group" aria-label="Colour theme">
+        <span class="appearance-label">Theme</span>
+        <button type="button" data-theme-choice="auto" aria-pressed="true">Auto</button>
+        <button type="button" data-theme-choice="light" aria-pressed="false">Light</button>
+        <button type="button" data-theme-choice="dark" aria-pressed="false">Dark</button>
+    </div>
+    <p class="appearance-note">Auto follows your local time: light from 07:00, dark from 19:00.</p>
+    <p>&copy; <span id="yr"></span> Chronomic Medicine Group, Department of Genomic Medicine, University of Cambridge</p>
 </footer>
 
+<script src="theme.js"></script>
 <script src="shared.js"></script>
 <script>
-// Clock
-(function(){
-    const cx=110,cy=110;
-    const ticks=document.getElementById('clockTicks');
-    for(let i=0;i<24;i++){
-        const ang=(i*15)-90, rad=ang*Math.PI/180;
-        const maj=i%6===0, r1=maj?96:99, r2=103;
-        const l=document.createElementNS('http://www.w3.org/2000/svg','line');
-        l.setAttribute('x1',cx+r1*Math.cos(rad)); l.setAttribute('y1',cy+r1*Math.sin(rad));
-        l.setAttribute('x2',cx+r2*Math.cos(rad)); l.setAttribute('y2',cy+r2*Math.sin(rad));
-        l.setAttribute('class',maj?'clock-tick-major':'clock-tick');
+// 24-hour clock: hands show the visitor's local time; the rim shows light (day) and dark (night) hours
+(function () {
+    const cx = 110, cy = 110, svgNS = 'http://www.w3.org/2000/svg';
+    const ticks = document.getElementById('clockTicks');
+    for (let i = 0; i < 24; i++) {
+        const rad = (i * 15 - 90) * Math.PI / 180;
+        const major = i % 6 === 0, r1 = major ? 96 : 99, r2 = 103;
+        const l = document.createElementNS(svgNS, 'line');
+        l.setAttribute('x1', cx + r1 * Math.cos(rad)); l.setAttribute('y1', cy + r1 * Math.sin(rad));
+        l.setAttribute('x2', cx + r2 * Math.cos(rad)); l.setAttribute('y2', cy + r2 * Math.sin(rad));
+        l.setAttribute('class', major ? 'clock-tick-major' : 'clock-tick');
         ticks.appendChild(l);
     }
-    function tick(){
-        const n=new Date(), h=n.getHours()+n.getMinutes()/60, m=n.getMinutes()+n.getSeconds()/60;
-        document.getElementById('hHand').style.transform=`rotate(${h*15}deg)`;
-        document.getElementById('mHand').style.transform=`rotate(${m*6}deg)`;
+    const dayStart = (window.CMTheme && CMTheme.dayStart) || 7;
+    const dayEnd = (window.CMTheme && CMTheme.dayEnd) || 19;
+    const pt = (h, r) => { const a = (h * 15 - 90) * Math.PI / 180; return [(cx + r * Math.cos(a)).toFixed(2), (cy + r * Math.sin(a)).toFixed(2)]; };
+    const arc = (h0, h1, r) => {
+        const [x0, y0] = pt(h0, r), [x1, y1] = pt(h1, r);
+        const span = ((h1 - h0) % 24 + 24) % 24;
+        return `M${x0} ${y0} A${r} ${r} 0 ${span > 12 ? 1 : 0} 1 ${x1} ${y1}`;
+    };
+    // a small gap either side of the change-over so the two arcs read as separate
+    document.getElementById('arcDay').setAttribute('d', arc(dayStart + 0.15, dayEnd - 0.15, 107));
+    document.getElementById('arcNight').setAttribute('d', arc(dayEnd + 0.15, dayStart + 24 - 0.15, 107));
+
+    function tick() {
+        const n = new Date(), h = n.getHours() + n.getMinutes() / 60, m = n.getMinutes() + n.getSeconds() / 60;
+        document.getElementById('hHand').style.transform = `rotate(${h * 15}deg)`;
+        document.getElementById('mHand').style.transform = `rotate(${m * 6}deg)`;
     }
-    tick(); setInterval(tick,30000);
+    tick(); setInterval(tick, 10000);
 })();
 
-// News
-(async function(){
-    const news=await loadCSV('data/news.csv');
-    const el=document.getElementById('newsList');
-    if(news.length){
-        el.innerHTML=news.slice(0,4).map(n=>`
-            <div class="news-item">
-                <div class="news-date">${formatDate(n.date)}</div>
-                <div class="news-title">${n.title}</div>
-                <div class="news-summary">${n.summary||''}</div>
-            </div>`).join('');
-    }
+// News, newest first
+(async function () {
+    const news = (await loadCSV('data/news.csv')).sort((a, b) => (b.date || '').localeCompare(a.date || ''));
+    const el = document.getElementById('newsList');
+    if (!news.length) return;
+    el.innerHTML = news.slice(0, 4).map(n => `
+        <div class="news-item">
+            <div class="news-date">${esc(formatDate(n.date))}</div>
+            <div class="news-title">${n.link ? `<a href="${esc(n.link)}">${esc(n.title)}</a>` : esc(n.title)}</div>
+            ${n.summary ? `<div class="news-summary">${esc(n.summary)}</div>` : ''}
+        </div>`).join('');
 })();
 </script>
 </body>

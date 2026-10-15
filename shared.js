@@ -1,5 +1,7 @@
 /* ═══════════════════════════════════════════
    CHRONOMIC MEDICINE — SHARED JS
+   CSV loading, nav, scroll reveal and footer year.
+   (Light/dark theme is in theme.js.)
    ═══════════════════════════════════════════ */
 
 /* ─── CSV Parser ─── */
@@ -25,7 +27,7 @@ function csvLine(line) {
         } else {
             if (ch === '"') q = true;
             else if (ch === ',') { r.push(c); c = ''; }
-            else c += ch;
+            else if (ch !== '\r') c += ch;
         }
     }
     r.push(c);
@@ -38,6 +40,13 @@ async function loadCSV(p) {
 }
 
 /* ─── Helpers ─── */
+// Escape text from the CSV files before putting it into the page
+function esc(str) {
+    return String(str == null ? '' : str)
+        .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;').replace(/'/g, '&#39;');
+}
+
 function getInitials(name) {
     return name.replace(/^(Dr|Prof|Mr|Ms|Mrs)\s+/i, '').split(/\s+/).map(w => w[0]).join('').substring(0, 2).toUpperCase();
 }
@@ -45,6 +54,7 @@ function getInitials(name) {
 function formatDate(d) {
     if (!d) return '';
     const dt = new Date(d + 'T00:00:00');
+    if (isNaN(dt)) return d;
     return dt.toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' });
 }
 
@@ -55,16 +65,21 @@ function initNav() {
     const links = document.getElementById('navLinks');
     if (!nav) return;
 
-    window.addEventListener('scroll', () => nav.classList.toggle('scrolled', window.scrollY > 50));
+    const onScroll = () => nav.classList.toggle('scrolled', window.scrollY > 50);
+    window.addEventListener('scroll', onScroll, { passive: true });
+    onScroll();
+
     if (toggle && links) {
-        toggle.addEventListener('click', () => {
-            links.classList.toggle('open');
-            toggle.classList.toggle('open');
+        const setOpen = (open) => {
+            links.classList.toggle('open', open);
+            toggle.classList.toggle('open', open);
+            toggle.setAttribute('aria-expanded', String(open));
+        };
+        toggle.addEventListener('click', () => setOpen(!links.classList.contains('open')));
+        links.querySelectorAll('a').forEach(a => a.addEventListener('click', () => setOpen(false)));
+        document.addEventListener('keydown', e => {
+            if (e.key === 'Escape' && links.classList.contains('open')) { setOpen(false); toggle.focus(); }
         });
-        links.querySelectorAll('a').forEach(a => a.addEventListener('click', () => {
-            links.classList.remove('open');
-            toggle.classList.remove('open');
-        }));
     }
 
     // Footer year
@@ -73,11 +88,21 @@ function initNav() {
 }
 
 /* ─── Scroll Reveal ─── */
+let revealObserver = null;
 function initReveal() {
-    const obs = new IntersectionObserver((entries) => {
-        entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
-    }, { threshold: 0.08, rootMargin: '0px 0px -30px 0px' });
-    document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
+    if (!('IntersectionObserver' in window)) {
+        document.querySelectorAll('.reveal').forEach(el => el.classList.add('visible'));
+        return;
+    }
+    if (!revealObserver) {
+        revealObserver = new IntersectionObserver((entries) => {
+            entries.forEach(e => {
+                if (e.isIntersecting) { e.target.classList.add('visible'); revealObserver.unobserve(e.target); }
+            });
+        // threshold 0 so that very tall sections (a long publication list on a phone) still appear
+        }, { threshold: 0, rootMargin: '0px 0px -8% 0px' });
+    }
+    document.querySelectorAll('.reveal:not(.visible)').forEach(el => revealObserver.observe(el));
 }
 
 document.addEventListener('DOMContentLoaded', () => {
