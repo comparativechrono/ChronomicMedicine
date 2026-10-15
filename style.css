@@ -202,6 +202,9 @@ footer a { color: var(--amber); text-decoration: none; }
 .link-arrow:hover { border-color: var(--amber); }
 
 /* ─── RESPONSIVE ─── */
+@media (min-width: 769px) and (max-width: 940px) {
+    .nav-links { gap: 1.05rem; }
+}
 @media (max-width: 768px) {
     nav { padding: 0 1.25rem; }
     .nav-links {

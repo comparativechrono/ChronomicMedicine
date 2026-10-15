@@ -20,6 +20,7 @@ Custom domain → `comparativechrono.org` + DNS A records to `185.199.108-111.15
 | Homepage | `index.html` | Clock hero, about, research pillars, news, join CTA, contact |
 | People | `people.html` | PI card, current members (photo grid + modals), alumni list |
 | Research | `research.html` | Projects (expandable), publications (with badges), open data |
+| Undergraduates | `undergraduate/index.html` | Interactive presentation of this year’s undergraduate projects and dissertations (see `undergraduate/README.md` for presenting and yearly updates) |
 
 ## Updating Content
 
@@ -104,6 +105,10 @@ Set `status` to `current` or `completed`.
 ├── style.css           Shared styles
 ├── shared.js           Shared CSV parser + nav + reveal
 ├── CNAME               Custom domain
+├── undergraduate/      Undergraduate projects presentation (own README)
+│   ├── index.html      Screens, text and reading lists
+│   ├── deck.css / deck.js / visuals.js
+│   └── qr.svg          QR code for comparativechrono.org/undergraduate
 ├── data/
 │   ├── members.csv     → People page
 │   ├── projects.csv    → Research page

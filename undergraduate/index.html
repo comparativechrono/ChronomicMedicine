@@ -1,0 +1,755 @@
+<!DOCTYPE html>
+<html lang="en" class="no-js">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Undergraduate projects 2026–27 — Chronomic Medicine Group</title>
+<meta name="description" content="Four research projects and three dissertations in genomic medicine and circadian biology for Cambridge undergraduates, from the Chronomic Medicine Group, Department of Genomic Medicine.">
+<meta property="og:title" content="Undergraduate projects 2026–27 — Chronomic Medicine Group">
+<meta property="og:description" content="Genomic medicine meets the body clock: four research projects and three dissertations.">
+<meta property="og:url" content="https://comparativechrono.org/undergraduate/">
+<meta name="theme-color" content="#060a14">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=Outfit:wght@200;300;400;500;600&display=swap" rel="stylesheet">
+<link rel="icon" href="../favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="deck.css">
+<script>document.documentElement.classList.replace('no-js', 'js');</script>
+</head>
+<body>
+
+<!--
+  HOW THIS PAGE WORKS
+  Each <section class="scene"> is one screen of the talk, in order.
+  - data-title       name shown in the overview (press O)
+  - data-steps       number of extra build steps inside the scene
+  - data-autoplay    ms between automatic steps, or "off" to step only on key press
+  - data-option      marks a project ("project") or dissertation ("dissertation");
+                     these are collected automatically into the menu dial,
+                     the overview and the closing screen
+  - <div class="details" hidden> holds the full text and reading list shown
+    by the "Details and reading" button
+  See README.md in this folder for how to update it for next year.
+-->
+
+<header class="chrome">
+    <a class="brand" href="../index.html">Chronomic Medicine <span>Undergraduate projects 2026–27</span></a>
+    <div class="chrome-tools">
+        <span class="timer" id="timer" hidden aria-live="off">0:00</span>
+        <button class="icon-btn" id="fullscreenBtn" type="button" aria-label="Full screen (F)" title="Full screen (F)">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><path d="M4 9V4h5M20 9V4h-5M4 15v5h5M20 15v5h-5"/></svg>
+        </button>
+        <button class="icon-btn dial-btn" id="dialBtn" type="button" aria-label="All screens (O)" title="All screens (O)">
+            <svg viewBox="-24 -24 48 48" aria-hidden="true">
+                <circle class="md-ring" r="20"/>
+                <g id="miniDots"></g>
+                <line class="md-hand" id="miniHand" x1="0" y1="0" x2="0" y2="-14"/>
+                <circle class="md-hub" r="2.2"/>
+            </svg>
+        </button>
+    </div>
+</header>
+
+<main class="deck" id="deck">
+
+<!-- ═══════════════ 1 · TITLE ═══════════════ -->
+<section class="scene scene--start" id="start" data-title="Undergraduate projects 2026–27">
+    <div class="scene-inner">
+        <div class="scene-text start-text">
+            <h1 class="start-title"><span>Undergraduate</span> <span>projects</span> <span class="yr">2026–27</span></h1>
+            <p class="start-sub">Genomic medicine meets the body clock</p>
+            <p class="start-by"><strong>Dr Tim Hearn</strong>, Chronomic Medicine Group<br>Department of Genomic Medicine, University of Cambridge</p>
+            <a class="qr" href="https://comparativechrono.org/undergraduate/">
+                <img src="qr.svg" alt="QR code for comparativechrono.org/undergraduate" width="120" height="120">
+                <span>Scan to follow along on your phone,<br>and to find every paper later<br><b>comparativechrono.org/undergraduate</b></span>
+            </a>
+        </div>
+        <figure class="scene-visual start-visual">
+            <svg class="vis helix-clock" viewBox="-320 -320 640 640" role="img" aria-label="A 24-hour clock whose rim is a DNA double helix; the hand lights up each base pair as it sweeps past">
+                <circle class="hc-ring" r="302"/>
+                <circle class="hc-ring hc-ring-inner" r="132"/>
+                <g class="hc-ticks"></g>
+                <text class="hc-label" x="0" y="-258">00</text>
+                <text class="hc-label" x="262" y="6">06</text>
+                <text class="hc-label" x="0" y="270">12</text>
+                <text class="hc-label" x="-262" y="6">18</text>
+                <g class="hc-back-layer"><path class="hc-strand hc-back s1"/><path class="hc-strand hc-back s2"/></g>
+                <g class="hc-rungs"></g>
+                <g class="hc-front-layer"><path class="hc-strand hc-front s1"/><path class="hc-strand hc-front s2"/></g>
+                <line class="hc-hand-tail" x1="0" y1="0" x2="0" y2="40"/>
+                <line class="hc-hand" x1="0" y1="0" x2="0" y2="-250"/>
+                <circle class="hc-hub" r="7"/>
+            </svg>
+        </figure>
+    </div>
+    <p class="hint"><span class="k-only">Press <kbd>→</kbd> to begin</span><span class="t-only">Tap the arrow to begin</span></p>
+</section>
+
+<!-- ═══════════════ 2 · THE MENU ═══════════════ -->
+<section class="scene scene--menu" id="menu" data-title="Four projects, three dissertations" data-steps="2" data-autoplay="2100" data-autoplay-start="350">
+    <div class="scene-inner menu-inner">
+        <div class="menu-stage">
+            <div class="menu-dial">
+                <svg class="mn-svg" viewBox="-260 -260 520 520" aria-hidden="true">
+                    <path class="mn-night"/>
+                    <path class="mn-day"/>
+                    <circle class="mn-ring" r="200"/>
+                    <g class="mn-ticks"></g>
+                    <text class="mn-label" x="0" y="-172">00</text>
+                    <text class="mn-label" x="176" y="5">06</text>
+                    <text class="mn-label" x="0" y="182">12</text>
+                    <text class="mn-label" x="-176" y="5">18</text>
+                    <circle class="mn-sun" cx="0" cy="146" r="7"/>
+                    <path class="mn-moon" d="M-4 -158 a10 10 0 1 0 10 13 a8 8 0 1 1 -10 -13 z"/>
+                    <g class="mn-marks"></g>
+                    <g class="mn-hand"><line x1="0" y1="-188" x2="0" y2="-216"/><circle class="mn-hand-tip" cx="0" cy="-200" r="5.5"/></g>
+                </svg>
+                <div class="menu-center">
+                    <h2 class="menu-title" id="menuTitle">Four projects, three dissertations</h2>
+                    <p class="menu-note">Projects by day, dissertations by night</p>
+                </div>
+            </div>
+            <ul class="menu-options" id="menuOptions" aria-label="All projects and dissertations"></ul>
+        </div>
+        <ul class="legend">
+            <li data-cat="computational">Computational project</li>
+            <li data-cat="lab">Lab project</li>
+            <li data-cat="dissertation">Dissertation</li>
+        </ul>
+    </div>
+</section>
+
+<!-- ═══════════════ 3 · WHAT IS GENOMIC MEDICINE? ═══════════════ -->
+<section class="scene scene--gm layout-split" id="genomic-medicine" data-title="What is genomic medicine?" data-steps="3" data-autoplay="2300" data-autoplay-start="1500">
+    <div class="scene-inner">
+        <div class="scene-text">
+            <p class="kicker">What is genomic medicine?</p>
+            <h2 class="scene-title">Read a patient’s whole genome. Find the one change behind their disease.</h2>
+            <ul class="facts">
+                <li><b>First</b><span>national health system to offer whole genome sequencing as routine care: the NHS Genomic Medicine Service</span></li>
+                <li><b>100,000</b><span>genomes from about 85,000 NHS patients with rare disease or cancer, in the 100,000 Genomes Project</span>
+                    <span class="gel-row"><img class="gel-logo" src="https://res.cloudinary.com/brandpad/image/upload/c_scale,w_auto/v1677600292/20150/gel_logo_rgb_light" alt="Genomics England" width="92" height="46" loading="lazy" referrerpolicy="no-referrer" data-fallback="Genomics England"></span></li>
+                <li><b>1 in 17</b><span>people will have a rare disease in their lifetime, and 80% of rare diseases have a genetic origin</span></li>
+            </ul>
+            <div class="actions"><button class="btn-quiet" type="button" data-details="details-gm">Sources</button></div>
+        </div>
+        <figure class="scene-visual">
+            <svg class="vis gm-svg" viewBox="0 0 820 560" role="img" aria-label="Zooming from all 24 human chromosomes into one chromosome, then one gene, then a single changed DNA letter">
+                <g class="gm-karyo"></g>
+                <g class="gm-callouts">
+                    <polygon class="gm-zoom gm-zoom1" data-show-at="2"/>
+                    <g class="gm-gene" data-show-at="2">
+                        <line class="gm-intron" x1="290" y1="150" x2="790" y2="150"/>
+                        <g class="gm-exons"></g>
+                        <text class="gm-gene-label" x="290" y="118">one gene: exons (blocks) and introns (line)</text>
+                    </g>
+                    <polygon class="gm-zoom gm-zoom2" data-show-at="3"/>
+                    <g class="gm-seq" data-show-at="3">
+                        <g class="gm-bases"></g>
+                        <line class="gm-scan" x1="0" y1="300" x2="0" y2="364"/>
+                    </g>
+                    <g data-show-at="3">
+                        <text class="gm-big" x="790" y="456" text-anchor="end">1 letter in 3,100,000,000</text>
+                        <text class="gm-big-sub" x="790" y="486" text-anchor="end">can be enough to cause a rare disease</text>
+                    </g>
+                </g>
+            </svg>
+            <div class="caption-stack vis-caption" aria-live="polite">
+                <p data-step-only="0"><strong>The human genome:</strong> 3.1 billion letters of DNA across chromosomes 1–22, X and Y</p>
+                <p data-step-only="1">Zoom into one chromosome…</p>
+                <p data-step-only="2">…then one gene…</p>
+                <p data-step-only="3">…then one letter. Finding it is genomic medicine.</p>
+            </div>
+        </figure>
+    </div>
+    <div class="details" id="details-gm" hidden>
+        <h3>Sources for this screen</h3>
+        <ol class="refs">
+            <li><a href="https://www.genomicsengland.co.uk/news/100-000-whole-genomes-sequenced-through-the-nhs-gms" target="_blank" rel="noopener">100,000 whole genomes sequenced through the NHS Genomic Medicine Service</a><span class="ref-meta">Genomics England news, August 2024. “The NHS is the first national health system in the world to offer whole genome sequencing” as part of routine care.</span></li>
+            <li><a href="https://www.genomicsengland.co.uk/initiatives/100000-genomes-project" target="_blank" rel="noopener">The 100,000 Genomes Project</a><span class="ref-meta">Genomics England. Genomes from around 85,000 NHS patients affected by rare disease or cancer; 100,000 genomes sequenced by December 2018.</span></li>
+            <li><a href="https://www.gov.wales/sites/default/files/publications/2021-01/the-UK-rare-diseases-framework.pdf" target="_blank" rel="noopener">The UK Rare Diseases Framework</a><span class="ref-meta">Department of Health and Social Care, 2021. 1 in 17 people affected by a rare disease in their lifetime; over 7,000 rare diseases; 80% with an identified genetic origin.</span></li>
+        </ol>
+    </div>
+</section>
+
+<!-- ═══════════════ 4 · PROJECT: SOLVE A RARE DISEASE PATIENT ═══════════════ -->
+<section class="scene scene--solve layout-split" id="solve" data-title="Solve a rare disease patient!"
+         data-option="project" data-cat="computational" data-short="Solve a rare disease patient!"
+         data-steps="4" data-autoplay="2000" data-autoplay-start="1800">
+    <div class="scene-inner">
+        <div class="scene-text">
+            <ul class="chips">
+                <li class="chip" data-cat="computational">Computational project</li>
+                <li class="chip">1 student</li>
+                <li class="chip">Genomics England data</li>
+            </ul>
+            <h2 class="scene-title">Solve a rare disease patient!</h2>
+            <p class="lead">Only about 30% of cases in the NHS Genomic Medicine Service are solved. You’ll search patients’ genomes for the cause of their disease, and feed your findings back to the NHS.</p>
+            <p class="people">With <strong>Tim Hearn</strong> and <strong>Bethan Lloyd-Owen</strong></p>
+            <div class="actions">
+                <button class="btn" type="button" data-details="details-solve">Details and reading</button>
+                <img class="gel-mini" src="https://res.cloudinary.com/brandpad/image/upload/c_scale,w_auto/v1677600292/20150/gel_logo_rgb_light" alt="Genomics England" width="76" height="38" loading="lazy" referrerpolicy="no-referrer" data-fallback="Genomics England">
+            </div>
+        </div>
+        <figure class="scene-visual fn">
+            <svg class="fn-patients" viewBox="0 0 760 90" role="img" aria-label="Ten patients; three have a diagnosis">
+                <g class="fn-people"></g>
+                <text class="fn-tally" x="760" y="60" text-anchor="end"><tspan class="n">3</tspan> of 10 patients solved</text>
+            </svg>
+            <div class="fn-body">
+                <ol class="fn-stages">
+                    <li>4–5 million letters differ from the reference genome</li>
+                    <li>About 10,000 of those change a protein</li>
+                    <li>A few hundred are rare in the population</li>
+                    <li>A handful sit in genes that fit the patient’s symptoms</li>
+                    <li>One explains their disease</li>
+                </ol>
+                <svg class="fn-dots" viewBox="0 0 460 420" role="img" aria-label="A funnel of dots, each a DNA variant, filtered stage by stage until one remains">
+                    <path class="fn-outline" d="M20 14 H440 L262 336 V404 H198 V336 Z"/>
+                    <g class="fn-field"></g>
+                    <circle class="fn-glow" cx="230" cy="372" r="22"/>
+                </svg>
+            </div>
+            <p class="vis-caption">Approximate numbers for one person’s genome</p>
+        </figure>
+    </div>
+    <div class="details" id="details-solve" hidden>
+        <h3>Solve a rare disease patient!</h3>
+        <ul class="chips">
+            <li class="chip" data-cat="computational">Computational project</li>
+            <li class="chip">1 student</li>
+            <li class="chip">Dry lab</li>
+            <li class="chip">Addenbrooke’s Treatment Centre</li>
+        </ul>
+        <p>The NHS genomic medicine service is here! Patients with rare diseases are now offered the opportunity to have whole genome sequencing performed on the NHS to identify a causal variant if standard testing fails. Only 30% of cases from the NHS genomic medicine service are currently solved. We need researchers to help us solve the many individuals who have been sequenced.</p>
+        <p>You will work in the Linux computing environment to examine potential causal variants in a set of patients, and feed your findings back to the NHS. This project has the potential to lead directly to improvements in a patient’s life.</p>
+        <h4>Good to know</h4>
+        <ul class="plain">
+            <li>The work uses the Genomics England 100,000 Genomes Project data, inside the secure Genomics England Research Environment.</li>
+            <li>You will sign up to the Genomics England clinical interpretation partnership agreement and complete information governance training.</li>
+        </ul>
+        <h4>Contacts</h4>
+        <p>Tim Hearn (<a href="mailto:tjh70@cam.ac.uk">tjh70@cam.ac.uk</a>) and Bethan Lloyd-Owen</p>
+        <h4>Reading</h4>
+        <ol class="refs">
+            <li><a href="https://doi.org/10.1056/NEJMoa2035790" target="_blank" rel="noopener">100,000 Genomes Pilot on rare-disease diagnosis in health care: preliminary report</a><span class="ref-meta">100,000 Genomes Project Pilot Investigators (2021) New England Journal of Medicine 385:1868–1880</span></li>
+            <li><a href="https://doi.org/10.1038/gim.2015.30" target="_blank" rel="noopener">Standards and guidelines for the interpretation of sequence variants</a><span class="ref-meta">Richards S et al. (2015) Genetics in Medicine 17:405–424. The ACMG/AMP joint consensus recommendation.</span></li>
+            <li><a href="https://doi.org/10.1038/s41525-024-00456-2" target="_blank" rel="noopener">Efficient reinterpretation of rare disease cases using Exomiser</a><span class="ref-meta">Vestito L et al. (2024) npj Genomic Medicine 9:65</span></li>
+            <li><a href="https://doi.org/10.1056/NEJMoa2314761" target="_blank" rel="noopener">Genome sequencing for diagnosing rare diseases</a><span class="ref-meta">Wojcik MH et al. (2024) New England Journal of Medicine 390:1985–1997</span></li>
+        </ol>
+        <h4>From our group</h4>
+        <ol class="refs">
+            <li><a href="https://doi.org/10.1136/bmjccgg-2025-000014" target="_blank" rel="noopener">Analysis of diagnostic yield of inherited cardiac arrhythmia gene panels across ethnic groups in the 100,000 Genomes Project</a><span class="ref-meta">McGowen J, Ampiah M, Hearn T (2025) BMJ Connections Clinical Genetics and Genomics 2:e000014</span></li>
+        </ol>
+        <h4>Where the funnel numbers come from</h4>
+        <ol class="refs">
+            <li><a href="https://doi.org/10.1038/nature15393" target="_blank" rel="noopener">A global reference for human genetic variation</a><span class="ref-meta">The 1000 Genomes Project Consortium (2015) Nature 526:68–74. A typical genome differs from the reference at 4.1–5.0 million sites. Later stages of the funnel are rounded, illustrative figures.</span></li>
+        </ol>
+    </div>
+</section>
+
+<!-- ═══════════════ 5 · WHAT IS CHRONOMIC MEDICINE? ═══════════════ -->
+<section class="scene scene--chrono layout-split" id="chronomic" data-title="Chronomic medicine: adding time">
+    <div class="scene-inner">
+        <div class="scene-text">
+            <p class="kicker">What might we be missing?</p>
+            <h2 class="scene-title">Your genome is the same at 8 am and 8 pm. What it’s doing isn’t.</h2>
+            <p class="lead">52% of disease-causing genes are predicted to oscillate across the day. <em>Chronomic medicine</em> is our name for bringing the body clock into genomic medicine.</p>
+            <ul class="angles">
+                <li><b>Severity</b><span>Could the clock explain why one variant is mild in one person and severe in another?</span></li>
+                <li><b>Diagnosis</b><span>Could variants in the switches that time our genes be hidden causes?</span></li>
+                <li><b>Treatment</b><span>The time of day a medicine is taken can change how well it works.</span></li>
+            </ul>
+            <div class="actions"><button class="btn-quiet" type="button" data-details="details-chrono">Sources</button></div>
+        </div>
+        <figure class="scene-visual">
+            <svg class="vis cd-svg" viewBox="-450 -330 900 660" role="group" aria-label="A 24-hour dial. Bars around the inside are genes that peak at different times of day; markers round the edge show daily events in the body.">
+                <path class="cd-night"/>
+                <path class="cd-day"/>
+                <circle class="cd-ring" r="250"/>
+                <g class="cd-ticks"></g>
+                <text class="cd-hour" x="0" y="-210">00</text>
+                <text class="cd-hour" x="214" y="6">06</text>
+                <text class="cd-hour" x="0" y="222">12</text>
+                <text class="cd-hour" x="-214" y="6">18</text>
+                <g class="cd-bars"></g>
+                <g class="cd-events"></g>
+                <circle class="cd-sun" cx="0" cy="-58" r="12"/>
+                <path class="cd-moon" d="M-6 -70 a13 13 0 1 0 13 17 a10 10 0 1 1 -13 -17 z"/>
+                <text class="cd-time" x="0" y="34">06:00</text>
+                <line class="cd-hand" x1="0" y1="-98" x2="0" y2="-236"/>
+                <circle class="cd-knob" r="15" cy="-250" tabindex="0" role="slider" aria-label="Time of day" aria-valuemin="0" aria-valuemax="24" aria-valuenow="6" aria-valuetext="06:00"/>
+            </svg>
+            <p class="vis-caption">Drag the hand to change the time. Bars are genes that peak at different times; events are typical for a day-active adult.</p>
+        </figure>
+    </div>
+    <div class="details" id="details-chrono" hidden>
+        <h3>Sources for this screen</h3>
+        <p>The 52% figure is our group’s estimate of disease-causing genes predicted to oscillate across the day. Times on the dial are typical of a day-active adult and vary from person to person: core body temperature is lowest a couple of hours before waking, cortisol peaks shortly after waking, heart attacks are most common between 6 am and noon, and melatonin starts to rise two to three hours before bedtime.</p>
+        <ol class="refs">
+            <li><a href="https://doi.org/10.1172/JCI80590" target="_blank" rel="noopener">Role of the circadian system in cardiovascular disease</a><span class="ref-meta">Thosar SS, Butler MP, Shea SA (2018) Journal of Clinical Investigation 128:2157–2167. Includes the morning peak in heart attacks and the blood pressure surge after waking.</span></li>
+            <li><a href="https://doi.org/10.1126/scitranslmed.aat8806" target="_blank" rel="noopener">A database of tissue-specific rhythmically expressed human genes has potential applications in circadian medicine</a><span class="ref-meta">Ruben MD et al. (2018) Science Translational Medicine 10:eaat8806</span></li>
+            <li><a href="https://doi.org/10.1146/annurev-neuro-060909-153128" target="_blank" rel="noopener">Central and peripheral circadian clocks in mammals</a><span class="ref-meta">Mohawk JA, Green CB, Takahashi JS (2012) Annual Review of Neuroscience 35:445–462</span></li>
+        </ol>
+    </div>
+</section>
+
+<!-- ═══════════════ 6 · PROJECT: MISSING HERITABILITY ═══════════════ -->
+<section class="scene scene--heritability layout-split" id="heritability" data-title="Circadian disruption and missing heritability in rare disease"
+         data-option="project" data-cat="computational" data-short="Circadian disruption and missing heritability"
+         data-steps="2" data-autoplay="off">
+    <div class="scene-inner">
+        <div class="scene-text">
+            <ul class="chips">
+                <li class="chip" data-cat="computational">Computational project</li>
+                <li class="chip">1 student</li>
+                <li class="chip">Genomics England data</li>
+            </ul>
+            <h2 class="scene-title is-long">Is circadian disruption of rhythmically expressed genes behind missing heritability in rare disease?</h2>
+            <p class="lead">The same disease variant can be severe in one person and mild in another. You’ll test whether the variants that make people morning larks or night owls help explain the difference.</p>
+            <p class="people">With <strong>Tim Hearn</strong> and <strong>Millie Ampiah</strong></p>
+            <div class="actions">
+                <button class="btn" type="button" data-details="details-heritability">Details and reading</button>
+                <img class="gel-mini" src="https://res.cloudinary.com/brandpad/image/upload/c_scale,w_auto/v1677600292/20150/gel_logo_rgb_light" alt="Genomics England" width="76" height="38" loading="lazy" referrerpolicy="no-referrer" data-fallback="Genomics England">
+            </div>
+        </div>
+        <figure class="scene-visual">
+            <svg class="vis hr-svg" viewBox="0 0 800 520" role="img" aria-label="Three steps: chronotype is partly genetic; the same disease variant can have different severity; your project tests which endocrine panel genes are rhythmic">
+                <!-- Step 0: larks and owls -->
+                <g class="hr-panel" data-step-only="0">
+                    <text class="hr-big" x="40" y="80">351</text>
+                    <text class="hr-big-sub" x="160" y="58">genetic loci linked to being a morning person,</text>
+                    <text class="hr-big-sub" x="160" y="82">from 697,828 people (Jones et al. 2019)</text>
+                    <g class="hr-hist"></g>
+                    <line class="hr-axis" x1="60" y1="430" x2="740" y2="430"/>
+                    <circle class="hr-sun" cx="60" cy="470" r="11"/>
+                    <text class="hr-axis-label" x="82" y="476">Morning larks</text>
+                    <path class="hr-moon" d="M736 458 a13 13 0 1 0 12 18 a10 10 0 1 1 -12 -18 z"/>
+                    <text class="hr-axis-label" x="718" y="476" text-anchor="end">Night owls</text>
+                </g>
+                <!-- Step 1: same variant, different severity -->
+                <g class="hr-panel" data-step-only="1">
+                    <g class="hr-pair"></g>
+                    <text class="hr-text" x="400" y="470" text-anchor="middle">Same disease variant <tspan fill="#ff8a9a">●</tspan>, different severity.</text>
+                    <text class="hr-text-muted" x="400" y="498" text-anchor="middle">Could variants that set the body clock <tspan fill="#e8c36e">●</tspan> be modifiers? We’ve found loci that do this for cardiac arrhythmias.</text>
+                </g>
+                <!-- Step 2: your project -->
+                <g class="hr-panel" data-step-only="2">
+                    <text class="hr-text" x="40" y="44">First: which genes on the endocrine disorders panel are rhythmic?</text>
+                    <g class="hr-tiles"></g>
+                    <text class="hr-q" x="440" y="236">?</text>
+                    <text class="hr-text-muted" x="440" y="262">rhythmic genes:</text>
+                    <text class="hr-text-muted" x="440" y="284">your first result</text>
+                    <path class="hr-arrow" d="M210 330 V 372" marker-end="url(#hrArrow)"/>
+                    <rect class="hr-cohort" x="40" y="384" width="720" height="96" rx="12"/>
+                    <text class="hr-text" x="64" y="422">Then: test clock variants against disease severity in patients’ genomes</text>
+                    <text class="hr-text-muted" x="64" y="452">100,000 Genomes Project endocrine cohort, or any rare disease or cancer you choose</text>
+                    <defs><marker id="hrArrow" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10 z" fill="#8a96a8"/></marker></defs>
+                </g>
+            </svg>
+            <div class="caption-stack vis-caption">
+                <p data-step-only="0">Chronotype, whether you’re a lark or an owl, is partly written in your genome.</p>
+                <p data-step-only="1">Missing heritability: what explains the difference between these two patients?</p>
+                <p data-step-only="2">Your project: endocrine disorders first, where the disease genes are highly differentially expressed.</p>
+            </div>
+        </figure>
+    </div>
+    <div class="details" id="details-heritability" hidden>
+        <h3>Is circadian disruption of rhythmically expressed genes behind missing heritability in rare disease?</h3>
+        <ul class="chips">
+            <li class="chip" data-cat="computational">Computational project</li>
+            <li class="chip">1 student</li>
+            <li class="chip">Dry lab</li>
+            <li class="chip">Addenbrooke’s Treatment Centre</li>
+        </ul>
+        <p>You will continue an existing study looking for associations between variants influencing genetic chronotype, the genetic basis for “morning” and “evening” people, and rare disease phenotype severity. We have previously identified loci that affect the severity of cardiac arrhythmias and you will continue this work with other candidate diseases.</p>
+        <p>There are many common endocrine disorders where the genetic aetiology is complicated and there is contribution from a variety of genes in related pathways to the overall disease phenotype. Endocrine disorders are excellent candidates for chronomic medicine, as the disease genes are highly differentially expressed. You will ascertain the number of genes on the endocrine disorders gene panel which are rhythmically expressed in patient samples. You will then perform an analysis on the patient genomes in the 100,000 Genomes Project endocrine disorders group.</p>
+        <p>It is possible to conduct this project on any other rare disease or cancer of interest to a student.</p>
+        <h4>Good to know</h4>
+        <ul class="plain">
+            <li>The work uses the Genomics England 100,000 Genomes Project data, inside the secure Genomics England Research Environment.</li>
+            <li>You will sign up to the Genomics England clinical interpretation partnership agreement and complete information governance training.</li>
+        </ul>
+        <h4>Contacts</h4>
+        <p>Tim Hearn (<a href="mailto:tjh70@cam.ac.uk">tjh70@cam.ac.uk</a>) and Millie Ampiah</p>
+        <h4>Reading</h4>
+        <ol class="refs">
+            <li><a href="https://doi.org/10.1101/2020.08.17.20176420" target="_blank" rel="noopener">Towards chronomic medicine: enrichment and linkage of chronotype markers with rare disease associated genes</a><span class="ref-meta">Malik BT, Hearn TJ (2020) medRxiv preprint</span></li>
+            <li><a href="https://doi.org/10.1038/s41467-018-08259-7" target="_blank" rel="noopener">Genome-wide association analyses of chronotype in 697,828 individuals provides insights into circadian rhythms</a><span class="ref-meta">Jones SE et al. (2019) Nature Communications 10:343</span></li>
+            <li><a href="https://doi.org/10.1126/scitranslmed.aat8806" target="_blank" rel="noopener">A database of tissue-specific rhythmically expressed human genes has potential applications in circadian medicine</a><span class="ref-meta">Ruben MD et al. (2018) Science Translational Medicine 10:eaat8806</span></li>
+            <li><a href="https://doi.org/10.1038/s41467-020-17374-3" target="_blank" rel="noopener">Polygenic background modifies penetrance of monogenic variants for tier 1 genomic conditions</a><span class="ref-meta">Fahed AC et al. (2020) Nature Communications 11:3635</span></li>
+        </ol>
+        <h4>From our group</h4>
+        <ol class="refs">
+            <li><a href="https://doi.org/10.1136/bmjccgg-2026-000087" target="_blank" rel="noopener">Human phenotype ontology clustering may uncover potential congenital adrenal hyperplasia cases in the 100 000 Genomes Project</a><span class="ref-meta">Gee H, Hearn TJ (2026) BMJ Connections Clinical Genetics and Genomics 3:e000087</span></li>
+            <li><a href="https://doi.org/10.1007/s40142-026-00247-4" target="_blank" rel="noopener">Enrichment of CYP21A2 promoter variant rs150223621 in congenital adrenal hyperplasia cohorts from the 100 000 Genomes Project</a><span class="ref-meta">Gee H, Hearn TJ (2026) Current Genetic Medicine Reports 14:14</span></li>
+            <li><a href="https://doi.org/10.1093/europace/euab116.001" target="_blank" rel="noopener">A candidate genetic modifier and autosomal recessive cause of Brugada syndrome that may alter the circadian expression of SCN5A</a><span class="ref-meta">Seed L, Hearn T (2021) EP Europace 23 (Supplement 3)</span></li>
+        </ol>
+    </div>
+</section>
+
+<!-- ═══════════════ 7 · PROJECT: TIMING OF HUMAN CELL CLOCK ═══════════════ -->
+<section class="scene scene--cells layout-split" id="cells" data-title="Timing of human cell clock"
+         data-option="project" data-cat="lab" data-short="Timing of human cell clock"
+         data-steps="1" data-autoplay="3600" data-autoplay-start="3600">
+    <div class="scene-inner">
+        <div class="scene-text">
+            <ul class="chips">
+                <li class="chip" data-cat="lab">Lab project</li>
+                <li class="chip">Human cell culture</li>
+            </ul>
+            <h2 class="scene-title">Timing of human cell clock</h2>
+            <p class="lead">Almost every cell in your body keeps its own 24-hour time. You’ll synchronise cultured human cells with a brief hormone pulse, then chart when each clock gene rises and falls across the day.</p>
+            <p class="people">With <strong>Tim Hearn</strong></p>
+            <div class="actions">
+                <button class="btn" type="button" data-details="details-cells">Details and reading</button>
+            </div>
+        </div>
+        <figure class="scene-visual">
+            <svg class="vis cl-svg" viewBox="0 0 820 500" role="img" aria-label="A dish of cells, each glowing with its own clock. Before the pulse they are out of step and the average signal is flat; after a hormone pulse they glow together and the average oscillates with a 24-hour period.">
+                <circle class="cl-dish-rim" cx="225" cy="250" r="214"/>
+                <circle class="cl-dish" cx="225" cy="250" r="205"/>
+                <g class="cl-cells"></g>
+                <circle class="cl-ripple" cx="225" cy="250" r="10"/>
+                <text class="cl-title" x="478" y="70">Average clock-gene signal in the dish</text>
+                <rect class="cl-frame" x="478" y="88" width="322" height="250" rx="8"/>
+                <g class="cl-grid"></g>
+                <line class="cl-pulse-mark" x1="0" y1="92" x2="0" y2="334" opacity="0"/>
+                <path class="cl-trace"/>
+                <text class="cl-axis-label" x="800" y="362" text-anchor="end">hours</text>
+                <text class="cl-axis-label cl-pulse-label" x="0" y="112" opacity="0">pulse</text>
+                <text class="cl-clock" x="478" y="420">0 h</text>
+                <text class="cl-axis-label cl-clock-sub" x="478" y="446">in culture</text>
+            </svg>
+            <div class="cl-controls">
+                <button class="btn" type="button" id="pulseBtn">
+                    <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="10" cy="10" r="3"/><circle cx="10" cy="10" r="7.5" opacity=".5"/></svg>
+                    <span>Add a hormone pulse</span>
+                </button>
+                <p class="vis-caption" id="cellCaption">Out of step, the cells’ rhythms cancel out.</p>
+            </div>
+        </figure>
+    </div>
+    <div class="details" id="details-cells" hidden>
+        <h3>Timing of human cell clock</h3>
+        <ul class="chips">
+            <li class="chip" data-cat="lab">Lab project</li>
+            <li class="chip">Human cell culture</li>
+        </ul>
+        <p>Our body clock runs inside individual cells, where clock-gene expression rises and falls at characteristic times of the day. A brief hormonal pulse can synchronize cultured cells so that their clocks run in phase, allowing us to study these rhythms under controlled experimental conditions.</p>
+        <p>This project will characterize clock-gene activities in human cells across the day, using a range of experimental techniques, to better understand the biology of circadian rhythms.</p>
+        <figure>
+            <svg viewBox="0 0 520 210" role="img" aria-label="The core clock feedback loop: CLOCK and BMAL1 switch on the Period and Cryptochrome genes; PER and CRY proteins build up and switch CLOCK–BMAL1 off; one turn takes about 24 hours.">
+                <rect class="ttfl-node" x="20" y="74" width="150" height="56" rx="28"/>
+                <text class="ttfl-text" x="95" y="107">CLOCK–BMAL1</text>
+                <rect class="ttfl-node b" x="350" y="74" width="150" height="56" rx="28"/>
+                <text class="ttfl-text" x="425" y="99">PER and CRY</text>
+                <text class="ttfl-text" x="425" y="118" style="font-size:12px;fill:#8a96a8">genes → proteins</text>
+                <path class="ttfl-arrow" d="M170 88 C 240 30, 280 30, 348 88" marker-end="url(#ttflOn)"/>
+                <text class="ttfl-label" x="260" y="34">switches on</text>
+                <path class="ttfl-arrow" d="M350 118 C 280 176, 240 176, 174 118" marker-end="url(#ttflOff)"/>
+                <text class="ttfl-label" x="260" y="186">switch off</text>
+                <text class="ttfl-label" x="260" y="108" style="fill:#e8c36e">≈ 24 hours per loop</text>
+                <defs>
+                    <marker id="ttflOn" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="8" markerHeight="8" orient="auto"><path d="M0 0 L10 5 L0 10 z" fill="#8a96a8"/></marker>
+                    <marker id="ttflOff" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="8" markerHeight="8" orient="auto"><path d="M5 0 V10" stroke="#8a96a8" stroke-width="3"/></marker>
+                </defs>
+            </svg>
+            <figcaption>The core clock is a transcription–translation feedback loop (see Partch et al. 2014).</figcaption>
+        </figure>
+        <h4>Contact</h4>
+        <p>Tim Hearn (<a href="mailto:tjh70@cam.ac.uk">tjh70@cam.ac.uk</a>)</p>
+        <h4>Reading</h4>
+        <ol class="refs">
+            <li><a href="https://doi.org/10.1016/j.tcb.2013.07.002" target="_blank" rel="noopener">Molecular architecture of the mammalian circadian clock</a><span class="ref-meta">Partch CL, Green CB, Takahashi JS (2014) Trends in Cell Biology 24:90–99</span></li>
+            <li><a href="https://doi.org/10.1042/bse0490103" target="_blank" rel="noopener">In vitro circadian rhythms: imaging and electrophysiology</a><span class="ref-meta">Beaulé C, Granados-Fuentes D, Marpegan L, Herzog ED (2011) Essays in Biochemistry 49:103–117</span></li>
+            <li><a href="https://doi.org/10.1677/JOE-08-0415" target="_blank" rel="noopener">Glucocorticoids and the circadian clock</a><span class="ref-meta">Dickmeis T (2009) Journal of Endocrinology 200:3–22</span></li>
+            <li><a href="https://doi.org/10.1146/annurev-neuro-060909-153128" target="_blank" rel="noopener">Central and peripheral circadian clocks in mammals</a><span class="ref-meta">Mohawk JA, Green CB, Takahashi JS (2012) Annual Review of Neuroscience 35:445–462</span></li>
+        </ol>
+    </div>
+</section>
+
+<!-- ═══════════════ 8 · PROJECT: NATIVE WORKBENCH ═══════════════ -->
+<section class="scene scene--workbench layout-split" id="workbench" data-title="Native Workbench"
+         data-option="project" data-cat="computational" data-short="Native Workbench: bioinformatics on Windows">
+    <div class="scene-inner">
+        <div class="scene-text">
+            <ul class="chips">
+                <li class="chip" data-cat="computational">Computational project</li>
+                <li class="chip">Software and benchmarking</li>
+            </ul>
+            <h2 class="scene-title is-long">Developing and benchmarking Native Workbench: accessible, reproducible bioinformatics on Windows</h2>
+            <p class="lead">Native Workbench runs established analysis tools on an ordinary Windows computer and records how every result was made. You’ll improve it, then test it against Linux.</p>
+            <p class="people">With <strong>Tim Hearn</strong>. Experience with AI agents and GitHub is an advantage.</p>
+            <div class="actions">
+                <button class="btn" type="button" data-details="details-workbench">Details and reading</button>
+            </div>
+        </div>
+        <figure class="scene-visual">
+            <svg class="vis wb-svg" viewBox="0 0 820 520" role="img" aria-label="A desktop app runs a pipeline from sequencing reads through quality control, alignment and variant calling, writing a record of every step; the same run on Windows and Linux is compared.">
+                <rect class="wb-window" x="20" y="10" width="780" height="330" rx="14"/>
+                <path class="wb-bar" d="M34 10 H786 a14 14 0 0 1 14 14 V46 H20 V24 a14 14 0 0 1 14 -14 z"/>
+                <circle class="wb-light" cx="46" cy="28" r="6"/><circle class="wb-light" cx="66" cy="28" r="6"/><circle class="wb-light" cx="86" cy="28" r="6"/>
+                <text class="wb-title" x="410" y="33" text-anchor="middle">Native Workbench</text>
+                <g class="wb-links"></g>
+                <g class="wb-nodes"></g>
+                <g class="wb-packets"></g>
+                <rect class="wb-log-bg" x="44" y="186" width="732" height="134" rx="8"/>
+                <g class="wb-log"></g>
+                <text class="wb-bench-label" x="20" y="384">Same workflow, matched conditions</text>
+                <text class="wb-bench-label" x="20" y="424">Windows</text>
+                <rect class="wb-bench-track" x="120" y="408" width="560" height="22" rx="11"/>
+                <rect class="wb-bench-fill win" x="120" y="408" width="560" height="22" rx="11"/>
+                <text class="wb-bench-label" x="20" y="470">Linux</text>
+                <rect class="wb-bench-track" x="120" y="454" width="560" height="22" rx="11"/>
+                <rect class="wb-bench-fill lin" x="120" y="454" width="560" height="22" rx="11"/>
+                <text class="wb-match" x="800" y="452" text-anchor="end">same results?</text>
+            </svg>
+            <ul class="wb-pillars" aria-label="What you will measure">
+                <li>Correctness</li><li>Performance</li><li>Usability</li><li>Reproducibility</li>
+            </ul>
+        </figure>
+    </div>
+    <div class="details" id="details-workbench" hidden>
+        <h3>Developing and benchmarking Native Workbench: accessible, reproducible bioinformatics on Windows</h3>
+        <ul class="chips">
+            <li class="chip" data-cat="computational">Computational project</li>
+            <li class="chip">Software and benchmarking</li>
+        </ul>
+        <p>Running bioinformatics analyses can involve complex software setup, creating barriers for students and researchers. Native Workbench is a Windows desktop application designed to make established analysis tools easier to run locally while recording how results were produced.</p>
+        <p>This project will develop the application further and evaluate its scientific correctness, performance, usability and reproducibility. The student will test workflows such as sequence quality control, alignment and variant calling using datasets with known expected results and larger, realistic datasets. Scientific outputs, execution times and computing-resource use will be compared with equivalent Linux analyses under matched conditions wherever practical.</p>
+        <p>Testing across different Windows computers and structured user feedback will guide improvements to installation, workflow construction and error recovery. The project will deliver an improved application and a reproducible benchmark suite, alongside evidence-based guidance on its capabilities and limitations.</p>
+        <h4>Good to know</h4>
+        <ul class="plain">
+            <li>A good understanding of the use of AI agents and GitHub would be an advantage.</li>
+        </ul>
+        <h4>Contact</h4>
+        <p>Tim Hearn (<a href="mailto:tjh70@cam.ac.uk">tjh70@cam.ac.uk</a>)</p>
+        <h4>Reading</h4>
+        <ol class="refs">
+            <li><a href="https://doi.org/10.1016/j.csbj.2017.07.002" target="_blank" rel="noopener">Scalability and validation of big data bioinformatics software</a><span class="ref-meta">Yang A, Troup M, Ho JWK (2017) Computational and Structural Biotechnology Journal 15:379–386</span></li>
+            <li><a href="https://doi.org/10.1186/s13059-019-1738-8" target="_blank" rel="noopener">Essential guidelines for computational method benchmarking</a><span class="ref-meta">Weber LM, Saelens W, Cannoodt R et al. (2019) Genome Biology 20:125</span></li>
+            <li><a href="https://doi.org/10.1093/bib/bbad375" target="_blank" rel="noopener">The five pillars of computational reproducibility: bioinformatics and beyond</a><span class="ref-meta">Ziemann M, Poulain P, Bora A (2023) Briefings in Bioinformatics 24:bbad375</span></li>
+            <li><a href="https://doi.org/10.1093/gigascience/giaa140" target="_blank" rel="noopener">Streamlining data-intensive biology with workflow systems</a><span class="ref-meta">Reiter T, Brooks PT, Irber L et al. (2021) GigaScience 10:giaa140</span></li>
+        </ol>
+    </div>
+</section>
+
+<!-- ═══════════════ 9 · DISSERTATIONS ═══════════════ -->
+<section class="scene scene--diss" id="dissertations" data-title="Three dissertations">
+    <div class="scene-inner ds-inner">
+        <div class="ds-head">
+            <h2 class="scene-title" id="dissTitle">Three dissertations</h2>
+        </div>
+        <div class="ds-grid">
+            <article class="ds-card" id="diss-bioinf" data-option="dissertation" data-cat="dissertation" data-short="Is bioinformatics a data science?">
+                <svg viewBox="0 0 300 190" role="img" aria-label="Circles for biology, computing and statistics drift together; a dashed circle for data science slides over them">
+                    <rect width="300" height="190" fill="rgba(6,10,20,.45)"/>
+                    <g transform="translate(140 100)">
+                        <g class="ds-bio"><circle class="ds-circle" cx="-28" cy="-14" r="46"/><text class="ds-venn-label" x="-48" y="-26">Biology</text></g>
+                        <g class="ds-cs"><circle class="ds-circle" cx="28" cy="-14" r="46"/><text class="ds-venn-label" x="50" y="-26">Computing</text></g>
+                        <g class="ds-stats"><circle class="ds-circle" cx="0" cy="24" r="46"/><text class="ds-venn-label" x="0" y="56">Statistics</text></g>
+                        <g class="ds-dsci"><circle class="ds-circle" cx="40" cy="8" r="62"/><text class="ds-venn-label" x="94" y="-50" style="fill:#b8a2ff">Data science</text></g>
+                        <text class="ds-venn-label" x="0" y="4" style="font-size:11px">Bioinformatics</text>
+                    </g>
+                    <text class="ds-q" x="268" y="176">?</text>
+                </svg>
+                <h3>Is bioinformatics a data science?</h3>
+                <button class="btn" type="button" data-details="details-diss-bioinf">Reading list</button>
+            </article>
+            <article class="ds-card" id="diss-cardio" data-option="dissertation" data-cat="dissertation" data-short="Circadian clocks and cardiovascular disease">
+                <svg viewBox="0 0 300 190" role="img" aria-label="A beating heart and an ECG trace above a 24-hour bar with the morning highlighted: heart attacks are most common in the morning">
+                    <rect width="300" height="190" fill="rgba(6,10,20,.45)"/>
+                    <g transform="translate(150 14) scale(0.74) translate(-150 -22)"><path class="ds-heart" d="M150 84 C 150 84, 118 64, 118 44 C 118 30, 130 22, 140 22 C 146 22, 150 26, 150 30 C 150 26, 154 22, 160 22 C 170 22, 182 30, 182 44 C 182 64, 150 84, 150 84 Z"/></g>
+                    <path class="ds-ecg" pathLength="100" d="M10 116 h10 q6 -8 12 0 h6 l3 5 l5 -46 l5 54 l3 -13 h10 q10 -16 20 0 h16 h10 q6 -8 12 0 h6 l3 5 l5 -46 l5 54 l3 -13 h10 q10 -16 20 0 h16 h10 q6 -8 12 0 h6 l3 5 l5 -46 l5 54 l3 -13 h10 q10 -16 20 0 h16"/>
+                    <text class="ds-text-muted" x="117" y="151" text-anchor="middle">heart attacks peak</text>
+                    <rect class="ds-daybar" x="20" y="157" width="260" height="9" rx="4.5"/>
+                    <rect class="ds-morning" x="85" y="157" width="65" height="9" rx="4.5"/>
+                    <text class="ds-text-muted" x="20" y="183">00</text>
+                    <text class="ds-text-muted" x="85" y="183" text-anchor="middle">06</text>
+                    <text class="ds-text-muted" x="150" y="183" text-anchor="middle">12</text>
+                    <text class="ds-text-muted" x="215" y="183" text-anchor="middle">18</text>
+                    <text class="ds-text-muted" x="280" y="183" text-anchor="end">24</text>
+                </svg>
+                <h3>The relevance of circadian clocks to cardiovascular disease</h3>
+                <button class="btn" type="button" data-details="details-diss-cardio">Reading list</button>
+            </article>
+            <article class="ds-card" id="diss-daphnia" data-option="dissertation" data-cat="dissertation" data-short="Circadian clocks in Daphnia">
+                <svg viewBox="0 0 300 190" role="img" aria-label="A water flea, Daphnia, sinks during the day and rises at night, its heart beating fast">
+                    <defs>
+                        <linearGradient id="dsWater" x1="0" y1="0" x2="0" y2="1">
+                            <stop offset="0" stop-color="#173a52"/>
+                            <stop offset="1" stop-color="#060d18"/>
+                        </linearGradient>
+                    </defs>
+                    <rect class="ds-water-day" width="300" height="190"/>
+                    <rect class="ds-nightshade" width="300" height="190"/>
+                    <circle class="ds-sunmoon-sun" cx="270" cy="26" r="10"/>
+                    <path class="ds-sunmoon-moon" d="M266 14 a12 12 0 1 0 12 15 a9 9 0 1 1 -12 -15 z"/>
+                    <g transform="translate(146 98) scale(1.15)">
+                        <g class="ds-daphnia-depth"><g class="ds-daphnia-hop">
+                            <path class="ds-carapace" d="M-14 -22 C -27 -8, -24 22, -4 34 C 6 40, 16 38, 22 30 L 42 50 L 26 25 C 31 9, 29 -12, 15 -24 C 6 -32, -8 -32, -14 -22 Z"/>
+                            <path class="ds-gut" d="M-7 -14 C 3 0, 7 14, 15 26"/>
+                            <circle class="ds-egg" cx="12" cy="-6" r="3.4"/><circle class="ds-egg" cx="17" cy="1" r="3.4"/><circle class="ds-egg" cx="13" cy="7" r="3.4"/>
+                            <ellipse class="ds-dheart" cx="6" cy="-20" rx="4" ry="3"/>
+                            <circle class="ds-eye" cx="-14" cy="-21" r="4.6"/>
+                            <path class="ds-limb" d="M-16 -4 l-7 3 M-15 4 l-7 4 M-12 12 l-6 5"/>
+                            <g class="ds-antenna">
+                                <path class="ds-limb" d="M-8 -26 L-30 -40 M-30 -40 L-52 -38 M-30 -40 L-48 -54 M-52 -38 l-4 -5 M-52 -38 l-5 2 M-48 -54 l-6 -2 M-48 -54 l-2 -6"/>
+                            </g>
+                        </g></g>
+                    </g>
+                </svg>
+                <h3>What do we know about circadian clocks in Daphnia, a potential model crustacean?</h3>
+                <button class="btn" type="button" data-details="details-diss-daphnia">Reading list</button>
+            </article>
+        </div>
+    </div>
+    <div class="details" id="details-diss-bioinf" hidden>
+        <h3>Is bioinformatics a data science?</h3>
+        <ul class="chips"><li class="chip" data-cat="dissertation">Dissertation</li></ul>
+        <h4>Reading list</h4>
+        <ol class="refs">
+            <li><a href="https://pubmed.ncbi.nlm.nih.gov/11552348/" target="_blank" rel="noopener">What is bioinformatics? A proposed definition and overview of the field</a><span class="ref-meta">Luscombe NM, Greenbaum D, Gerstein M (2001) Methods of Information in Medicine 40:346–358</span></li>
+            <li><a href="https://doi.org/10.1080/10618600.2017.1384734" target="_blank" rel="noopener">50 years of data science</a><span class="ref-meta">Donoho D (2017) Journal of Computational and Graphical Statistics 26:745–766</span></li>
+            <li><a href="https://doi.org/10.1371/journal.pbio.3001165" target="_blank" rel="noopener">Is “bioinformatics” dead?</a><span class="ref-meta">Bourne PE (2021) PLoS Biology 19:e3001165</span></li>
+        </ol>
+        <h4>Contact</h4>
+        <p>Tim Hearn (<a href="mailto:tjh70@cam.ac.uk">tjh70@cam.ac.uk</a>)</p>
+    </div>
+    <div class="details" id="details-diss-cardio" hidden>
+        <h3>The relevance of circadian clocks to cardiovascular disease</h3>
+        <ul class="chips"><li class="chip" data-cat="dissertation">Dissertation</li></ul>
+        <h4>Starting points</h4>
+        <ol class="refs">
+            <li><a href="https://doi.org/10.1172/JCI80590" target="_blank" rel="noopener">Role of the circadian system in cardiovascular disease</a><span class="ref-meta">Thosar SS, Butler MP, Shea SA (2018) Journal of Clinical Investigation 128:2157–2167</span></li>
+        </ol>
+        <h4>From our group</h4>
+        <ol class="refs">
+            <li><a href="https://doi.org/10.1016/j.cub.2021.01.106" target="_blank" rel="noopener">Daily rhythms in heartbeat rate are intrinsic to the zebrafish heart</a><span class="ref-meta">Fong CK, Hearn T, Webb SE et al. (2021) Current Biology 31:R239–R240</span></li>
+            <li><a href="https://doi.org/10.3389/fphar.2022.867131" target="_blank" rel="noopener">A systematic review of utilisation of diurnal timing information in clinical trial design for Long QT syndrome</a><span class="ref-meta">Seed LM, Hearn TJ (2022) Frontiers in Pharmacology 13:867131</span></li>
+        </ol>
+        <h4>Contact</h4>
+        <p>Tim Hearn (<a href="mailto:tjh70@cam.ac.uk">tjh70@cam.ac.uk</a>)</p>
+    </div>
+    <div class="details" id="details-diss-daphnia" hidden>
+        <h3>What do we know about circadian clocks in Daphnia, a potential model crustacean?</h3>
+        <ul class="chips"><li class="chip" data-cat="dissertation">Dissertation</li></ul>
+        <h4>From our group</h4>
+        <ol class="refs">
+            <li><a href="https://doi.org/10.1098/rsbl.2025.0142" target="_blank" rel="noopener">Photoperiodic and intrinsic circadian regulation of heart rate in Daphnia pulex</a><span class="ref-meta">Hearn TJ, Ampiah M, King L, Whitmore D (2025) Biology Letters 21:20250142</span></li>
+        </ol>
+        <h4>Starting points</h4>
+        <ol class="refs">
+            <li><a href="https://doi.org/10.1186/s12864-016-2998-2" target="_blank" rel="noopener">Genome-wide profiling of 24 hr diel rhythmicity in the water flea, Daphnia pulex: network analysis reveals rhythmic gene expression and enhances functional gene annotation</a><span class="ref-meta">Rund SSC, Yoo B, Alam C et al. (2016) BMC Genomics 17:653</span></li>
+            <li><a href="https://doi.org/10.1186/s13227-022-00199-0" target="_blank" rel="noopener">Daphnia as a versatile model system in ecology and evolution</a><span class="ref-meta">Ebert D (2022) EvoDevo 13</span></li>
+            <li><a href="https://doi.org/10.1126/science.1197761" target="_blank" rel="noopener">The ecoresponsive genome of Daphnia pulex</a><span class="ref-meta">Colbourne JK et al. (2011) Science 331:555–561</span></li>
+        </ol>
+        <h4>Contact</h4>
+        <p>Tim Hearn (<a href="mailto:tjh70@cam.ac.uk">tjh70@cam.ac.uk</a>)</p>
+    </div>
+</section>
+
+<!-- ═══════════════ 10 · COME AND TALK TO US ═══════════════ -->
+<section class="scene scene--join layout-split" id="join" data-title="Come and talk to us">
+    <div class="scene-inner">
+        <div class="scene-text">
+            <h2 class="scene-title">Come and talk to us</h2>
+            <p class="lead">Ask about any project or dissertation, or come and see where we work.</p>
+            <div class="join-contact">
+                <img src="../photos/tim-hearn.webp" alt="Tim Hearn" width="104" height="104" loading="lazy">
+                <p><strong>Dr Tim Hearn</strong><br><a class="join-email" href="mailto:tjh70@cam.ac.uk">tjh70@cam.ac.uk</a></p>
+            </div>
+            <p class="join-where">Level 6, Addenbrooke’s Treatment Centre, Cambridge Biomedical Campus</p>
+            <div class="join-papers">
+                <h3>Recent papers led by students in the group</h3>
+                <ul>
+                    <li><a href="https://doi.org/10.1136/bmjccgg-2026-000087" target="_blank" rel="noopener"><span>Gee &amp; Hearn 2026:</span> congenital adrenal hyperplasia in the 100,000 Genomes Project</a></li>
+                    <li><a href="https://doi.org/10.3389/fphar.2022.867131" target="_blank" rel="noopener"><span>Seed &amp; Hearn 2022:</span> time of day in Long QT syndrome trials</a></li>
+                    <li><a href="https://doi.org/10.1101/2020.08.17.20176420" target="_blank" rel="noopener"><span>Malik &amp; Hearn 2020:</span> towards chronomic medicine</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="join-side">
+            <div class="join-clock">
+                <svg class="vis helix-clock" viewBox="-320 -320 640 640" aria-hidden="true">
+                    <circle class="hc-ring" r="302"/>
+                    <circle class="hc-ring hc-ring-inner" r="132"/>
+                    <g class="hc-ticks"></g>
+                    <text class="hc-label" x="0" y="-258">00</text>
+                    <text class="hc-label" x="262" y="6">06</text>
+                    <text class="hc-label" x="0" y="270">12</text>
+                    <text class="hc-label" x="-262" y="6">18</text>
+                    <g class="hc-back-layer"><path class="hc-strand hc-back s1"/><path class="hc-strand hc-back s2"/></g>
+                    <g class="hc-rungs"></g>
+                    <g class="hc-front-layer"><path class="hc-strand hc-front s1"/><path class="hc-strand hc-front s2"/></g>
+                    <line class="hc-hand-tail" x1="0" y1="0" x2="0" y2="0"/>
+                    <line class="hc-hand" x1="0" y1="-128" x2="0" y2="-250"/>
+                </svg>
+                <a class="join-qr" href="https://comparativechrono.org/undergraduate/"><img src="qr.svg" alt="QR code for comparativechrono.org/undergraduate" width="120" height="120"></a>
+            </div>
+            <p class="join-url">Everything from today, with all the papers:<br><a href="https://comparativechrono.org/undergraduate/">comparativechrono.org/undergraduate</a></p>
+            <ul class="join-jump" id="joinJump" aria-label="Jump to a project or dissertation"></ul>
+        </div>
+    </div>
+</section>
+
+</main>
+
+<nav class="pager" aria-label="Presentation">
+    <button class="pager-btn" id="prevBtn" type="button" aria-label="Previous">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M15 5l-7 7 7 7"/></svg>
+    </button>
+    <button class="pager-btn" id="nextBtn" type="button" aria-label="Next">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M9 5l7 7-7 7"/></svg>
+    </button>
+</nav>
+
+<div class="sweep-hand" id="sweepHand" aria-hidden="true"></div>
+
+<div class="drawer" id="drawer" aria-hidden="true">
+    <div class="drawer-scrim" data-close></div>
+    <div class="drawer-panel" role="dialog" aria-modal="true" aria-label="Details and reading">
+        <button class="icon-btn drawer-close" type="button" data-close aria-label="Close (Esc)">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></svg>
+        </button>
+        <div class="drawer-body" id="drawerBody"></div>
+    </div>
+</div>
+
+<div class="overlay" id="overview" role="dialog" aria-modal="true" aria-label="All screens" aria-hidden="true">
+    <button class="icon-btn overlay-close" type="button" data-close aria-label="Close (Esc)">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></svg>
+    </button>
+    <div>
+        <h2>All screens</h2>
+        <ol class="overview-list" id="overviewList"></ol>
+    </div>
+</div>
+
+<div class="overlay" id="help" role="dialog" aria-modal="true" aria-label="Keyboard shortcuts" aria-hidden="true">
+    <button class="icon-btn overlay-close" type="button" data-close aria-label="Close (Esc)">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></svg>
+    </button>
+    <div>
+        <h2>Presenting</h2>
+        <dl class="help-list">
+            <dt><kbd>→</kbd> <kbd>Space</kbd> <kbd>Page Down</kbd></dt><dd>Next step or screen (works with a clicker)</dd>
+            <dt><kbd>←</kbd> <kbd>Page Up</kbd></dt><dd>Previous screen</dd>
+            <dt><kbd>O</kbd></dt><dd>All screens</dd>
+            <dt><kbd>F</kbd></dt><dd>Full screen</dd>
+            <dt><kbd>B</kbd></dt><dd>Black screen</dd>
+            <dt><kbd>T</kbd></dt><dd>Show the talk timer (turns amber at 8 minutes, red at 10)</dd>
+            <dt><kbd>Home</kbd> <kbd>End</kbd></dt><dd>First or last screen</dd>
+            <dt><kbd>Esc</kbd></dt><dd>Close a panel</dd>
+        </dl>
+    </div>
+</div>
+
+<div class="blackout" id="blackout" aria-hidden="true"></div>
+<p class="sr-only" id="announcer" aria-live="polite"></p>
+
+<script src="deck.js"></script>
+<script src="visuals.js"></script>
+</body>
+</html>
