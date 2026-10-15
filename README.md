@@ -16,7 +16,7 @@ Pushing to `main` updates the live site within a minute or two. There is no buil
 | People | `people.html` | PI card, current members (photo grid + modals), alumni list |
 | Research | `research.html` | Every current project with an interactive diagram, and an overview dial at the top |
 | Publications | `publications.html` | Publications by year, with a year chart, type filters and search |
-| Software | `software.html` | Pedigree Studio and its Python packages, nugap, the Bioinformatics workbench, software for teaching (genomics.tel) and more code |
+| Software | `software.html` | Pedigree Studio and its Python packages, nugap, the Bioinformatics workbench, software for teaching (www.genomics.tel) and more code |
 | News | `news.html` | All news stories by year, with filters by kind of story |
 | Undergraduates | `undergraduate/index.html` | Interactive presentation of this year’s undergraduate projects and dissertations (see `undergraduate/README.md` for presenting and yearly updates) |
 
