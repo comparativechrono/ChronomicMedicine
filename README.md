@@ -12,11 +12,12 @@ Pushing to `main` updates the live site within a minute or two. There is no buil
 
 | Page | File | Content |
 |------|------|---------|
-| Homepage | `index.html` | 24-hour clock showing the visitor’s local time, about, a carousel of current projects (each with its diagram), news, join CTA, contact |
+| Homepage | `index.html` | 24-hour clock showing the visitor’s local time, about, a carousel of current projects (each with its diagram), the three latest news stories, join CTA, contact |
 | People | `people.html` | PI card, current members (photo grid + modals), alumni list |
 | Research | `research.html` | Every current project with an interactive diagram, and an overview dial at the top |
 | Publications | `publications.html` | Publications by year, with a year chart, type filters and search |
 | Software | `software.html` | Pedigree Studio and its Python packages, nugap, the Bioinformatics workbench, software for teaching (genomics.tel) and more code |
+| News | `news.html` | All news stories by year, with filters by kind of story |
 | Undergraduates | `undergraduate/index.html` | Interactive presentation of this year’s undergraduate projects and dissertations (see `undergraduate/README.md` for presenting and yearly updates) |
 
 ## Light and dark themes
@@ -119,9 +120,10 @@ Publications are grouped by year, newest first, on the Publications page. The ye
 | date | YYYY-MM-DD |
 | title | Headline |
 | summary | Short description |
-| link | URL (optional; makes the headline a link) |
+| link | URL (optional; makes the headline a link — links to other sites open in a new tab) |
+| tag | Kind of story, e.g. `Paper`, `The Conversation`, `Event`, `Lab news` (optional; shown as a label, and the News page has a filter button for each tag) |
 
-The homepage shows the four most recent items, newest first.
+Stories can be in any order in the file: they are sorted by date. The homepage shows the three most recent as cards, and the News page shows them all, grouped by year.
 
 ### Software: `data/software.csv`
 
@@ -147,6 +149,7 @@ The diagrams on the Software page are in `viz-software.js`. The file-format map 
 ├── research.html       Research projects, each with an interactive diagram
 ├── publications.html   Publications, with year chart, filters and search
 ├── software.html       Software and teaching
+├── news.html           All news stories
 ├── style.css           Shared styles (theme colours at the top)
 ├── viz.css             Colours and styles for the interactive diagrams
 ├── theme.js            Light/dark theme: default by local time, toggle, remembered choice
@@ -163,7 +166,7 @@ The diagrams on the Software page are in `viz-software.js`. The file-format map 
 │   ├── members.csv     → People page
 │   ├── projects.csv    → Research page and homepage carousel
 │   ├── publications.csv→ Publications page
-│   ├── news.csv        → Homepage
+│   ├── news.csv        → News page and homepage
 │   └── software.csv    → Software page
 └── photos/
     ├── README.md       Photo naming guide

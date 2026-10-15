@@ -34,7 +34,7 @@
         <li><a href="publications.html">Publications</a></li>
         <li><a href="software.html">Software</a></li>
         <li><a href="undergraduate/">Undergraduates</a></li>
-        <li><a href="#news">News</a></li>
+        <li><a href="news.html">News</a></li>
         <li><a href="#contact">Contact</a></li>
     </ul>
     <div class="nav-tools">
@@ -108,11 +108,12 @@
     <a href="undergraduate/" class="cta-btn">See the projects</a>
 </div>
 
-<!-- NEWS (from data/news.csv, newest first) -->
+<!-- NEWS: the three most recent stories in data/news.csv; all of them are on news.html -->
 <section id="news" class="section reveal">
     <p class="section-label">News</p>
-    <h2>Latest updates</h2>
-    <div id="newsList"></div>
+    <h2>Latest news</h2>
+    <div class="news-cards" id="newsList"></div>
+    <p class="pillars-more"><a href="news.html" class="link-arrow">All news ›</a></p>
 </section>
 
 <!-- JOIN -->
@@ -299,17 +300,11 @@
     requestAnimationFrame(tick);
 })();
 
-// News, newest first
+// News: the three most recent stories
 (async function () {
     const news = (await loadCSV('data/news.csv')).sort((a, b) => (b.date || '').localeCompare(a.date || ''));
-    const el = document.getElementById('newsList');
     if (!news.length) return;
-    el.innerHTML = news.slice(0, 4).map(n => `
-        <div class="news-item">
-            <div class="news-date">${esc(formatDate(n.date))}</div>
-            <div class="news-title">${n.link ? `<a href="${esc(n.link)}">${esc(n.title)}</a>` : esc(n.title)}</div>
-            ${n.summary ? `<div class="news-summary">${esc(n.summary)}</div>` : ''}
-        </div>`).join('');
+    document.getElementById('newsList').innerHTML = news.slice(0, 3).map(newsCard).join('');
 })();
 </script>
 </body>

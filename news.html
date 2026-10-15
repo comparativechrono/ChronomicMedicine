@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>News — Chronomic Medicine Group</title>
+    <meta name="description" content="News from the Chronomic Medicine Group, Department of Genomic Medicine, University of Cambridge: new papers, events and articles for The Conversation.">
+    <meta name="theme-color" content="#060a14">
+    <meta name="color-scheme" content="dark light">
+    <script>
+    /* Colour theme: light 07:00–19:00 local time, dark otherwise, unless the visitor has chosen one (see theme.js) */
+    (function(d){var p=null;try{p=localStorage.getItem('cm-theme')}catch(e){}var h=new Date().getHours();d.setAttribute('data-theme',p==='light'||p==='dark'?p:(h>=7&&h<19?'light':'dark'))})(document.documentElement);
+    </script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=Outfit:wght@200..600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <link rel="icon" href="favicon.svg" type="image/svg+xml">
+</head>
+<body>
+
+<a class="skip-link" href="#main">Skip to content</a>
+
+<nav id="mainNav" class="nav-solid" aria-label="Main">
+    <a href="index.html" class="nav-brand">Chronomic Medicine</a>
+    <ul class="nav-links" id="navLinks">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="people.html">People</a></li>
+        <li><a href="research.html">Research</a></li>
+        <li><a href="publications.html">Publications</a></li>
+        <li><a href="software.html">Software</a></li>
+        <li><a href="undergraduate/">Undergraduates</a></li>
+        <li><a href="news.html" class="active" aria-current="page">News</a></li>
+        <li><a href="index.html#contact">Contact</a></li>
+    </ul>
+    <div class="nav-tools">
+        <button class="theme-toggle" type="button" data-theme-toggle aria-label="Switch between light and dark mode">
+            <svg class="icon-sun" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="4.2"/><path d="M12 2.5v2.2M12 19.3v2.2M2.5 12h2.2M19.3 12h2.2M5.3 5.3l1.6 1.6M17.1 17.1l1.6 1.6M5.3 18.7l1.6-1.6M17.1 6.9l1.6-1.6"/></svg>
+            <svg class="icon-moon" viewBox="0 0 24 24" aria-hidden="true"><path d="M20 14.6A8.4 8.4 0 0 1 9.4 4a8.4 8.4 0 1 0 10.6 10.6z"/></svg>
+        </button>
+        <button class="nav-toggle" id="navToggle" type="button" aria-label="Menu" aria-expanded="false" aria-controls="navLinks"><span></span><span></span><span></span></button>
+    </div>
+</nav>
+
+<main id="main">
+    <!-- News comes from data/news.csv -->
+    <header class="page-header reveal">
+        <p class="section-label">News</p>
+        <h1>News</h1>
+        <p class="section-intro">New papers, events and Tim’s articles for The Conversation.</p>
+    </header>
+
+    <section class="section section--tight-top" aria-label="News stories">
+        <div class="news-tools" id="newsTools" hidden>
+            <div class="pub-types" id="newsTags" role="group" aria-label="Show one kind of story"></div>
+            <p class="pub-count" id="newsCount" aria-live="polite"></p>
+        </div>
+        <div id="newsList"><noscript><p class="pub-note">The news list needs JavaScript. It is also available as <a href="data/news.csv">data/news.csv</a>.</p></noscript></div>
+    </section>
+
+    <div class="join-band reveal">
+        <h2>Tim on The Conversation</h2>
+        <p>Tim writes about sleep, body clocks and genetics for The Conversation, a news site where academics write for the public.</p>
+        <a href="https://theconversation.com/profiles/timothy-hearn-1439589" class="cta-btn" target="_blank" rel="noopener">All Tim’s articles</a>
+    </div>
+</main>
+
+<footer>
+    <div class="footer-links">
+        <a href="https://github.com/comparativechrono/" target="_blank" rel="noopener">GitHub</a>
+        <a href="mailto:tjh70@cam.ac.uk">Email</a>
+    </div>
+    <div class="appearance" role="group" aria-label="Colour theme">
+        <span class="appearance-label">Theme</span>
+        <button type="button" data-theme-choice="auto" aria-pressed="true">Auto</button>
+        <button type="button" data-theme-choice="light" aria-pressed="false">Light</button>
+        <button type="button" data-theme-choice="dark" aria-pressed="false">Dark</button>
+    </div>
+    <p class="appearance-note">Auto follows your local time: light from 07:00, dark from 19:00.</p>
+    <p>&copy; <span id="yr"></span> Chronomic Medicine Group, Department of Genomic Medicine, University of Cambridge</p>
+</footer>
+
+<script src="theme.js"></script>
+<script src="shared.js"></script>
+<script>
+// Plural labels for the filter buttons; any other tag is shown as written
+const TAG_PLURALS = { Paper: 'Papers', Event: 'Events', Talk: 'Talks', Award: 'Awards', Grant: 'Grants' };
+let news = [], current = null;
+
+function render() {
+    const tags = [...new Set(news.map(n => n.tag).filter(Boolean))];
+    const tagsEl = document.getElementById('newsTags');
+    tagsEl.innerHTML = tags.length < 2 ? '' :
+        [`<button type="button" class="chip-btn" data-tag="" aria-pressed="${!current}">All<span class="c">${news.length}</span></button>`]
+        .concat(tags.map(t => `<button type="button" class="chip-btn" data-tag="${esc(t)}" aria-pressed="${current === t}">${esc(TAG_PLURALS[t] || t)}<span class="c">${news.filter(n => n.tag === t).length}</span></button>`))
+        .join('');
+    tagsEl.querySelectorAll('button').forEach(b => b.addEventListener('click', () => { current = b.dataset.tag || null; render(); }));
+
+    const shown = current ? news.filter(n => n.tag === current) : news;
+    document.getElementById('newsCount').textContent = current ? `Showing ${shown.length} of ${news.length}` : `${news.length} stories`;
+    const years = [...new Set(shown.map(n => (n.date || '').slice(0, 4)))];
+    document.getElementById('newsList').innerHTML = years.map(y => `
+        <div class="pub-year-group">
+            <div class="pub-year-heading">${esc(y)}</div>
+            <div>${shown.filter(n => (n.date || '').startsWith(y)).map(newsEntry).join('')}</div>
+        </div>`).join('');
+}
+
+async function init() {
+    news = (await loadCSV('data/news.csv')).sort((a, b) => (b.date || '').localeCompare(a.date || ''));
+    if (!news.length) {
+        document.getElementById('newsList').innerHTML = '<p class="pub-note">Add news to data/news.csv (columns: date, title, summary, link, tag).</p>';
+        return;
+    }
+    document.getElementById('newsTools').hidden = false;
+    render();
+}
+
+init();
+</script>
+</body>
+</html>

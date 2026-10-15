@@ -58,6 +58,27 @@ function formatDate(d) {
     return dt.toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' });
 }
 
+/* ─── News (homepage cards and the News page) ─── */
+// Links to other sites open in a new tab
+function newsLink(n, text) {
+    if (!n.link) return esc(text);
+    const external = /^https?:\/\//i.test(n.link) && !/^https?:\/\/(www\.)?comparativechrono\.org/i.test(n.link);
+    return `<a href="${esc(n.link)}"${external ? ' target="_blank" rel="noopener"' : ''}>${esc(text)}` +
+        (external ? '<span class="news-ext" aria-hidden="true">↗</span><span class="visually-hidden"> (opens in a new tab)</span>' : '') + '</a>';
+}
+function newsMeta(n) {
+    return `<p class="news-meta"><time datetime="${esc(n.date)}">${esc(formatDate(n.date))}</time>` +
+        (n.tag ? `<span class="news-tag">${esc(n.tag)}</span>` : '') + '</p>';
+}
+function newsEntry(n) {
+    return `<article class="news-entry">${newsMeta(n)}<h3 class="news-entry-title">${newsLink(n, n.title)}</h3>` +
+        (n.summary ? `<p class="news-entry-summary">${esc(n.summary)}</p>` : '') + '</article>';
+}
+function newsCard(n) {
+    return `<article class="news-card">${newsMeta(n)}<h3 class="news-card-title">${newsLink(n, n.title)}</h3>` +
+        (n.summary ? `<p class="news-card-summary">${esc(n.summary)}</p>` : '') + '</article>';
+}
+
 /* ─── Nav ─── */
 function initNav() {
     const nav = document.getElementById('mainNav');
