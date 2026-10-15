@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Research — Chronomic Medicine Group</title>
-    <meta name="description" content="Research projects, publications and open data from the Chronomic Medicine Group, Department of Genomic Medicine, University of Cambridge.">
+    <meta name="description" content="Research projects of the Chronomic Medicine Group, Department of Genomic Medicine, University of Cambridge, each with an interactive diagram.">
     <meta name="theme-color" content="#060a14">
     <meta name="color-scheme" content="dark light">
     <script>
@@ -15,6 +15,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=Outfit:wght@200..600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="viz.css">
     <link rel="icon" href="favicon.svg" type="image/svg+xml">
 </head>
 <body>
@@ -25,9 +26,10 @@
     <a href="index.html" class="nav-brand">Chronomic Medicine</a>
     <ul class="nav-links" id="navLinks">
         <li><a href="index.html">Home</a></li>
-        <li><a href="index.html#about">About</a></li>
         <li><a href="people.html">People</a></li>
         <li><a href="research.html" class="active" aria-current="page">Research</a></li>
+        <li><a href="publications.html">Publications</a></li>
+        <li><a href="software.html">Software</a></li>
         <li><a href="undergraduate/">Undergraduates</a></li>
         <li><a href="index.html#news">News</a></li>
         <li><a href="index.html#contact">Contact</a></li>
@@ -42,45 +44,36 @@
 </nav>
 
 <main id="main">
-    <div class="page-header reveal">
-        <p class="section-label">Research</p>
-        <h1>Projects, publications and data</h1>
-        <p class="section-intro">Our work covers cardiac arrhythmias, chrono-pharmacogenomics, cancer and rare disease.</p>
-        <div class="page-nav">
-            <a href="#projects">Projects</a>
-            <a href="#publications">Publications</a>
-            <a href="#tools">Open research</a>
-            <a href="undergraduate/">Undergraduate projects</a>
+    <!-- Projects come from data/projects.csv; each picks an interactive diagram from viz-projects.js -->
+    <header class="page-header research-intro">
+        <div class="reveal">
+            <p class="section-label">Research</p>
+            <h1>Research projects</h1>
+            <p class="section-intro">We study how the body clock contributes to genetic disease. Most of our projects analyse genomes from the 100,000 Genomes Project, and each one below has an interactive diagram to try.</p>
+            <p class="ri-links">
+                <a href="publications.html" class="link-arrow">Publications ›</a>
+                <a href="software.html" class="link-arrow">Software ›</a>
+                <a href="undergraduate/" class="link-arrow">Undergraduate projects ›</a>
+            </p>
         </div>
+        <div class="ri-overview reveal" id="overview" hidden>
+            <div class="ri-dial" id="projectDial"></div>
+            <ol class="ri-index" id="projectIndex" aria-label="Current projects"></ol>
+        </div>
+    </header>
+
+    <div class="rp-list" id="projectList"><noscript><p class="section-intro">The project list and its diagrams need JavaScript. The projects are also listed in <a href="data/projects.csv">data/projects.csv</a>.</p></noscript></div>
+
+    <section id="completed" class="section reveal" hidden>
+        <h2>Completed projects</h2>
+        <div id="completedProjects"></div>
+    </section>
+
+    <div class="join-band reveal">
+        <h2>Interested in one of these projects?</h2>
+        <p>We welcome enquiries from prospective students, from undergraduates to PhD, and from clinical and research collaborators.</p>
+        <a href="mailto:tjh70@cam.ac.uk" class="cta-btn">Get in touch</a>
     </div>
-
-    <!-- PROJECTS (from data/projects.csv) -->
-    <section id="projects" class="section section--tight-top reveal">
-        <h2>Current projects</h2>
-        <p class="section-intro section-intro--spaced">Select a project to read the full description.</p>
-        <div id="currentProjects"></div>
-        <div id="completedSection" class="completed-section" hidden>
-            <h3>Completed projects</h3>
-            <div id="completedProjects"></div>
-        </div>
-    </section>
-
-    <div class="divider"><div class="divider-line"></div></div>
-
-    <!-- PUBLICATIONS (from data/publications.csv) -->
-    <section id="publications" class="section reveal">
-        <h2>Publications</h2>
-        <div id="pubList"></div>
-    </section>
-
-    <div class="divider"><div class="divider-line"></div></div>
-
-    <!-- OPEN RESEARCH (from data/tools.csv) -->
-    <section id="tools" class="section reveal">
-        <h2>Open research</h2>
-        <p class="section-intro">Analysis scripts, datasets and tools are publicly available.</p>
-        <div class="tools-grid" id="toolsList"></div>
-    </section>
 </main>
 
 <footer>
@@ -100,91 +93,91 @@
 
 <script src="theme.js"></script>
 <script src="shared.js"></script>
+<script src="viz.js"></script>
+<script src="viz-projects.js"></script>
 <script>
-const TYPE_LABELS = { article: 'Article', review: 'Review', abstract: 'Conference abstract', commentary: 'Commentary', preprint: 'Preprint', chapter: 'Book chapter' };
+const slug = (s) => String(s).toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
 
 async function init() {
-    // Projects
     const projects = await loadCSV('data/projects.csv');
     const current = projects.filter(p => p.status === 'current');
     const completed = projects.filter(p => p.status === 'completed');
+    current.forEach(p => {
+        p.id = p.id || slug(p.title);
+        p.tone = Viz.tone(p.pillar);
+        p.short = p.short || p.title;
+    });
 
-    document.getElementById('currentProjects').innerHTML = current.map((p, i) => `
-        <div class="project-card reveal">
-            <button type="button" class="project-head" ${p.description ? `aria-expanded="false" aria-controls="project-${i}"` : ''}>
-                <span class="project-header">
-                    <span class="project-title">${esc(p.title)}</span>
-                    <span class="project-badges">
-                        ${p.registry_id ? `<span class="badge badge-amber">GEL #${esc(p.registry_id)}</span>` : ''}
-                        ${p.pillar ? `<span class="badge badge-muted">${esc(p.pillar)}</span>` : ''}
-                    </span>
-                </span>
-                <span class="project-summary">${esc(p.summary)}</span>
-                ${p.description ? '<span class="project-toggle">Read more ›</span>' : ''}
-            </button>
-            ${p.description ? `<div class="project-detail" id="project-${i}" hidden>${esc(p.description)}</div>` : ''}
-        </div>`).join('');
+    // One section per project
+    const list = document.getElementById('projectList');
+    list.innerHTML = current.map((p, i) => `
+        <article class="rp tone-${p.tone}${i % 2 ? ' rp--flip' : ''} reveal" id="${esc(p.id)}" aria-labelledby="${esc(p.id)}-title">
+            <div class="rp-head">
+                <p class="rp-kicker"><span class="rp-num" aria-hidden="true">${i + 1}</span>${esc(p.pillar || 'Research')}</p>
+                <h2 class="rp-title" id="${esc(p.id)}-title">${esc(p.title)}</h2>
+            </div>
+            <div class="rp-visual"><div class="rp-viz"></div></div>
+            <div class="rp-body">
+                ${p.summary ? `<p class="rp-lead">${esc(p.summary)}</p>` : ''}
+                ${p.registry_id ? `<ul class="rp-chips"><li>Genomics England project ${esc(p.registry_id)}</li></ul>` : ''}
+                ${p.description ? `
+                    <button type="button" class="rp-more" aria-expanded="false" aria-controls="${esc(p.id)}-more">More about this project</button>
+                    <div class="rp-detail" id="${esc(p.id)}-more" hidden><p>${esc(p.description)}</p></div>` : ''}
+            </div>
+        </article>`).join('');
 
-    document.querySelectorAll('.project-head[aria-controls]').forEach(btn => {
+    list.querySelectorAll('.rp').forEach((el, i) => {
+        const name = Viz.has(current[i].visual) ? current[i].visual : 'gene-clock';
+        Viz.mount(el.querySelector('.rp-viz'), name);
+    });
+    list.querySelectorAll('.rp-more').forEach(btn => {
         btn.addEventListener('click', () => {
             const open = btn.getAttribute('aria-expanded') !== 'true';
             btn.setAttribute('aria-expanded', String(open));
             document.getElementById(btn.getAttribute('aria-controls')).hidden = !open;
-            btn.querySelector('.project-toggle').textContent = open ? '‹ Read less' : 'Read more ›';
+            btn.textContent = open ? 'Show less' : 'More about this project';
         });
     });
 
+    // Overview: a dial and a numbered list
+    if (current.length) {
+        document.getElementById('overview').hidden = false;
+        const index = document.getElementById('projectIndex');
+        index.innerHTML = current.map((p, i) => `
+            <li class="tone-${p.tone}"><a href="#${esc(p.id)}" data-i="${i}">
+                <span class="ri-n" aria-hidden="true">${i + 1}</span>
+                <span class="ri-name">${esc(p.short)}</span>
+                <span class="ri-pillar">${esc(p.pillar)}</span>
+            </a></li>`).join('');
+        const items = [...index.querySelectorAll('li')];
+        const dial = Viz.mount(document.getElementById('projectDial'), 'project-dial', {
+            projects: current.map(p => ({ id: p.id, short: p.short, pillar: p.pillar, tone: p.tone })),
+            onHighlight: (i) => items.forEach((li, k) => li.classList.toggle('is-active', k === i)),
+        });
+        index.querySelectorAll('a').forEach(a => {
+            const i = +a.dataset.i;
+            a.addEventListener('pointerenter', () => dial && dial.api.highlight(i, true));
+            a.addEventListener('focus', () => dial && dial.api.highlight(i, true));
+            a.addEventListener('pointerleave', () => dial && dial.api.release());
+            a.addEventListener('blur', () => dial && dial.api.release());
+        });
+    }
+
     if (completed.length) {
-        document.getElementById('completedSection').hidden = false;
+        document.getElementById('completed').hidden = false;
         document.getElementById('completedProjects').innerHTML = completed.map(p => `
             <div class="completed-item">
                 <span class="completed-title">${esc(p.title)}</span>
-                ${p.registry_id ? `<span class="badge badge-amber">GEL #${esc(p.registry_id)}</span>` : ''}
-            </div>`).join('');
-    }
-
-    // Publications, newest year first
-    const pubs = await loadCSV('data/publications.csv');
-    const pubEl = document.getElementById('pubList');
-    if (pubs.length) {
-        const years = [...new Set(pubs.map(p => p.year))].sort((a, b) => b.localeCompare(a));
-        pubEl.innerHTML = years.map(y => `
-            <div class="pub-year-group">
-                <div class="pub-year-heading">${esc(y)}</div>
-                <div>
-                    ${pubs.filter(p => p.year === y).map(p => `
-                        <div class="pub-item">
-                            ${p.type ? `<div class="pub-type">${esc(TYPE_LABELS[p.type] || p.type)}</div>` : ''}
-                            <div class="pub-title">${esc(p.title)}</div>
-                            <div class="pub-authors">${esc(p.authors)}</div>
-                            ${p.journal ? `<div class="pub-journal">${esc(p.journal)}</div>` : ''}
-                            <div class="pub-badges">
-                                ${p.doi ? `<a href="https://doi.org/${esc(p.doi)}" target="_blank" rel="noopener" class="pub-badge">DOI</a>` : ''}
-                                ${p.pdf ? `<a href="${esc(p.pdf)}" target="_blank" rel="noopener" class="pub-badge">PDF</a>` : ''}
-                                ${p.github ? `<a href="${esc(p.github)}" target="_blank" rel="noopener" class="pub-badge">Code</a>` : ''}
-                                ${p.preprint ? `<a href="${esc(p.preprint)}" target="_blank" rel="noopener" class="pub-badge">Preprint</a>` : ''}
-                            </div>
-                        </div>`).join('')}
-                </div>
-            </div>`).join('');
-    } else {
-        pubEl.innerHTML = '<p class="pub-note">Add publications to data/publications.csv (columns: year, authors, title, journal, doi, pdf, github, preprint, type).</p>';
-    }
-
-    // Tools
-    const tools = await loadCSV('data/tools.csv');
-    if (tools.length) {
-        document.getElementById('toolsList').innerHTML = tools.map(t => `
-            <div class="tool-card">
-                <div class="tool-type">${esc(t.type || 'resource')}</div>
-                <div class="tool-name">${esc(t.name)}</div>
-                <div class="tool-desc">${esc(t.description)}</div>
-                ${t.url ? `<a href="${esc(t.url)}" target="_blank" rel="noopener" class="tool-link">View ›</a>` : ''}
-                ${t.language ? `<span class="tool-lang">${esc(t.language)}</span>` : ''}
+                ${p.registry_id ? `<span class="badge badge-amber">Genomics England ${esc(p.registry_id)}</span>` : ''}
             </div>`).join('');
     }
 
     initReveal();
+    // If the page was opened at a project (research.html#cardiac-arrhythmia), go there now it exists
+    if (location.hash) {
+        const target = document.getElementById(decodeURIComponent(location.hash.slice(1)));
+        if (target) target.scrollIntoView();
+    }
 }
 
 init();

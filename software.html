@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Software — Chronomic Medicine Group</title>
+    <meta name="description" content="Open-source software from the Chronomic Medicine Group: Pedigree Studio and its Python packages, nugap, the Bioinformatics workbench and software for teaching.">
+    <meta name="theme-color" content="#060a14">
+    <meta name="color-scheme" content="dark light">
+    <script>
+    /* Colour theme: light 07:00–19:00 local time, dark otherwise, unless the visitor has chosen one (see theme.js) */
+    (function(d){var p=null;try{p=localStorage.getItem('cm-theme')}catch(e){}var h=new Date().getHours();d.setAttribute('data-theme',p==='light'||p==='dark'?p:(h>=7&&h<19?'light':'dark'))})(document.documentElement);
+    </script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=Outfit:wght@200..600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="viz.css">
+    <link rel="icon" href="favicon.svg" type="image/svg+xml">
+</head>
+<body>
+
+<a class="skip-link" href="#main">Skip to content</a>
+
+<nav id="mainNav" class="nav-solid" aria-label="Main">
+    <a href="index.html" class="nav-brand">Chronomic Medicine</a>
+    <ul class="nav-links" id="navLinks">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="people.html">People</a></li>
+        <li><a href="research.html">Research</a></li>
+        <li><a href="publications.html">Publications</a></li>
+        <li><a href="software.html" class="active" aria-current="page">Software</a></li>
+        <li><a href="undergraduate/">Undergraduates</a></li>
+        <li><a href="index.html#news">News</a></li>
+        <li><a href="index.html#contact">Contact</a></li>
+    </ul>
+    <div class="nav-tools">
+        <button class="theme-toggle" type="button" data-theme-toggle aria-label="Switch between light and dark mode">
+            <svg class="icon-sun" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="4.2"/><path d="M12 2.5v2.2M12 19.3v2.2M2.5 12h2.2M19.3 12h2.2M5.3 5.3l1.6 1.6M17.1 17.1l1.6 1.6M5.3 18.7l1.6-1.6M17.1 6.9l1.6-1.6"/></svg>
+            <svg class="icon-moon" viewBox="0 0 24 24" aria-hidden="true"><path d="M20 14.6A8.4 8.4 0 0 1 9.4 4a8.4 8.4 0 1 0 10.6 10.6z"/></svg>
+        </button>
+        <button class="nav-toggle" id="navToggle" type="button" aria-label="Menu" aria-expanded="false" aria-controls="navLinks"><span></span><span></span><span></span></button>
+    </div>
+</nav>
+
+<main id="main">
+    <header class="page-header reveal">
+        <p class="section-label">Software</p>
+        <h1>Software</h1>
+        <p class="section-intro">We write open-source software for clinical genetics, for analysing biological rhythms and for teaching. All of it is free to use.</p>
+        <a class="cta-btn sw-github" href="https://github.com/comparativechrono" target="_blank" rel="noopener">
+            <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/></svg>
+            All our code on GitHub
+        </a>
+        <div class="page-nav" aria-label="On this page">
+            <a href="#pedigree-studio">Pedigree Studio</a>
+            <a href="#nugap">nugap</a>
+            <a href="#bioinformatics-workbench">Bioinformatics workbench</a>
+            <a href="#teaching">Teaching</a>
+            <a href="#more">More code</a>
+        </div>
+    </header>
+
+    <!-- PEDIGREE STUDIO -->
+    <section class="sw tone-rose reveal" id="pedigree-studio" aria-labelledby="ps-title">
+        <div class="sw-text">
+            <p class="sw-kicker">Clinical genetics</p>
+            <h2 class="sw-title" id="ps-title">Pedigree Studio</h2>
+            <p class="sw-lead">Draw clinical genetics pedigrees in a web browser. Pedigree Studio is a single HTML file that works offline, and no data leaves the device, so it can be used where online tools can’t: in prisons, rural clinics and home visits, and wherever patient data mustn’t go to an outside server.</p>
+            <p class="sw-note">It is also useful for teaching, as students can practise drawing pedigrees without accounts or any setup.</p>
+            <p class="sw-actions">
+                <a class="sw-btn sw-btn--primary" href="https://pedigreestudio.xyz/" target="_blank" rel="noopener">Open Pedigree Studio</a>
+                <a class="sw-btn" href="https://github.com/comparativechrono/PedigreeStudio" target="_blank" rel="noopener">GitHub</a>
+                <a class="sw-btn" href="https://doi.org/10.5281/zenodo.20209376" target="_blank" rel="noopener">Zenodo</a>
+            </p>
+        </div>
+        <div class="sw-visual"><div data-viz="pedigree"></div></div>
+    </section>
+
+    <section class="sw-sub tone-rose reveal" id="pedigree-packages" aria-labelledby="pkg-title">
+        <h3 class="sw-subtitle" id="pkg-title">Python packages for Pedigree Studio files</h3>
+        <p>Convert pedigrees between Pedigree Studio, PED files, the GA4GH Pedigree standard and Phenopackets, and standardise their disease and phenotype terms. Each package installs with pip.</p>
+        <div class="sw-formats" id="formats"></div>
+        <div class="pkg-grid" id="pkgPedigree"></div>
+    </section>
+
+    <!-- NUGAP -->
+    <section class="sw sw--flip tone-teal reveal" id="nugap" aria-labelledby="ng-title">
+        <div class="sw-text">
+            <p class="sw-kicker">Time-course data</p>
+            <h2 class="sw-title" id="ng-title">nugap</h2>
+            <p class="sw-lead">A Python package that finds which genes, or which relationships between them, change their dynamics between two conditions, such as wild type and mutant. It uses the Vinnicombe ν-gap, a distance between dynamical systems from control theory, and its results have been checked against MATLAB’s implementation.</p>
+            <p class="sw-install"><span><span class="prompt">$ </span>pip install nugap</span><button type="button" class="copy-btn" data-copy="pip install nugap">Copy</button></p>
+            <p class="sw-actions">
+                <a class="sw-btn" href="https://pypi.org/project/nugap/" target="_blank" rel="noopener">PyPI</a>
+                <a class="sw-btn" href="https://github.com/comparativechrono/nugap" target="_blank" rel="noopener">GitHub</a>
+                <a class="sw-btn" href="https://doi.org/10.5281/zenodo.20693443" target="_blank" rel="noopener">Zenodo</a>
+                <a class="sw-btn" href="https://colab.research.google.com/github/comparativechrono/nugap/blob/main/tutorial_nugap.ipynb" target="_blank" rel="noopener">Tutorial in Colab</a>
+            </p>
+        </div>
+        <div class="sw-visual"><div data-viz="nugap"></div></div>
+    </section>
+
+    <!-- BIOINFORMATICS WORKBENCH -->
+    <section class="sw tone-blue reveal" id="bioinformatics-workbench" aria-labelledby="wb-title">
+        <div class="sw-text">
+            <p class="sw-kicker">Teaching</p>
+            <h2 class="sw-title" id="wb-title">Bioinformatics workbench</h2>
+            <p class="sw-lead">A workbench in the browser for bioinformatics practicals: Python and R notebooks, a Linux terminal with real bioinformatics programs, Galaxy, public databases, a genome browser, a 3D structure viewer and a network viewer.</p>
+            <p class="sw-note">Everything runs in the student’s browser. There is nothing to install and no server, and students’ files stay on their own computer.</p>
+            <p class="sw-actions">
+                <a class="sw-btn sw-btn--primary" href="https://comparativechrono.github.io/bioinformatics-workbench/" target="_blank" rel="noopener">Open the workbench</a>
+                <a class="sw-btn" href="https://github.com/comparativechrono/bioinformatics-workbench" target="_blank" rel="noopener">GitHub</a>
+            </p>
+        </div>
+        <div class="sw-visual"><div data-viz="workbench"></div></div>
+    </section>
+
+    <!-- TEACHING -->
+    <section class="section reveal" id="teaching" aria-labelledby="teach-title">
+        <p class="section-label">Teaching</p>
+        <h2 id="teach-title">Software in teaching</h2>
+        <p class="section-intro">We write software for teaching genomics and bioinformatics, and share it so that others can use it too. Most of it runs entirely in the browser, so students don’t need to install anything and their work stays on their own computer.</p>
+        <a class="tel-card" href="https://genomics.tel/" target="_blank" rel="noopener">
+            <svg viewBox="0 0 64 64" aria-hidden="true">
+                <circle cx="32" cy="32" r="27" fill="none" stroke="var(--line-strong)" stroke-width="1.5"/>
+                <g class="tel-orbit">
+                    <path d="M18 14 C30 24 34 40 46 50 M46 14 C34 24 30 40 18 50" fill="none" stroke="var(--accent)" stroke-width="2" stroke-linecap="round"/>
+                    <path d="M24 19 H40 M28 26 H36 M28 38 H36 M24 45 H40" stroke="var(--accent)" stroke-width="1.6" stroke-linecap="round" opacity="0.6"/>
+                </g>
+            </svg>
+            <span>
+                <span class="tel-name">genomics.tel</span>
+                <span class="tel-desc">Our website for teaching genomics.</span>
+            </span>
+            <span class="tel-go">Visit ›</span>
+        </a>
+        <div class="pkg-grid" id="pkgTeaching"></div>
+    </section>
+
+    <!-- MORE -->
+    <section class="section reveal" id="more" aria-labelledby="more-title">
+        <h2 id="more-title">More code</h2>
+        <p class="section-intro section-intro--spaced">Other software we are working on, and the analysis code behind our papers.</p>
+        <div class="pkg-grid" id="pkgMore"></div>
+    </section>
+</main>
+
+<footer>
+    <div class="footer-links">
+        <a href="https://github.com/comparativechrono/" target="_blank" rel="noopener">GitHub</a>
+        <a href="mailto:tjh70@cam.ac.uk">Email</a>
+    </div>
+    <div class="appearance" role="group" aria-label="Colour theme">
+        <span class="appearance-label">Theme</span>
+        <button type="button" data-theme-choice="auto" aria-pressed="true">Auto</button>
+        <button type="button" data-theme-choice="light" aria-pressed="false">Light</button>
+        <button type="button" data-theme-choice="dark" aria-pressed="false">Dark</button>
+    </div>
+    <p class="appearance-note">Auto follows your local time: light from 07:00, dark from 19:00.</p>
+    <p>&copy; <span id="yr"></span> Chronomic Medicine Group, Department of Genomic Medicine, University of Cambridge</p>
+</footer>
+
+<script src="theme.js"></script>
+<script src="shared.js"></script>
+<script src="viz.js"></script>
+<script src="viz-software.js"></script>
+<script>
+// Package cards come from data/software.csv; the "group" column decides where each one goes
+function card(p) {
+    const links = [
+        p.url ? `<a href="${esc(p.url)}" target="_blank" rel="noopener">Open</a>` : '',
+        p.pypi ? `<a href="https://pypi.org/project/${esc(p.pypi)}/" target="_blank" rel="noopener">PyPI</a>` : '',
+        p.github ? `<a href="${esc(p.github)}" target="_blank" rel="noopener">GitHub</a>` : '',
+        p.zenodo ? `<a href="https://doi.org/${esc(p.zenodo)}" target="_blank" rel="noopener">Zenodo</a>` : '',
+    ].join('');
+    const code = /^[a-z0-9_.-]+$/i.test(p.name);
+    return `
+        <article class="pkg" data-name="${esc(p.name)}">
+            <h4 class="pkg-name${code ? '' : ' is-plain'}">${esc(p.name)}</h4>
+            <p class="pkg-desc">${esc(p.description)}</p>
+            ${p.pypi ? `<p class="pkg-install"><span>pip install ${esc(p.pypi)}</span><button type="button" class="copy-btn" data-copy="pip install ${esc(p.pypi)}" aria-label="Copy pip install ${esc(p.pypi)}">Copy</button></p>` : ''}
+            <p class="pkg-links">${links}${p.language ? `<span class="pkg-lang">${esc(p.language)}</span>` : ''}</p>
+        </article>`;
+}
+
+async function init() {
+    const software = await loadCSV('data/software.csv');
+    const groups = { 'pedigree-studio': 'pkgPedigree', teaching: 'pkgTeaching', more: 'pkgMore' };
+    Object.entries(groups).forEach(([g, id]) => {
+        const list = software.filter(s => (s.group || 'more') === g);
+        document.getElementById(id).innerHTML = list.map(card).join('');
+    });
+
+    Viz.mountAll(document);
+    // the format map and the package cards light each other up
+    const cards = [...document.querySelectorAll('#pkgPedigree .pkg')];
+    const formats = Viz.mount(document.getElementById('formats'), 'formats', {
+        onHighlight(names) { cards.forEach(c => c.classList.toggle('is-highlight', !!names && names.includes(c.dataset.name))); },
+    });
+    cards.forEach(c => {
+        const on = () => formats && formats.api.highlight(c.dataset.name);
+        const off = () => formats && formats.api.highlight(null);
+        c.addEventListener('pointerenter', on); c.addEventListener('pointerleave', off);
+        c.addEventListener('focusin', on); c.addEventListener('focusout', off);
+    });
+
+    // copy buttons
+    document.addEventListener('click', async (e) => {
+        const btn = e.target.closest('.copy-btn');
+        if (!btn) return;
+        try {
+            await navigator.clipboard.writeText(btn.dataset.copy);
+            btn.textContent = 'Copied';
+            btn.classList.add('is-done');
+            setTimeout(() => { btn.textContent = 'Copy'; btn.classList.remove('is-done'); }, 1600);
+        } catch (err) {
+            btn.textContent = 'Select and copy';
+        }
+    });
+    initReveal();
+}
+
+init();
+</script>
+</body>
+</html>

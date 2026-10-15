@@ -18,6 +18,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=Outfit:wght@200..600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="viz.css">
     <link rel="icon" href="favicon.svg" type="image/svg+xml">
 </head>
 <body>
@@ -28,9 +29,10 @@
     <a href="index.html" class="nav-brand">Chronomic Medicine</a>
     <ul class="nav-links" id="navLinks">
         <li><a href="index.html" class="active" aria-current="page">Home</a></li>
-        <li><a href="#about">About</a></li>
         <li><a href="people.html">People</a></li>
         <li><a href="research.html">Research</a></li>
+        <li><a href="publications.html">Publications</a></li>
+        <li><a href="software.html">Software</a></li>
         <li><a href="undergraduate/">Undergraduates</a></li>
         <li><a href="#news">News</a></li>
         <li><a href="#contact">Contact</a></li>
@@ -79,24 +81,25 @@
     <p class="prose">Tim has a leading role in the <strong>Cambridge Genomic Medicine Programme</strong>, and we take MPhil and MSt students from it each year. We also welcome clinical collaborators.</p>
 </section>
 
-<!-- PILLARS -->
-<div class="section section--flush-top reveal">
-    <div class="pillars">
-        <div class="pillar reveal reveal-d1">
-            <h3>Circadian clocks and cardiac disease</h3>
-            <p>How circadian timing affects cardiac arrhythmias, Long QT syndrome and UBR4 pathways.</p>
-        </div>
-        <div class="pillar reveal reveal-d2">
-            <h3>Immunity, cancer and rare disease</h3>
-            <p>Circadian gene networks in Lynch syndrome cancers, rheumatoid arthritis and congenital adrenal hyperplasia.</p>
-        </div>
-        <div class="pillar reveal reveal-d3">
-            <h3>Chrono-pharmacogenomics</h3>
-            <p>Genetic variants that change how a patient responds to a drug depending on the time of day it is taken.</p>
+<!-- CURRENT PROJECTS: a carousel built from data/projects.csv, each slide with the project's diagram -->
+<section class="section section--flush-top reveal" id="projects" aria-labelledby="projectsTitle">
+    <p class="section-label">Research</p>
+    <h2 id="projectsTitle">Current projects</h2>
+    <div class="carousel" id="carousel" aria-roledescription="carousel" aria-labelledby="projectsTitle" hidden>
+        <div class="carousel-slides" id="carouselSlides"></div>
+        <div class="carousel-controls">
+            <button type="button" class="carousel-btn" id="carouselPlay" aria-label="Pause the slideshow">
+                <svg class="ring" viewBox="0 0 38 38" aria-hidden="true"><circle cx="19" cy="19" r="18"/></svg>
+                <svg class="icon-pause" viewBox="0 0 16 16" aria-hidden="true"><path d="M5.5 3.5v9M10.5 3.5v9"/></svg>
+                <svg class="icon-play" viewBox="0 0 16 16" aria-hidden="true"><path d="M5.5 3.4l7 4.6-7 4.6z"/></svg>
+            </button>
+            <button type="button" class="carousel-btn" id="carouselPrev" aria-label="Previous project"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M10 3L5 8l5 5"/></svg></button>
+            <div class="carousel-dots" id="carouselDots" role="group" aria-label="Choose a project"></div>
+            <button type="button" class="carousel-btn" id="carouselNext" aria-label="Next project"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M6 3l5 5-5 5"/></svg></button>
         </div>
     </div>
     <p class="pillars-more"><a href="research.html" class="link-arrow">All our projects ›</a></p>
-</div>
+</section>
 
 <!-- UNDERGRADUATE PROJECTS (update the year and counts each autumn; the presentation lives in undergraduate/) -->
 <div class="join-band reveal" id="undergraduates">
@@ -161,6 +164,8 @@
 
 <script src="theme.js"></script>
 <script src="shared.js"></script>
+<script src="viz.js"></script>
+<script src="viz-projects.js"></script>
 <script>
 // 24-hour clock: hands show the visitor's local time; the rim shows light (day) and dark (night) hours
 (function () {
@@ -193,6 +198,105 @@
         document.getElementById('mHand').style.transform = `rotate(${m * 6}deg)`;
     }
     tick(); setInterval(tick, 10000);
+})();
+
+// Current projects carousel: one slide per project in data/projects.csv
+(async function () {
+    const projects = (await loadCSV('data/projects.csv')).filter(p => p.status === 'current');
+    const root = document.getElementById('carousel');
+    if (!projects.length || !window.Viz || !root) return;
+    const slidesEl = document.getElementById('carouselSlides');
+    const dotsEl = document.getElementById('carouselDots');
+    const playBtn = document.getElementById('carouselPlay');
+    const DURATION = 9000; // milliseconds per slide
+    root.hidden = false;
+
+    slidesEl.innerHTML = projects.map((p, i) => `
+        <div class="slide tone-${Viz.tone(p.pillar)}" role="group" aria-roledescription="slide" aria-label="${i + 1} of ${projects.length}: ${esc(p.short || p.title)}">
+            <div class="slide-visual"><div class="slide-viz"></div></div>
+            <div class="slide-text">
+                <p class="slide-kicker">${esc(p.pillar || 'Research')}</p>
+                <h3 class="slide-title">${esc(p.title)}</h3>
+                ${p.summary ? `<p class="slide-summary">${esc(p.summary)}</p>` : ''}
+                <a class="link-arrow" href="research.html${p.id ? '#' + esc(p.id) : ''}">Try the interactive diagram ›</a>
+            </div>
+        </div>`).join('');
+    dotsEl.innerHTML = projects.map(p => `<button type="button" class="tone-${Viz.tone(p.pillar)}" aria-label="${esc(p.short || p.title)}"></button>`).join('');
+    const slides = [...slidesEl.children], dots = [...dotsEl.children], handles = [];
+    let current = -1, playing = !Viz.reduced(), hovering = false, focused = false, onScreen = true, elapsed = 0, last = performance.now();
+
+    function show(i, animate) {
+        i = (i + slides.length) % slides.length;
+        if (i === current) return;
+        const prev = current;
+        current = i;
+        slides.forEach((s, k) => {
+            const on = k === i;
+            s.classList.toggle('is-active', on);
+            s.classList.remove('is-entering', 'is-leaving');
+            s.setAttribute('aria-hidden', String(!on));
+            s.inert = !on;
+        });
+        // the new slide sweeps in like a clock hand over the old one
+        if (animate && prev >= 0 && !Viz.reduced()) {
+            slides[prev].classList.add('is-leaving');
+            void slides[i].offsetWidth;
+            slides[i].classList.add('is-entering');
+        }
+        dots.forEach((d, k) => d.setAttribute('aria-current', String(k === i)));
+        if (handles[i] === undefined) {
+            const p = projects[i];
+            handles[i] = Viz.mount(slides[i].querySelector('.slide-viz'), Viz.has(p.visual) ? p.visual : 'gene-clock', { compact: true });
+        }
+        handles.forEach((h, k) => { if (h) h.setActive(k === i); });
+        elapsed = 0;
+    }
+    function setPlaying(on) {
+        playing = on;
+        root.classList.toggle('is-paused', !on);
+        playBtn.setAttribute('aria-label', on ? 'Pause the slideshow' : 'Play the slideshow');
+        slidesEl.setAttribute('aria-live', on ? 'off' : 'polite');
+    }
+    slides.forEach(s => s.addEventListener('animationend', () => {
+        s.classList.remove('is-entering');
+        slides.forEach(o => o.classList.remove('is-leaving'));
+    }));
+    playBtn.addEventListener('click', () => setPlaying(!playing));
+    document.getElementById('carouselPrev').addEventListener('click', () => show(current - 1, true));
+    document.getElementById('carouselNext').addEventListener('click', () => show(current + 1, true));
+    dots.forEach((d, k) => d.addEventListener('click', () => show(k, true)));
+    // Pause while the visitor is looking closely
+    root.addEventListener('pointerenter', (e) => { if (e.pointerType === 'mouse') hovering = true; });
+    root.addEventListener('pointerleave', () => { hovering = false; });
+    root.addEventListener('focusin', () => { focused = true; });
+    root.addEventListener('focusout', (e) => { if (!root.contains(e.relatedTarget)) focused = false; });
+    root.addEventListener('keydown', (e) => {
+        if (e.key === 'ArrowLeft') { show(current - 1, true); e.preventDefault(); }
+        if (e.key === 'ArrowRight') { show(current + 1, true); e.preventDefault(); }
+    });
+    // Swipe on touch screens
+    let x0 = null;
+    slidesEl.addEventListener('pointerdown', (e) => { if (e.pointerType !== 'mouse') x0 = e.clientX; });
+    slidesEl.addEventListener('pointerup', (e) => {
+        if (x0 === null) return;
+        const dx = e.clientX - x0; x0 = null;
+        if (Math.abs(dx) > 50) show(current + (dx < 0 ? 1 : -1), true);
+    });
+    slidesEl.addEventListener('pointercancel', () => { x0 = null; });
+    if ('IntersectionObserver' in window) new IntersectionObserver(es => es.forEach(e => { onScreen = e.isIntersecting; })).observe(root);
+
+    function tick(now) {
+        const dt = Math.min(100, now - last); last = now;
+        if (playing && !hovering && !focused && onScreen && !document.hidden) {
+            elapsed += dt;
+            if (elapsed >= DURATION) show(current + 1, true);
+        }
+        root.style.setProperty('--progress', Math.min(1, elapsed / DURATION).toFixed(3));
+        requestAnimationFrame(tick);
+    }
+    setPlaying(playing);
+    show(0, false);
+    requestAnimationFrame(tick);
 })();
 
 // News, newest first

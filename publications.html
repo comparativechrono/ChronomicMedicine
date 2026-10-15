@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Publications — Chronomic Medicine Group</title>
+    <meta name="description" content="Papers, reviews and conference abstracts from the Chronomic Medicine Group, Department of Genomic Medicine, University of Cambridge.">
+    <meta name="theme-color" content="#060a14">
+    <meta name="color-scheme" content="dark light">
+    <script>
+    /* Colour theme: light 07:00–19:00 local time, dark otherwise, unless the visitor has chosen one (see theme.js) */
+    (function(d){var p=null;try{p=localStorage.getItem('cm-theme')}catch(e){}var h=new Date().getHours();d.setAttribute('data-theme',p==='light'||p==='dark'?p:(h>=7&&h<19?'light':'dark'))})(document.documentElement);
+    </script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=Outfit:wght@200..600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <link rel="icon" href="favicon.svg" type="image/svg+xml">
+</head>
+<body>
+
+<a class="skip-link" href="#main">Skip to content</a>
+
+<nav id="mainNav" class="nav-solid" aria-label="Main">
+    <a href="index.html" class="nav-brand">Chronomic Medicine</a>
+    <ul class="nav-links" id="navLinks">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="people.html">People</a></li>
+        <li><a href="research.html">Research</a></li>
+        <li><a href="publications.html" class="active" aria-current="page">Publications</a></li>
+        <li><a href="software.html">Software</a></li>
+        <li><a href="undergraduate/">Undergraduates</a></li>
+        <li><a href="index.html#news">News</a></li>
+        <li><a href="index.html#contact">Contact</a></li>
+    </ul>
+    <div class="nav-tools">
+        <button class="theme-toggle" type="button" data-theme-toggle aria-label="Switch between light and dark mode">
+            <svg class="icon-sun" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="4.2"/><path d="M12 2.5v2.2M12 19.3v2.2M2.5 12h2.2M19.3 12h2.2M5.3 5.3l1.6 1.6M17.1 17.1l1.6 1.6M5.3 18.7l1.6-1.6M17.1 6.9l1.6-1.6"/></svg>
+            <svg class="icon-moon" viewBox="0 0 24 24" aria-hidden="true"><path d="M20 14.6A8.4 8.4 0 0 1 9.4 4a8.4 8.4 0 1 0 10.6 10.6z"/></svg>
+        </button>
+        <button class="nav-toggle" id="navToggle" type="button" aria-label="Menu" aria-expanded="false" aria-controls="navLinks"><span></span><span></span><span></span></button>
+    </div>
+</nav>
+
+<main id="main">
+    <!-- Publications come from data/publications.csv -->
+    <header class="page-header reveal">
+        <p class="section-label">Publications</p>
+        <h1>Publications</h1>
+        <p class="section-intro" id="pubIntro">Papers, reviews and conference abstracts from the group.</p>
+    </header>
+
+    <section class="section section--tight-top" aria-label="Publication list">
+        <div class="pub-tools" id="pubTools" hidden>
+            <div class="pub-years" id="pubYears" role="group" aria-label="Show one year"></div>
+            <div class="pub-filter">
+                <div class="pub-types" id="pubTypes" role="group" aria-label="Show one type"></div>
+                <label class="pub-search">
+                    <span class="visually-hidden">Search publications</span>
+                    <input type="search" id="pubSearch" placeholder="Search titles, authors and journals" autocomplete="off">
+                </label>
+            </div>
+            <p class="pub-count" id="pubCount" aria-live="polite"></p>
+        </div>
+        <div id="pubList"><noscript><p class="pub-note">The publication list needs JavaScript. It is also available as <a href="data/publications.csv">data/publications.csv</a>.</p></noscript></div>
+    </section>
+
+    <div class="join-band reveal">
+        <h2>Code and data</h2>
+        <p>The software and analysis code behind many of these papers is open source.</p>
+        <a href="software.html" class="cta-btn">See our software</a>
+    </div>
+</main>
+
+<footer>
+    <div class="footer-links">
+        <a href="https://github.com/comparativechrono/" target="_blank" rel="noopener">GitHub</a>
+        <a href="mailto:tjh70@cam.ac.uk">Email</a>
+    </div>
+    <div class="appearance" role="group" aria-label="Colour theme">
+        <span class="appearance-label">Theme</span>
+        <button type="button" data-theme-choice="auto" aria-pressed="true">Auto</button>
+        <button type="button" data-theme-choice="light" aria-pressed="false">Light</button>
+        <button type="button" data-theme-choice="dark" aria-pressed="false">Dark</button>
+    </div>
+    <p class="appearance-note">Auto follows your local time: light from 07:00, dark from 19:00.</p>
+    <p>&copy; <span id="yr"></span> Chronomic Medicine Group, Department of Genomic Medicine, University of Cambridge</p>
+</footer>
+
+<script src="theme.js"></script>
+<script src="shared.js"></script>
+<script>
+const TYPE_LABELS = { article: 'Article', review: 'Review', abstract: 'Conference abstract', commentary: 'Commentary', preprint: 'Preprint', chapter: 'Book chapter' };
+const TYPE_PLURALS = { article: 'Articles', review: 'Reviews', abstract: 'Conference abstracts', commentary: 'Commentaries', preprint: 'Preprints', chapter: 'Book chapters' };
+const state = { year: null, type: null, q: '' };
+let pubs = [];
+
+// Bold the group leader's name in author lists
+const highlightAuthors = (a) => esc(a).replace(/\bHearn\s+T[A-Z]*\b/g, m => `<strong>${m}</strong>`);
+
+function matches(p, ignore) {
+    if (state.year && ignore !== 'year' && p.year !== state.year) return false;
+    if (state.type && ignore !== 'type' && (p.type || 'article') !== state.type) return false;
+    if (state.q) {
+        const hay = `${p.title} ${p.authors} ${p.journal}`.toLowerCase();
+        if (!state.q.toLowerCase().split(/\s+/).filter(Boolean).every(w => hay.includes(w))) return false;
+    }
+    return true;
+}
+
+function renderControls() {
+    // year chart: bars show how many match the other filters
+    // every year from the first to the last, including years with none
+    const ys = pubs.map(p => +p.year).filter(Boolean);
+    const years = [];
+    for (let y = Math.min(...ys); y <= Math.max(...ys); y++) years.push(String(y));
+    const counts = years.map(y => pubs.filter(p => p.year === y && matches(p, 'year')).length);
+    const max = Math.max(1, ...years.map(y => pubs.filter(p => p.year === y).length));
+    const yearsEl = document.getElementById('pubYears');
+    if (!yearsEl.children.length) {
+        yearsEl.innerHTML = years.map(y => `<button type="button" class="pub-year-btn" data-year="${esc(y)}" aria-pressed="false"><span class="n"></span><span class="bar"></span><span class="y">${esc(y)}</span></button>`).join('');
+        yearsEl.querySelectorAll('button').forEach(b => b.addEventListener('click', () => {
+            state.year = state.year === b.dataset.year ? null : b.dataset.year;
+            render();
+        }));
+    }
+    yearsEl.querySelectorAll('button').forEach((b, i) => {
+        b.setAttribute('aria-pressed', String(state.year === b.dataset.year));
+        b.setAttribute('aria-label', `${b.dataset.year}: ${counts[i]} ${counts[i] === 1 ? 'publication' : 'publications'}`);
+        b.querySelector('.n').textContent = counts[i];
+        b.style.setProperty('--h', (100 * counts[i] / max).toFixed(1));
+    });
+    // type chips
+    const types = Object.keys(TYPE_LABELS).filter(t => pubs.some(p => (p.type || 'article') === t));
+    const typesEl = document.getElementById('pubTypes');
+    const nAll = pubs.filter(p => matches(p, 'type')).length;
+    typesEl.innerHTML = [`<button type="button" class="chip-btn" data-type="" aria-pressed="${!state.type}">All<span class="c">${nAll}</span></button>`]
+        .concat(types.map(t => `<button type="button" class="chip-btn" data-type="${t}" aria-pressed="${state.type === t}">${TYPE_PLURALS[t]}<span class="c">${pubs.filter(p => (p.type || 'article') === t && matches(p, 'type')).length}</span></button>`))
+        .join('');
+    typesEl.querySelectorAll('button').forEach(b => b.addEventListener('click', () => {
+        state.type = b.dataset.type || null;
+        render();
+    }));
+}
+
+function renderList() {
+    const shown = pubs.filter(p => matches(p));
+    const filtered = state.year || state.type || state.q;
+    const countEl = document.getElementById('pubCount');
+    countEl.innerHTML = filtered
+        ? `Showing ${shown.length} of ${pubs.length}<button type="button" id="pubClear">Show all</button>`
+        : `${pubs.length} publications`;
+    const clear = document.getElementById('pubClear');
+    if (clear) clear.addEventListener('click', () => {
+        state.year = null; state.type = null; state.q = '';
+        document.getElementById('pubSearch').value = '';
+        render();
+    });
+    const pubEl = document.getElementById('pubList');
+    if (!shown.length) { pubEl.innerHTML = '<p class="pub-note">No publications match.</p>'; return; }
+    const years = [...new Set(shown.map(p => p.year))].sort((a, b) => b.localeCompare(a));
+    pubEl.innerHTML = years.map(y => `
+        <div class="pub-year-group">
+            <div class="pub-year-heading">${esc(y)}</div>
+            <div>
+                ${shown.filter(p => p.year === y).map(p => `
+                    <article class="pub-item">
+                        ${p.type ? `<div class="pub-type">${esc(TYPE_LABELS[p.type] || p.type)}</div>` : ''}
+                        <h3 class="pub-title">${esc(p.title)}</h3>
+                        <div class="pub-authors">${highlightAuthors(p.authors)}</div>
+                        ${p.journal ? `<div class="pub-journal">${esc(p.journal)}</div>` : ''}
+                        <div class="pub-badges">
+                            ${p.doi ? `<a href="https://doi.org/${esc(p.doi)}" target="_blank" rel="noopener" class="pub-badge">DOI</a>` : ''}
+                            ${p.pdf ? `<a href="${esc(p.pdf)}" target="_blank" rel="noopener" class="pub-badge">PDF</a>` : ''}
+                            ${p.github ? `<a href="${esc(p.github)}" target="_blank" rel="noopener" class="pub-badge">Code</a>` : ''}
+                            ${p.preprint ? `<a href="${esc(p.preprint)}" target="_blank" rel="noopener" class="pub-badge">Preprint</a>` : ''}
+                        </div>
+                    </article>`).join('')}
+            </div>
+        </div>`).join('');
+}
+
+function render() { renderControls(); renderList(); }
+
+async function init() {
+    pubs = await loadCSV('data/publications.csv');
+    if (!pubs.length) {
+        document.getElementById('pubList').innerHTML = '<p class="pub-note">Add publications to data/publications.csv (columns: year, authors, title, journal, doi, pdf, github, preprint, type).</p>';
+        return;
+    }
+    const years = pubs.map(p => +p.year).filter(Boolean);
+    document.getElementById('pubIntro').textContent =
+        `${pubs.length} papers, reviews and conference abstracts from the group since ${Math.min(...years)}. Select a year or a type, or search.`;
+    document.getElementById('pubTools').hidden = false;
+    let timer = 0;
+    document.getElementById('pubSearch').addEventListener('input', (e) => {
+        clearTimeout(timer);
+        timer = setTimeout(() => { state.q = e.target.value.trim(); render(); }, 120);
+    });
+    // the year bars grow in when the page opens
+    render();
+    const bars = document.querySelectorAll('.pub-year-btn');
+    const heights = [...bars].map(b => b.style.getPropertyValue('--h'));
+    bars.forEach(b => b.style.setProperty('--h', 0));
+    requestAnimationFrame(() => requestAnimationFrame(() => bars.forEach((b, i) => b.style.setProperty('--h', heights[i]))));
+}
+
+init();
+</script>
+</body>
+</html>

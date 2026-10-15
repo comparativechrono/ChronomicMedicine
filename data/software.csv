@@ -1,0 +1,15 @@
+name,group,description,url,github,pypi,zenodo,language
+studio2ga4gh,pedigree-studio,Convert Pedigree Studio sessions to the GA4GH Pedigree standard and Phenopackets.,,https://github.com/comparativechrono/studio2ga4gh,studio2ga4gh,,Python
+ga4gh2studio,pedigree-studio,Convert GA4GH Pedigree and Phenopackets files into Pedigree Studio sessions.,,https://github.com/comparativechrono/ga4gh2studio,ga4gh2studio,,Python
+studio2ped,pedigree-studio,Convert Pedigree Studio sessions to PED and MPED (multi-phenotype PED) files.,,https://github.com/comparativechrono/studio2ped,studio2ped,,Python
+ped2studio,pedigree-studio,Convert PED and MPED files into Pedigree Studio sessions.,,https://github.com/comparativechrono/ped2studio,ped2studio,,Python
+mpedtools,pedigree-studio,"Read, check, merge, split, convert and query PED and MPED files.",,https://github.com/comparativechrono/mpedtools,mpedtools,,Python
+hponorm,pedigree-studio,Check the phenotype terms in phenopackets and match them to the Human Phenotype Ontology (HPO).,,https://github.com/comparativechrono/hponorm,hponorm,,Python
+mondonorm,pedigree-studio,Check the disease terms in phenopackets and match them to the MONDO disease ontology.,,https://github.com/comparativechrono/mondonorm,mondonorm,,Python
+R workbench,teaching,"R practicals in the browser: an R console, an RStudio-style editor, notebooks, R Markdown, Quarto and Shiny, next to the practical’s instructions.",https://comparativechrono.github.io/R-workbench/,https://github.com/comparativechrono/R-workbench,,,R
+How aligners work,teaching,"An interactive tutorial on the algorithms inside sequence aligners, from hash tables to the Burrows–Wheeler transform, one step at a time.",https://comparativechrono.github.io/how-aligners-work/,https://github.com/comparativechrono/how-aligners-work,,,JavaScript
+Bioinformatics algorithms in Python,teaching,"A three-hour practical in which students write Python in the browser and use it to look inside alignment, BLAST, trees and networks.",https://comparativechrono.github.io/bioinformatics-algorithms-python/,https://github.com/comparativechrono/bioinformatics-algorithms-python,,,Python
+SLURM emulator,teaching,"Practise writing, submitting and managing SLURM jobs on your own computer before using a real cluster.",,https://github.com/comparativechrono/SLURM_Emulator_Teaching_Package,,,Python
+Native Workbench,more,A Windows desktop application that runs bioinformatics tools locally and records how each result was produced. In development.,,https://github.com/comparativechrono/workbench,,,
+Genomics WebAssembly tools,more,"Bioinformatics programs compiled to run in a web browser, each tested against the original program. Several of the Bioinformatics workbench’s programs come from here.",,https://github.com/comparativechrono/genomics-wasm,,,JavaScript
+Analysis code for our papers,more,Lab-wide analysis scripts and shared code.,https://github.com/comparativechrono/,,,,R/Python

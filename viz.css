@@ -1,0 +1,282 @@
+/* ═══════════════════════════════════════════
+   CHRONOMIC MEDICINE — INTERACTIVE DIAGRAMS (viz.js)
+   Colours for both themes, the controls under each diagram,
+   and the shapes used inside the diagrams.
+   ═══════════════════════════════════════════ */
+
+/* Category colours: one per research theme */
+:root,
+[data-theme="dark"] {
+    --c-rose: #ff8a9a;   --c-rose-rgb: 255, 138, 154;
+    --c-violet: #b8a2ff; --c-violet-rgb: 184, 162, 255;
+    --c-teal: #5ed6c0;   --c-teal-rgb: 94, 214, 192;
+    --c-amber: #e8c36e;  --c-amber-rgb: 232, 195, 110;
+    --c-blue: #7fb4ff;   --c-blue-rgb: 127, 180, 255;
+    --c-green: #9bd77a;  --c-green-rgb: 155, 215, 122;
+    --viz-panel: rgba(255, 255, 255, 0.018);
+    --viz-node: #0f1a2d;
+}
+[data-theme="light"] {
+    --c-rose: #cf3a58;   --c-rose-rgb: 207, 58, 88;
+    --c-violet: #7d44c8; --c-violet-rgb: 125, 68, 200;
+    --c-teal: #0a8f7a;   --c-teal-rgb: 10, 143, 122;
+    --c-amber: #b26a00;  --c-amber-rgb: 178, 106, 0;
+    --c-blue: #2b77e3;   --c-blue-rgb: 43, 119, 227;
+    --c-green: #3d8b28;  --c-green-rgb: 61, 139, 40;
+    --viz-panel: #fbfdff;
+    --viz-node: #ffffff;
+}
+
+/* A theme colour set on a parent (a project, a slide) is picked up by its diagram as --c */
+.tone-rose   { --tone: var(--c-rose);   --tone-rgb: var(--c-rose-rgb); }
+.tone-violet { --tone: var(--c-violet); --tone-rgb: var(--c-violet-rgb); }
+.tone-teal   { --tone: var(--c-teal);   --tone-rgb: var(--c-teal-rgb); }
+.tone-amber  { --tone: var(--c-amber);  --tone-rgb: var(--c-amber-rgb); }
+.tone-blue   { --tone: var(--c-blue);   --tone-rgb: var(--c-blue-rgb); }
+.tone-green  { --tone: var(--c-green);  --tone-rgb: var(--c-green-rgb); }
+.tone-accent { --tone: var(--accent);   --tone-rgb: var(--accent-rgb); }
+
+.viz { --c: var(--tone, var(--accent)); --c-rgb: var(--tone-rgb, var(--accent-rgb)); position: relative; }
+.viz-stage { position: relative; }
+.viz-svg { display: block; width: 100%; height: auto; overflow: visible; -webkit-user-select: none; user-select: none; }
+.viz-svg text { font-family: var(--sans); font-size: 13px; fill: var(--text-muted); font-weight: 400; }
+[data-theme="light"] .viz-svg text { font-weight: 450; }
+.viz--failed { display: none; }
+
+/* ─── Controls under a diagram ─── */
+.viz-controls { display: flex; flex-wrap: wrap; align-items: center; gap: 0.7rem 1.25rem; margin-top: 1rem; }
+.viz-seg {
+    display: inline-flex; align-items: center; flex-wrap: wrap; gap: 0.2rem;
+    padding: 0.2rem; border: 1px solid var(--line-strong); border-radius: 999px;
+}
+.viz-seg-label { font-size: 0.74rem; color: var(--text-muted); padding: 0 0.45rem 0 0.6rem; }
+.viz-seg button {
+    font: inherit; font-size: 0.76rem; color: var(--text-muted);
+    background: none; border: none; cursor: pointer;
+    padding: 0.32rem 0.8rem; border-radius: 999px;
+    transition: background 0.25s, color 0.25s;
+}
+.viz-seg button:hover { color: var(--text-strong); }
+.viz-seg button[aria-pressed="true"] { background: rgba(var(--c-rgb), 0.16); color: var(--text-strong); }
+.viz-slider { display: grid; gap: 0.15rem; flex: 1 1 220px; max-width: 340px; }
+.viz-slider label { display: flex; justify-content: space-between; gap: 1rem; font-size: 0.76rem; color: var(--text-muted); }
+.viz-slider-value { color: var(--text-strong); font-variant-numeric: tabular-nums; }
+.viz-slider input { width: 100%; accent-color: var(--c); cursor: pointer; }
+.viz-btn {
+    font: inherit; font-size: 0.76rem; color: var(--text);
+    background: none; border: 1px solid rgba(var(--c-rgb), 0.5); border-radius: 999px;
+    padding: 0.38rem 0.95rem; cursor: pointer;
+    transition: background 0.25s, border-color 0.25s, color 0.25s;
+}
+.viz-btn:hover { background: rgba(var(--c-rgb), 0.12); border-color: var(--c); color: var(--text-strong); }
+.viz-btn--quiet { border-color: transparent; color: var(--text-muted); padding-left: 0.4rem; padding-right: 0.4rem; text-decoration: underline; text-underline-offset: 3px; text-decoration-color: var(--line-strong); }
+.viz-btn--quiet:hover { background: none; border-color: transparent; }
+.viz-caption { margin-top: 0.9rem; font-size: 0.82rem; line-height: 1.6; color: var(--text-muted); max-width: 64ch; }
+.viz-caption strong { color: var(--text-strong); font-weight: 450; }
+
+/* ─── Shapes shared by several diagrams ─── */
+.v-ring { fill: none; stroke: rgba(var(--ink-rgb), 0.22); stroke-width: 1; }
+.v-ring-soft { fill: none; stroke: rgba(var(--ink-rgb), 0.1); stroke-width: 1; }
+.v-face { fill: var(--viz-panel); stroke: rgba(var(--ink-rgb), 0.16); stroke-width: 1; }
+.v-tick { stroke: rgba(var(--ink-rgb), 0.35); stroke-width: 1; }
+.v-tick.is-major { stroke: rgba(var(--ink-rgb), 0.7); stroke-width: 1.6; }
+.viz-svg .v-hour { font-size: 11px; letter-spacing: 0.08em; fill: var(--text-faint); text-anchor: middle; dominant-baseline: middle; }
+.v-day { fill: none; stroke: var(--day-arc); stroke-width: 3; stroke-linecap: round; }
+.v-night { fill: none; stroke: var(--night-arc); stroke-width: 3; stroke-linecap: round; }
+.v-hand { stroke: var(--c); stroke-width: 2.5; stroke-linecap: round; }
+.v-hub { fill: var(--c); }
+.v-knob { fill: var(--c); stroke: var(--bg); stroke-width: 3; }
+.viz-grab { cursor: grab; touch-action: none; }
+.is-dragging, .is-dragging .viz-grab { cursor: grabbing; }
+.viz-knob:focus { outline: none; }
+.viz-knob:focus-visible { stroke: var(--text-strong); stroke-width: 3; }
+.v-line { stroke: rgba(var(--ink-rgb), 0.35); stroke-width: 1; fill: none; }
+.v-faint { stroke: rgba(var(--ink-rgb), 0.14); stroke-width: 1; fill: none; }
+.v-grid { stroke: rgba(var(--ink-rgb), 0.07); stroke-width: 1; fill: none; }
+.v-tone { stroke: var(--c); fill: none; }
+.v-tone-fill { fill: var(--c); }
+.v-panel { fill: var(--viz-panel); stroke: rgba(var(--ink-rgb), 0.14); stroke-width: 1; }
+.viz-svg .v-strong { fill: var(--text-strong); }
+.viz-svg .v-small { font-size: 11px; }
+.viz-svg .v-label { font-size: 12px; fill: var(--text-muted); }
+.viz-svg .v-title { font-size: 12px; letter-spacing: 0.08em; text-transform: uppercase; fill: var(--text-muted); }
+.viz-svg .v-num { font-family: var(--serif); font-size: 30px; fill: var(--text-strong); font-variant-numeric: lining-nums tabular-nums; }
+.viz-svg .v-num-sm { font-family: var(--serif); font-size: 22px; fill: var(--text-strong); font-variant-numeric: lining-nums tabular-nums; }
+.viz-svg .v-mono { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 11.5px; }
+.viz-svg .v-tone-text { fill: var(--c); }
+.viz-svg .v-rose-text { fill: var(--c-rose); }
+.viz-svg .v-teal-text { fill: var(--c-teal); }
+.viz-svg .v-mid { text-anchor: middle; }
+.viz-svg .v-end { text-anchor: end; }
+.v-rose { stroke: var(--c-rose); fill: none; }
+.v-rose-fill { fill: var(--c-rose); }
+.v-teal { stroke: var(--c-teal); fill: none; }
+.v-teal-fill { fill: var(--c-teal); }
+.v-amber { stroke: var(--c-amber); fill: none; }
+.v-amber-fill { fill: var(--c-amber); }
+.v-violet { stroke: var(--c-violet); fill: none; }
+.v-violet-fill { fill: var(--c-violet); }
+.v-blue { stroke: var(--c-blue); fill: none; }
+.v-blue-fill { fill: var(--c-blue); }
+.v-ecg { fill: none; stroke: var(--c); stroke-width: 1.8; stroke-linejoin: round; stroke-linecap: round; }
+.v-fade { transition: opacity 0.4s; }
+
+/* ─── Heart through the day ─── */
+.hd-risk { fill: none; stroke: rgba(var(--c-rose-rgb), 0.55); stroke-width: 7; stroke-linecap: round; }
+.hd-cursor { fill: var(--c); }
+.hd-qt { stroke: var(--c-rose); stroke-width: 1.4; fill: none; }
+.viz-svg .hd-qt-label { fill: var(--c-rose); font-size: 12px; }
+
+/* ─── Conserved gene (UBR4) ─── */
+.cg-row { cursor: pointer; }
+.cg-row:focus { outline: none; }
+.cg-row:focus-visible .cg-hit { stroke: var(--c); stroke-width: 1.5; }
+.cg-hit { fill: transparent; stroke: transparent; rx: 8; }
+.cg-row.is-on .cg-hit { fill: rgba(var(--c-rgb), 0.08); }
+.cg-icon { fill: none; stroke: rgba(var(--ink-rgb), 0.6); stroke-width: 1.6; stroke-linecap: round; stroke-linejoin: round; }
+.cg-row.is-on .cg-icon { stroke: var(--c); }
+.cg-bar { fill: rgba(var(--ink-rgb), 0.12); }
+.cg-block { fill: var(--c); }
+.viz-svg .cg-row.is-on .cg-name { fill: var(--text-strong); }
+
+/* ─── DNA repair (Lynch syndrome) ─── */
+.mr-unit { fill: rgba(var(--ink-rgb), 0.08); stroke: rgba(var(--ink-rgb), 0.35); stroke-width: 1; }
+.mr-unit.is-new { fill: rgba(var(--c-rgb), 0.14); stroke: var(--c); }
+.mr-unit.is-extra { fill: rgba(var(--c-rose-rgb), 0.2); stroke: var(--c-rose); }
+.viz-svg .mr-unit-text { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 10.5px; fill: var(--text); text-anchor: middle; dominant-baseline: central; }
+.mr-pol { fill: none; stroke: var(--c); stroke-width: 1.6; stroke-dasharray: 3 3; }
+.mr-loop { fill: rgba(var(--c-rose-rgb), 0.2); stroke: var(--c-rose); stroke-width: 1.4; }
+.mr-clamp { fill: rgba(var(--c-teal-rgb), 0.18); stroke: var(--c-teal); stroke-width: 1.6; }
+.viz-svg .mr-clamp-text { fill: var(--c-teal); font-size: 10px; text-anchor: middle; dominant-baseline: central; font-weight: 500; }
+.mr-window { fill: none; stroke: rgba(var(--c-rgb), 0.55); stroke-width: 6; stroke-linecap: round; transition: opacity 0.5s; }
+.mr-dot { fill: var(--c); }
+.mr-cell { fill: rgba(var(--c-rgb), 0.15); stroke: var(--c); stroke-width: 1.3; }
+
+/* ─── Chronotype (Covid-19) ─── */
+.ct-bar { stroke: var(--c-teal); stroke-width: 3; stroke-linecap: round; }
+.ct-virus { fill: var(--c-rose); }
+.ct-virus-spike { stroke: var(--c-rose); stroke-width: 1.4; stroke-linecap: round; }
+.ct-meter-bg { fill: rgba(var(--ink-rgb), 0.1); }
+.ct-meter { fill: var(--c-teal); }
+
+/* ─── Steroids (CYP21A2) ─── */
+.st-node { fill: var(--viz-node); stroke: rgba(var(--ink-rgb), 0.3); stroke-width: 1; }
+.st-pool { fill: rgba(var(--c-amber-rgb), 0.18); stroke: var(--c-amber); stroke-width: 1.2; }
+.st-gate { fill: rgba(var(--c-rgb), 0.16); stroke: var(--c); stroke-width: 1.4; }
+.st-path { fill: none; stroke: rgba(var(--ink-rgb), 0.25); stroke-width: 1.5; }
+.st-dot { fill: var(--c-blue); }
+.st-dot.is-ohp { fill: var(--c-amber); }
+.st-dot.is-andro { fill: var(--c-rose); }
+.st-cortisol { fill: none; stroke: var(--c-blue); stroke-width: 2; }
+.st-ohp { fill: none; stroke: var(--c-amber); stroke-width: 2; stroke-dasharray: 5 4; }
+.st-exon { fill: rgba(var(--ink-rgb), 0.3); }
+.st-promoter { fill: rgba(var(--c-rgb), 0.18); stroke: var(--c); stroke-width: 1; }
+
+/* ─── Enrichment (rheumatoid arthritis) ─── */
+.en-gene { fill: rgba(var(--ink-rgb), 0.16); stroke: none; transition: fill 0.25s; }
+.en-gene.is-rhythmic { fill: var(--c-teal); }
+.en-gene.is-ra { stroke: var(--c-rose); stroke-width: 1.8; fill: transparent; }
+.en-gene.is-ra.is-rhythmic { fill: var(--c-teal); }
+.en-bar { fill: rgba(var(--ink-rgb), 0.3); }
+.en-bar.is-extreme { fill: rgba(var(--c-rose-rgb), 0.7); }
+.en-obs { stroke: var(--c-rose); stroke-width: 1.6; stroke-dasharray: 4 3; }
+.en-exp { stroke: rgba(var(--ink-rgb), 0.5); stroke-width: 1.2; stroke-dasharray: 2 3; }
+
+/* ─── Dosing (chrono-pharmacogenomics) ─── */
+.ds-band { fill: rgba(var(--c-teal-rgb), 0.12); }
+.ds-high { fill: rgba(var(--c-rose-rgb), 0.07); }
+.ds-curve { fill: none; stroke: var(--c); stroke-width: 2.2; stroke-linejoin: round; }
+.ds-area { fill: rgba(var(--c-rgb), 0.08); }
+.ds-clear { stroke: rgba(var(--c-rgb), 0.55); stroke-width: 3; stroke-linecap: round; }
+.ds-pill-a { fill: var(--c); }
+.ds-pill-b { fill: var(--bg); stroke: var(--c); stroke-width: 1.5; }
+
+/* ─── Gene panels ─── */
+.gp-gene { fill: rgba(var(--ink-rgb), 0.1); transition: fill 0.35s; }
+.gp-gene.is-tested { fill: rgba(var(--c-rgb), 0.22); }
+.gp-gene.is-cause { fill: rgba(var(--ink-rgb), 0.38); }
+.gp-gene.is-tested.is-cause { fill: var(--c); }
+.gp-panel { fill: none; stroke: rgba(var(--ink-rgb), 0.35); stroke-width: 1.2; stroke-dasharray: 4 3; transition: stroke 0.35s; }
+.gp-panel.is-tested { stroke: var(--c); stroke-dasharray: none; stroke-width: 1.6; }
+.gp-person { fill: none; stroke: rgba(var(--ink-rgb), 0.45); stroke-width: 1.4; transition: fill 0.35s, stroke 0.35s; }
+.gp-person.is-found { fill: rgba(var(--c-rgb), 0.22); stroke: var(--c); }
+.gp-link { stroke: var(--c); stroke-width: 1; opacity: 0.6; fill: none; }
+
+/* ─── Gene clock (default diagram) ─── */
+.gc-bar { stroke: var(--c); stroke-width: 3; stroke-linecap: round; }
+
+/* ─── Project dial (Research page overview) ─── */
+.pd-dot { stroke: var(--bg); stroke-width: 2; cursor: pointer; transition: r 0.3s var(--ease); }
+.viz-svg .pd-num { font-size: 10.5px; fill: var(--bg); text-anchor: middle; dominant-baseline: central; pointer-events: none; font-weight: 600; }
+.pd-spoke { stroke: rgba(var(--ink-rgb), 0.1); stroke-width: 1; }
+.viz-svg .pd-centre { font-family: var(--serif); font-size: 21px; fill: var(--text-strong); text-anchor: middle; }
+.viz-svg .pd-sub { font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase; text-anchor: middle; }
+
+/* ─── Pedigree Studio ─── */
+.pg-line { fill: none; stroke: rgba(var(--ink-rgb), 0.7); stroke-width: 1.6; stroke-linecap: round; }
+.pg-arrow { fill: rgba(var(--ink-rgb), 0.8); }
+.pg-person { cursor: pointer; }
+.pg-person:focus { outline: none; }
+.pg-person:focus-visible .pg-sym { stroke: var(--c); stroke-width: 3; }
+.pg-sym { fill: var(--viz-node); stroke: rgba(var(--ink-rgb), 0.8); stroke-width: 1.6; transition: fill 0.3s; }
+.pg-person:hover .pg-sym { stroke: var(--c); }
+.pg-person.is-affected .pg-sym { fill: var(--c); }
+.pg-file { fill: var(--viz-node); stroke: rgba(var(--ink-rgb), 0.45); stroke-width: 1.2; }
+
+/* ─── File formats ─── */
+.fm-node { fill: var(--viz-node); stroke: rgba(var(--ink-rgb), 0.3); stroke-width: 1; }
+.fm-node.is-main { fill: rgba(var(--c-rgb), 0.14); stroke: var(--c); }
+.fm-edge { fill: none; stroke: rgba(var(--ink-rgb), 0.35); stroke-width: 1.5; transition: stroke 0.25s, opacity 0.25s; }
+.fm-arrowhead { fill: rgba(var(--ink-rgb), 0.5); }
+.fm-dot { fill: var(--c); opacity: 0.8; }
+.viz-svg .fm-label { font-size: 11.5px; fill: var(--text); transition: fill 0.25s; }
+.fm-route { cursor: default; transition: opacity 0.25s; }
+.fm-hit { fill: none; stroke: transparent; stroke-width: 18; pointer-events: stroke; }
+.fm-route.is-on .fm-edge { stroke: var(--c); stroke-width: 2.2; }
+.viz-svg .fm-route.is-on .fm-label { fill: var(--c); font-weight: 600; }
+.fm-route.is-off { opacity: 0.25; }
+
+/* ─── nugap ─── */
+.ng-a { fill: none; stroke: rgba(var(--ink-rgb), 0.75); stroke-width: 2; }
+.ng-b { fill: none; stroke: var(--c); stroke-width: 2.4; }
+.viz-svg .ng-a-text { fill: var(--text); }
+.viz-svg .ng-b-text { fill: var(--c); }
+.ng-input { fill: none; stroke: rgba(var(--ink-rgb), 0.3); stroke-width: 1.4; stroke-dasharray: 4 3; }
+.ng-track { fill: none; stroke: rgba(var(--ink-rgb), 0.12); stroke-width: 12; stroke-linecap: round; }
+.ng-fill { fill: none; stroke: var(--c); stroke-width: 12; stroke-linecap: round; }
+.ng-needle { stroke: var(--text-strong); stroke-width: 2; stroke-linecap: round; }
+
+/* ─── Bioinformatics workbench ─── */
+.wb-window { fill: var(--viz-panel); stroke: rgba(var(--ink-rgb), 0.25); stroke-width: 1; }
+.wb-dot { fill: rgba(var(--ink-rgb), 0.25); }
+.wb-url { fill: rgba(var(--ink-rgb), 0.07); }
+.wb-tab { cursor: pointer; }
+.wb-tab:focus { outline: none; }
+.wb-tab:focus-visible .wb-tab-bg { stroke: var(--c); }
+.wb-tab-bg { fill: transparent; stroke: rgba(var(--ink-rgb), 0.18); stroke-width: 1; transition: fill 0.25s; }
+.wb-tab:hover .wb-tab-bg { fill: rgba(var(--ink-rgb), 0.06); }
+.wb-tab.is-on .wb-tab-bg { fill: rgba(var(--c-rgb), 0.18); stroke: var(--c); }
+.viz-svg .wb-tab.is-on text { fill: var(--text-strong); }
+.viz-svg .wb-term { fill: var(--text-strong); font-size: 12px; }
+.viz-svg .wb-term.is-out { fill: var(--c-teal); }
+.wb-caret { fill: var(--c); }
+.wb-cell { fill: rgba(var(--ink-rgb), 0.05); stroke: rgba(var(--ink-rgb), 0.15); stroke-width: 1; }
+.viz-svg .wb-code { fill: var(--text-strong); font-size: 12px; }
+.wb-bar { fill: var(--c); opacity: 0.85; }
+.wb-field { fill: var(--viz-node); stroke: rgba(var(--ink-rgb), 0.22); stroke-width: 1; }
+.wb-hist { fill: rgba(var(--ink-rgb), 0.08); stroke: rgba(var(--ink-rgb), 0.2); stroke-width: 1; transition: fill 0.3s, stroke 0.3s; }
+.is-done > .wb-hist { fill: rgba(var(--c-green-rgb), 0.16); stroke: var(--c-green); }
+.wb-exon { fill: var(--c); }
+.wb-read { fill: rgba(var(--ink-rgb), 0.22); }
+.wb-var { fill: var(--c-rose); }
+.wb-helix { fill: none; stroke: var(--c); stroke-width: 7; stroke-linecap: round; stroke-linejoin: round; }
+.wb-helix.is-back { stroke: rgba(var(--c-rgb), 0.3); stroke-width: 5; }
+.wb-edge { stroke: rgba(var(--ink-rgb), 0.3); stroke-width: 1.2; }
+.wb-node { fill: var(--viz-node); stroke: var(--c); stroke-width: 2; }
+.wb-node.is-hub { fill: var(--c); }
+
+/* On phones the format map is too wide to shrink, so it scrolls sideways */
+@media (max-width: 600px) {
+    .viz--formats .viz-stage { overflow-x: auto; -webkit-overflow-scrolling: touch; overscroll-behavior-x: contain; }
+    .viz--formats .viz-svg { min-width: 640px; }
+}
