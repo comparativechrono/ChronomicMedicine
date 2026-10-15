@@ -214,7 +214,7 @@
 
 /* ─── Pedigree Studio ─── */
 .pg-line { fill: none; stroke: rgba(var(--ink-rgb), 0.7); stroke-width: 1.6; stroke-linecap: round; }
-.pg-arrow { fill: rgba(var(--ink-rgb), 0.8); }
+.pg-arrow { fill: rgba(var(--ink-rgb), 0.7); stroke: rgba(var(--ink-rgb), 0.7); stroke-width: 1; stroke-linejoin: round; }
 .pg-person { cursor: pointer; }
 .pg-person:focus { outline: none; }
 .pg-person:focus-visible .pg-sym { stroke: var(--c); stroke-width: 3; }

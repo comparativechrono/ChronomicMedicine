@@ -50,9 +50,15 @@
             else shape = v.s('path', { d: `M${p.x} ${p.y - S - 2} L${p.x + S + 2} ${p.y} L${p.x} ${p.y + S + 2} L${p.x - S - 2} ${p.y} Z`, class: 'pg-sym' }, g);
             if (p.deceased) v.s('line', { x1: p.x - S - 5, y1: p.y + S + 5, x2: p.x + S + 5, y2: p.y - S - 5, class: 'pg-line' }, g);
             if (p.proband) {
-                v.s('path', { d: `M${p.x - 34} ${p.y + 30} L${p.x - S - 3} ${p.y + S + 3}`, class: 'pg-line' }, g);
-                v.s('path', { d: `M${p.x - S - 3} ${p.y + S + 3} l-2 -8 l-6 6 z`, class: 'pg-arrow' }, g);
-                v.text(g, p.x - 44, p.y + 38, 'P', { class: 'v-label v-strong' });
+                // standard notation: an arrow to the lower-left corner of the symbol, with P at its tail
+                const tipX = p.x - S - 2, tipY = p.y + S + 2, tailX = tipX - 20, tailY = tipY + 20;
+                const len = Math.hypot(tipX - tailX, tipY - tailY);
+                const ux = (tipX - tailX) / len, uy = (tipY - tailY) / len; // direction of the arrow
+                const HEAD = 9, HALF = 4.5;
+                const baseX = tipX - ux * HEAD, baseY = tipY - uy * HEAD;    // where the head meets the line
+                v.s('path', { d: `M${v.f1(tailX)} ${v.f1(tailY)} L${v.f1(baseX)} ${v.f1(baseY)}`, class: 'pg-line' }, g);
+                v.s('path', { d: `M${v.f1(tipX)} ${v.f1(tipY)} L${v.f1(baseX - uy * HALF)} ${v.f1(baseY + ux * HALF)} L${v.f1(baseX + uy * HALF)} ${v.f1(baseY - ux * HALF)} Z`, class: 'pg-arrow' }, g);
+                v.text(g, tailX - 12, tailY + 10, 'P', { class: 'v-label v-strong' });
             }
             const toggle = () => { p.affected = !p.affected; v.touch(); render(); v.changed(); };
             g.addEventListener('click', toggle);
