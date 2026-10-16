@@ -101,10 +101,10 @@
     <p class="pillars-more"><a href="research.html" class="link-arrow">All our projects ›</a></p>
 </section>
 
-<!-- UNDERGRADUATE PROJECTS (update the year and counts each autumn; the presentation lives in undergraduate/) -->
+<!-- UNDERGRADUATE PROJECTS (update the year each autumn; the presentation lives in undergraduate/) -->
 <div class="join-band reveal" id="undergraduates">
     <h2>Undergraduate projects 2026–27</h2>
-    <p>Four research projects and three dissertations in genomic medicine and circadian biology, for Cambridge undergraduates.</p>
+    <p>We offer Cambridge undergraduates research projects and dissertation topics in genomic medicine and circadian biology.</p>
     <a href="undergraduate/" class="cta-btn">See the projects</a>
 </div>
 
@@ -296,7 +296,10 @@
         requestAnimationFrame(tick);
     }
     setPlaying(playing);
-    show(0, false);
+    // Open on the cardiac arrhythmia project, whose animated heartbeat makes the best first impression.
+    // If that project is ever renamed or removed, the carousel starts on the first project instead.
+    const FIRST = 'cardiac-arrhythmia';
+    show(Math.max(0, projects.findIndex(p => p.id === FIRST)), false);
     requestAnimationFrame(tick);
 })();
 

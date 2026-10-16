@@ -180,7 +180,7 @@
         frame(dt) { if (!reduced()) startClock.frame(dt); },
     });
 
-    /* ═══ 2 · The menu: projects by day, dissertations by night ═══ */
+    /* ═══ 2 · The menu: projects on the day side of the clock, dissertations on the night side ═══ */
     (function () {
         const words = ['no', 'one', 'two', 'three', 'four', 'five', 'six', 'seven', 'eight', 'nine', 'ten', 'eleven', 'twelve'];
         const count = (n, w) => `${words[n] || n} ${w}${n === 1 ? '' : 's'}`;
@@ -220,14 +220,10 @@
                 projects.forEach((o, k) => { o._hour = 6 + 12 * (k + 0.5) / projects.length; });
                 diss.forEach((o, k) => { o._hour = 18 + 12 * (k + 0.5) / diss.length; });
 
-                const title = `${cap(count(projects.length, 'project'))}, ${count(diss.length, 'dissertation')}`;
-                $('#menuTitle').textContent = title;
-                scene.dataset.title = title;
-                const dissTitle = $('#dissTitle');
-                if (dissTitle) {
-                    dissTitle.textContent = cap(count(diss.length, 'dissertation'));
-                    dissTitle.closest('.scene').dataset.title = dissTitle.textContent;
-                }
+                // The note under the title counts the options, so it stays right when one is added or removed
+                $('.menu-note', scene).textContent =
+                    `${cap(count(projects.length, 'research project'))} on the daytime side of the clock, ` +
+                    `and ${count(diss.length, 'dissertation topic')} on the night side.`;
 
                 const marks = $('.mn-marks', svg);
                 const list = $('#menuOptions');

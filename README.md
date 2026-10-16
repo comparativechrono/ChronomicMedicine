@@ -65,7 +65,7 @@ Recommended: 400×400px square crop, JPEG, under 200KB.
 
 ### Projects: `data/projects.csv`
 
-Set `status` to `current` or `completed`. Current projects appear on the Research page and in the homepage carousel, in the order of the file.
+Set `status` to `current` or `completed`. Current projects appear on the Research page and in the homepage carousel, in the order of the file. The carousel opens on the cardiac arrhythmia project (`id` `cardiac-arrhythmia`); to open on another, change `FIRST` in the carousel script in `index.html`.
 
 | Column | Description |
 |--------|-------------|
