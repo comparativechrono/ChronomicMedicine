@@ -460,7 +460,6 @@ html:not([data-theme]) .only-light { display: none !important; }
     font-size: clamp(1.5rem, 3.1vmin + 0.6rem, 3.4rem); line-height: 1.05;
     text-wrap: balance;
 }
-.menu-note { margin-top: 0.7rem; font-size: var(--fs-small); color: var(--text-muted); }
 .menu-options { list-style: none; position: absolute; inset: 0; pointer-events: none; }
 .menu-options li { position: absolute; left: var(--x); top: var(--y); transform: var(--anchor); pointer-events: auto; width: max-content; max-width: 15.5em; }
 .menu-opt {
@@ -935,7 +934,6 @@ html:not([data-theme]) .only-light { display: none !important; }
     .menu-dial { position: relative; inset: auto; width: min(78vw, 44vh); aspect-ratio: 1; margin: 0 auto; }
     .menu-center { width: 60%; }
     .menu-title { font-size: 1.4rem; }
-    .menu-note { display: none; }
     .menu-options { position: static; display: grid; gap: 0.5rem; width: 100%; pointer-events: auto; }
     .menu-options li { position: static; transform: none; width: auto; max-width: none; }
     .menu-opt { max-width: none; width: 100%; }

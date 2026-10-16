@@ -69,7 +69,7 @@ Every project has a **Details and reading** button that opens the full descripti
    <li><a href="https://doi.org/10.xxxx/xxxxx" target="_blank" rel="noopener">Paper title</a><span class="ref-meta">Author A et al. (2025) Journal 1:23</span></li>
    ```
 
-4. **Remove a project:** delete its whole `<section>`. The menu dial, the overview, the closing screen’s jump links and the count of projects and dissertations under the menu’s title all update themselves.
+4. **Remove a project:** delete its whole `<section>`. The menu dial, the overview and the closing screen’s jump links all update themselves.
 5. **Add a project:** copy an existing project `<section>`, give it a new `id`, and set
    - `data-option="project"` (or `"dissertation"`),
    - `data-cat="computational"`, `"lab"` or `"dissertation"` (sets the colour),

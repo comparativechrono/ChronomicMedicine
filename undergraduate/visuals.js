@@ -182,9 +182,6 @@
 
     /* ═══ 2 · The menu: projects on the day side of the clock, dissertations on the night side ═══ */
     (function () {
-        const words = ['no', 'one', 'two', 'three', 'four', 'five', 'six', 'seven', 'eight', 'nine', 'ten', 'eleven', 'twelve'];
-        const count = (n, w) => `${words[n] || n} ${w}${n === 1 ? '' : 's'}`;
-        const cap = (s) => s.charAt(0).toUpperCase() + s.slice(1);
         const items = [];
         let handEl = null;
         let handHour = 6;
@@ -220,10 +217,6 @@
                 projects.forEach((o, k) => { o._hour = 6 + 12 * (k + 0.5) / projects.length; });
                 diss.forEach((o, k) => { o._hour = 18 + 12 * (k + 0.5) / diss.length; });
 
-                // The note under the title counts the options, so it stays right when one is added or removed
-                $('.menu-note', scene).textContent =
-                    `${cap(count(projects.length, 'research project'))} on the daytime side of the clock, ` +
-                    `and ${count(diss.length, 'dissertation topic')} on the night side.`;
 
                 const marks = $('.mn-marks', svg);
                 const list = $('#menuOptions');
