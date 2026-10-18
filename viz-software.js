@@ -110,52 +110,60 @@
     /* ═══ File formats and the packages that convert between them ═══
        highlight(name) shows one package's routes; opts.onHighlight(name) is told when the visitor points at one */
     Viz.register('formats', function (v, opts) {
-        const svg = v.svg(760, 320, 'Pedigree Studio sessions in the middle, converted to and from PED files, the GA4GH Pedigree standard and Phenopackets by seven Python packages.');
+        const svg = v.svg(760, 360, 'A map of the file formats. Pedigree Studio sessions sit in the middle, and our Python packages convert them to and from PED files, the GA4GH Pedigree standard and Phenopackets. Abusua Pedigree Studio sessions convert to and from the GA4GH Pedigree too, and all the converters use pedigree-ga4gh for the GA4GH files.');
         const uid = 'fm' + Math.random().toString(36).slice(2, 8);
         const defs = v.s('defs', {}, svg);
         const marker = v.s('marker', { id: uid, viewBox: '0 0 10 10', refX: 8, refY: 5, markerWidth: 7, markerHeight: 7, orient: 'auto-start-reverse' }, defs);
         v.s('path', { d: 'M0 0 L10 5 L0 10 z', class: 'fm-arrowhead' }, marker);
         const N = {
-            ped: { x: 120, y: 136, w: 150, label: 'PED / MPED files' },
-            studio: { x: 380, y: 136, w: 196, label: 'Pedigree Studio session', main: true },
-            ga4gh: { x: 646, y: 56, w: 172, label: 'GA4GH Pedigree' },
-            pheno: { x: 646, y: 192, w: 172, label: 'Phenopackets' },
+            ped: { x: 120, y: 176, w: 150, label: 'PED / MPED files' },
+            studio: { x: 380, y: 176, w: 196, label: 'Pedigree Studio session', main: true },
+            abusua: { x: 300, y: 46, w: 172, label: 'Abusua session' },
+            ga4gh: { x: 646, y: 96, w: 172, label: 'GA4GH Pedigree' },
+            pheno: { x: 646, y: 232, w: 172, label: 'Phenopackets' },
         };
-        // [packages, path, label x, label y, anchor, arrow?]
+        // [packages, path, label x, label y, anchor, arrows ('end' or 'both'), packages that also light the route,
+        //  label on a background (for a label that sits on its line)]
+        const GA = ['pedigree-ga4gh'];
         const ROUTES = [
-            [['studio2ped'], 'M282 124 C250 98 230 98 199 120', 240, 92, 'middle', true],
-            [['ped2studio'], 'M196 150 C230 176 250 176 280 152', 240, 192, 'middle', true],
-            [['studio2ga4gh'], 'M466 116 C496 70 516 50 558 50', 492, 46, 'end', true],
-            [['ga4gh2studio'], 'M560 68 C532 70 506 104 478 124', 548, 102, 'start', true],
-            [['studio2ga4gh'], 'M466 156 C496 202 516 212 558 210', 488, 230, 'end', true],
-            [['ga4gh2studio'], 'M560 176 C532 172 506 160 478 148', 552, 150, 'start', true],
-            [['hponorm', 'mondonorm'], 'M612 211 C592 262 700 262 680 211', 646, 274, 'middle', true],
-            [['mpedtools'], 'M86 155 C66 202 174 202 154 155', 120, 216, 'middle', true],
+            [['studio2ped'], 'M282 164 C250 138 230 138 199 160', 240, 132, 'middle', 'end'],
+            [['ped2studio'], 'M196 190 C230 216 250 216 280 192', 240, 232, 'middle', 'end'],
+            [['studio2ga4gh'], 'M466 156 C496 110 516 90 558 90', 492, 86, 'end', 'end', GA],
+            [['ga4gh2studio'], 'M560 108 C532 110 506 144 478 164', 548, 142, 'start', 'end', GA],
+            [['studio2ga4gh'], 'M466 196 C496 242 516 252 558 250', 488, 270, 'end', 'end', GA],
+            [['ga4gh2studio'], 'M560 216 C532 212 506 200 478 188', 552, 190, 'start', 'end', GA],
+            [['abusua2ga4gh', 'ga4gh2abusua'], 'M388 46 C460 30 540 36 580 75', 490, 22, 'middle', 'both', GA],
+            [['phenopacket-toolkit'], 'M646 117 L646 211', 646, 168, 'middle', 'both', GA, true],
+            [['pedigree-ga4gh'], 'M650 77 C630 30 738 30 718 77', 684, 20, 'middle', 'end'],
+            [['hponorm', 'mondonorm'], 'M612 251 C592 302 700 302 680 251', 646, 314, 'middle', 'end'],
+            [['mpedtools'], 'M86 195 C66 242 174 242 154 195', 120, 256, 'middle', 'end'],
         ];
         const routesG = v.s('g', {}, svg);
-        const routes = ROUTES.map(([names, d, lx, ly, anchor, arrow]) => {
+        const routes = ROUTES.map(([names, d, lx, ly, anchor, arrows, also, onLine]) => {
             const g = v.s('g', { class: 'fm-route' }, routesG);
             v.s('path', { d, class: 'fm-hit' }, g); // a wider, invisible line that is easier to point at
-            const path = v.s('path', { d, class: 'fm-edge', 'marker-end': arrow ? `url(#${uid})` : null }, g);
-            v.text(g, lx, ly, names.join(', '), { class: 'v-mono fm-label', 'text-anchor': anchor });
+            const path = v.s('path', { d, class: 'fm-edge', 'marker-end': `url(#${uid})`, 'marker-start': arrows === 'both' ? `url(#${uid})` : null }, g);
+            const dots = [0, 0.33, 0.66].map((o) => ({ o, el: v.s('circle', { r: 2.6, class: 'fm-dot' }, g) }));
+            const label = names.join(', ');
+            if (onLine) v.s('rect', { x: lx - label.length * 3.6 - 8, y: ly - 13, width: label.length * 7.2 + 16, height: 18, rx: 9, class: 'fm-labelbg' }, g);
+            v.text(g, lx, ly, label, { class: 'v-mono fm-label', 'text-anchor': anchor });
             g.addEventListener('pointerenter', () => { set(names[0]); if (opts.onHighlight) opts.onHighlight(names); });
             g.addEventListener('pointerleave', () => { set(null); if (opts.onHighlight) opts.onHighlight(null); });
-            const dots = [0, 0.33, 0.66].map((o) => ({ o, el: v.s('circle', { r: 2.6, class: 'fm-dot' }, g) }));
-            return { names, g, path, dots, len: 0 };
+            return { names, lights: names.concat(also || []), g, path, dots, len: 0 };
         });
         Object.values(N).forEach((n) => {
             v.s('rect', { x: n.x - n.w / 2, y: n.y - 19, width: n.w, height: 38, rx: 19, class: 'fm-node' + (n.main ? ' is-main' : '') }, svg);
             v.text(svg, n.x, n.y + 4.5, n.label, { class: 'v-label v-mid v-strong' });
         });
-        v.text(svg, 646, 292, 'disease and phenotype terms matched', { class: 'v-small v-mid' });
-        v.text(svg, 646, 307, 'to the MONDO and HPO ontologies', { class: 'v-small v-mid' });
-        v.text(svg, 120, 234, 'check, merge, split, convert', { class: 'v-small v-mid' });
+        v.text(svg, 646, 332, 'disease and phenotype terms matched', { class: 'v-small v-mid' });
+        v.text(svg, 646, 347, 'to the MONDO and HPO ontologies', { class: 'v-small v-mid' });
+        v.text(svg, 120, 274, 'check, merge, split, convert', { class: 'v-small v-mid' });
 
         let active = null, t = 0;
         function set(name) {
             active = name;
             routes.forEach((r) => {
-                const on = !!name && r.names.includes(name);
+                const on = !!name && r.lights.includes(name);
                 r.g.classList.toggle('is-on', on);
                 r.g.classList.toggle('is-off', !!name && !on);
             });
@@ -165,7 +173,7 @@
             routes.forEach((r) => {
                 if (!r.len) r.len = r.path.getTotalLength();
                 r.dots.forEach((d) => {
-                    const boost = active && r.names.includes(active) ? 2.2 : 1;
+                    const boost = active && r.lights.includes(active) ? 2.2 : 1;
                     const f = (t * speed * boost / Math.max(60, r.len) + d.o) % 1;
                     const pt = r.path.getPointAtLength(f * r.len);
                     d.el.setAttribute('cx', v.f1(pt.x)); d.el.setAttribute('cy', v.f1(pt.y));

@@ -1,6 +1,10 @@
 name,group,description,url,github,pypi,zenodo,language
+pedigree-ga4gh,pedigree-studio,"Read, write, check and upgrade GA4GH Pedigree and Phenopackets files. The converters below all use it, so they write the same standard form.",,https://github.com/comparativechrono/pedigree-ga4gh,pedigree-ga4gh,,Python
 studio2ga4gh,pedigree-studio,Convert Pedigree Studio sessions to the GA4GH Pedigree standard and Phenopackets.,,https://github.com/comparativechrono/studio2ga4gh,studio2ga4gh,,Python
 ga4gh2studio,pedigree-studio,Convert GA4GH Pedigree and Phenopackets files into Pedigree Studio sessions.,,https://github.com/comparativechrono/ga4gh2studio,ga4gh2studio,,Python
+abusua2ga4gh,pedigree-studio,Convert Abusua Pedigree Studio sessions to the GA4GH Pedigree standard and Phenopackets.,,https://github.com/comparativechrono/abusua2ga4gh,abusua2ga4gh,,Python
+ga4gh2abusua,pedigree-studio,Convert GA4GH Pedigree and Phenopackets files back into Abusua Pedigree Studio sessions.,,https://github.com/comparativechrono/ga4gh2abusua,ga4gh2abusua,,Python
+phenopacket-toolkit,pedigree-studio,"View, check, filter, de-identify, merge and convert Phenopackets and GA4GH Pedigrees, and fill in missing ontology terms. Its command is phenotk.",,https://github.com/comparativechrono/phenopacket-toolkit,phenopacket-toolkit,,Python
 studio2ped,pedigree-studio,Convert Pedigree Studio sessions to PED and MPED (multi-phenotype PED) files.,,https://github.com/comparativechrono/studio2ped,studio2ped,,Python
 ped2studio,pedigree-studio,Convert PED and MPED files into Pedigree Studio sessions.,,https://github.com/comparativechrono/ped2studio,ped2studio,,Python
 mpedtools,pedigree-studio,"Read, check, merge, split, convert and query PED and MPED files.",,https://github.com/comparativechrono/mpedtools,mpedtools,,Python
