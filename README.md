@@ -16,7 +16,7 @@ Pushing to `main` updates the live site within a minute or two. There is no buil
 | People | `people.html` | PI card, current members (photo grid + modals), alumni list |
 | Research | `research.html` | Every current project with an interactive diagram, and an overview dial at the top |
 | Publications | `publications.html` | Publications by year, with a year chart, type filters and search |
-| Software | `software.html` | Pedigree Studio and its Python packages, nugap, the Bioinformatics workbench, software for teaching (www.genomics.tel) and more code |
+| Software | `software.html` | Pedigree Studio, the Pedigree workbench and their Python packages, nugap, the Bioinformatics workbench, software for teaching (www.genomics.tel) and more code |
 | News | `news.html` | All news stories by year, with filters by kind of story |
 | Undergraduates | `undergraduate/index.html` | Interactive presentation of this year’s undergraduate projects and dissertations (see `undergraduate/README.md` for presenting and yearly updates) |
 
@@ -133,7 +133,7 @@ Pedigree Studio, nugap and the Bioinformatics workbench have their own sections 
 | Column | Description |
 |--------|-------------|
 | name | Name, as shown on the card (package names are shown in a code font) |
-| group | Where it goes: `pedigree-studio` (Python packages for Pedigree Studio files), `teaching` (Software in teaching) or `more` (More code) |
+| group | Where it goes: `pedigree-studio` (Python packages for pedigree files), `teaching` (Software in teaching) or `more` (More code) |
 | description | One or two sentences |
 | url | Link to use it online (optional; shown as “Open”) |
 | github | GitHub repository URL (optional) |

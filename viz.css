@@ -235,6 +235,7 @@
 .fm-route.is-on .fm-edge { stroke: var(--c); stroke-width: 2.2; }
 .viz-svg .fm-route.is-on .fm-label { fill: var(--c); font-weight: 600; }
 .fm-route.is-off { opacity: 0.25; }
+.fm-labelbg { fill: var(--surface); stroke: none; pointer-events: none; }
 
 /* ─── nugap ─── */
 .ng-a { fill: none; stroke: rgba(var(--ink-rgb), 0.75); stroke-width: 2; }
