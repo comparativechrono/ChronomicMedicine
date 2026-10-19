@@ -237,6 +237,13 @@
 .fm-route.is-off { opacity: 0.25; }
 .fm-labelbg { fill: var(--surface); stroke: none; pointer-events: none; }
 
+/* ─── PedNet ─── */
+.pn-loop { fill: none; stroke: var(--c); stroke-width: 5; stroke-linecap: round; stroke-linejoin: round; opacity: 0.5; transition: opacity 0.3s; }
+.pg-person.is-loop .pg-sym { stroke: var(--c); stroke-width: 2.6; }
+.pn-halo { fill: none; stroke: var(--c); stroke-width: 1.6; stroke-dasharray: 3 3; transition: opacity 0.3s; pointer-events: none; }
+.pn-track { fill: rgba(var(--ink-rgb), 0.08); }
+.pn-bar { fill: var(--c); }
+
 /* ─── nugap ─── */
 .ng-a { fill: none; stroke: rgba(var(--ink-rgb), 0.75); stroke-width: 2; }
 .ng-b { fill: none; stroke: var(--c); stroke-width: 2.4; }

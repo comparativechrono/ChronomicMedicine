@@ -3,6 +3,7 @@
 
      pedigree   a family pedigree drawing itself (Pedigree Studio)
      formats    how the Pedigree Studio packages convert between file formats
+     pednet     a family read as a graph: its loop, kinship and mode of inheritance (PedNet)
      nugap      the ν-gap between two simple models, computed live
      workbench  a tour of the Bioinformatics workbench's tabs
 
@@ -291,6 +292,151 @@
                 render(dt);
             },
             draw() { render(0); },
+        };
+    });
+
+    /* ═══ PedNet: a family read as a graph ═══
+       The family is PedNet's example consanguineous.ped. The relationships, kinship coefficients and probabilities
+       are what PedNet 2.0.0 works out for it (graph.relationship, graph.inbreeding, infer_mode, classify_by_patterns). */
+    Viz.register('pednet', function (v) {
+        const svg = v.svg(560, 330, 'A four-generation family in which two of the four children of first cousins are affected, as PedNet analyses it: the loop that the cousins’ marriage makes, how closely each person is related to the proband, and the probability of each mode of inheritance.');
+        const S = 11; // half the size of a symbol
+        const COUSINS = 'the parents are cousins';
+        const people = [
+            { id: 'I-1', sex: 'm', x: 150, y: 52, rel: 'great-grandfather', why: ['twice over: through', 'both IV-1’s parents'], kin: 0.125, frac: '1/8' },
+            { id: 'I-2', sex: 'f', x: 210, y: 52, rel: 'great-grandmother', why: ['twice over: through', 'both IV-1’s parents'], kin: 0.125, frac: '1/8' },
+            { id: 'II-3', sex: 'f', x: 60, y: 122, rel: 'grandmother', kin: 0.125, frac: '1/8' },
+            { id: 'II-1', sex: 'm', x: 120, y: 122, rel: 'grandfather', why: ['and great-uncle, through', 'IV-1’s mother'], kin: 0.1875, frac: '3/16', loop: true },
+            { id: 'II-2', sex: 'f', x: 240, y: 122, rel: 'grandmother', why: ['and great-aunt, through', 'IV-1’s father'], kin: 0.1875, frac: '3/16', loop: true },
+            { id: 'II-4', sex: 'm', x: 300, y: 122, rel: 'grandfather', kin: 0.125, frac: '1/8' },
+            { id: 'III-1', sex: 'm', x: 150, y: 192, rel: 'father', why: ['more than ¼, as', COUSINS], kin: 0.28125, frac: '9/32', loop: true },
+            { id: 'III-2', sex: 'f', x: 210, y: 192, rel: 'mother', why: ['more than ¼, as', COUSINS], kin: 0.28125, frac: '9/32', loop: true },
+            { id: 'IV-1', sex: 'm', x: 105, y: 266, affected: true, proband: true },
+            { id: 'IV-2', sex: 'f', x: 155, y: 266, affected: true, rel: 'sister', why: ['more than ¼, as', COUSINS], kin: 0.28125, frac: '9/32' },
+            { id: 'IV-3', sex: 'm', x: 205, y: 266, rel: 'brother', why: ['more than ¼, as', COUSINS], kin: 0.28125, frac: '9/32' },
+            { id: 'IV-4', sex: 'f', x: 255, y: 266, rel: 'sister', why: ['more than ¼, as', COUSINS], kin: 0.28125, frac: '9/32' },
+        ];
+        // PedNet's answer for the family, from exact likelihoods (infer_mode), most probable first
+        const MODES = [['AR', 0.928], ['XLR', 0.027], ['AD', 0.026], ['XLD', 0.020]];
+
+        ['I', 'II', 'III', 'IV'].forEach((g, i) => v.text(svg, 22, [56, 126, 196, 270][i], g, { class: 'v-label v-mid v-strong', 'font-family': 'var(--serif)' }));
+        const loop = v.s('path', { d: 'M150 181 V157 H90 V122 H109 M120 111 V87 H240 V111 M251 122 H270 V157 H210 V181 M199 192 H161', class: 'pn-loop' }, svg);
+        [
+            'M161 52 H199',                                                   // I-1 and I-2
+            'M180 52 V87 M120 87 H240 M120 87 V111 M240 87 V111',             // their son and daughter
+            'M71 122 H109', 'M251 122 H289',                                  // who marry outside the family
+            'M90 122 V157 H150 V181', 'M270 122 V157 H210 V181',              // and have III-1 and III-2
+            'M161 190 H199 M161 194 H199',                                    // first cousins: a double line
+            'M180 194 V229 M105 229 H255 M105 229 V255 M155 229 V255 M205 229 V255 M255 229 V255',
+        ].forEach((d) => v.s('path', { d, class: 'pg-line' }, svg));
+
+        const halo = v.s('circle', { r: S + 6, class: 'pn-halo' }, svg);
+        let view = 'loop', picked = 3, since = 0;
+        const nodes = people.map((p, i) => {
+            const g = v.s('g', { class: 'pg-person', tabindex: '0', role: 'button' }, svg);
+            if (p.sex === 'm') v.s('rect', { x: p.x - S, y: p.y - S, width: S * 2, height: S * 2, class: 'pg-sym' }, g);
+            else v.s('circle', { cx: p.x, cy: p.y, r: S, class: 'pg-sym' }, g);
+            if (p.affected) g.classList.add('is-affected');
+            if (p.proband) {
+                // the standard arrow to the lower-left corner, with P at its tail
+                const tipX = p.x - S - 2, tipY = p.y + S + 2;
+                v.s('path', { d: `M${tipX - 15} ${tipY + 15} L${tipX - 5} ${tipY + 5}`, class: 'pg-line' }, g);
+                v.s('path', { d: `M${tipX} ${tipY} L${tipX - 8.5} ${tipY + 2.1} L${tipX - 2.1} ${tipY + 8.5} Z`, class: 'pg-arrow' }, g);
+                v.text(g, tipX - 26, tipY + 24, 'P', { class: 'v-label v-strong' });
+            }
+            v.text(g, p.x, p.y + S + 13, p.id, { class: 'v-small v-mid', 'font-size': 9.5 }); // below, clear of the lines
+            const pick = () => { picked = i; setView('kin'); v.touch(); render(); v.changed(); };
+            g.addEventListener('click', pick);
+            g.addEventListener('keydown', (e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); pick(); } });
+            return g;
+        });
+
+        // the panel on the right: one group of text for each view
+        const X = 360;
+        const panel = v.s('g', {}, svg);
+        const title = v.text(panel, X, 46, '', { class: 'v-title' });
+        const big = v.text(panel, X, 92, '', { class: 'v-num' });
+        const small = v.text(panel, X, 92, '', { class: 'v-label' });
+        const lines = [0, 1, 2, 3].map((k) => v.text(panel, X, 124 + k * 19, '', { class: k < 1 ? 'v-strong' : '' }));
+        const hint = v.text(panel, X, 292, '', { class: 'v-small' });
+        const bars = MODES.map(([mode, p], k) => {
+            const y = 72 + k * 26;
+            const g = v.s('g', {}, svg);
+            v.text(g, X, y + 4, mode, { class: 'v-strong', 'font-size': 12 });
+            v.s('rect', { x: X + 38, y: y - 6, width: 112, height: 11, rx: 5.5, class: 'pn-track' }, g);
+            const bar = v.s('rect', { x: X + 38, y: y - 6, width: 0, height: 11, rx: 5.5, class: 'pn-bar' }, g);
+            v.text(g, X + 190, y + 4, p.toFixed(2), { class: 'v-end', 'font-size': 12 });
+            return { g, bar, p };
+        });
+
+        const seg = v.segmented({
+            label: 'Show', value: view,
+            options: [{ label: 'Loops', value: 'loop' }, { label: 'Kinship', value: 'kin' }, { label: 'Mode of inheritance', value: 'mode' }],
+            onChange(val) { setView(val); render(); },
+        });
+        v.caption('PedNet reads a family as a graph. <strong>Select anyone</strong> to see how they are related to the proband, IV-1, and their kinship coefficient, which counts every line of descent between them: in this family the children of first cousins are related to their great-grandparents through both parents. The probabilities of the modes of inheritance (AD and AR autosomal dominant and recessive, XLD and XLR X-linked) are PedNet’s own answer for the family.');
+
+        function setView(val) {
+            if (val !== view) { view = val; since = 0; }
+            seg.set(view);
+        }
+        function show(el, text) { el.textContent = text; }
+        function render() {
+            const k = v.reduced() ? 1 : v.easeOut(Math.min(1, since / 0.9));
+            // the loop through the cousins' parents and grandparents
+            loop.style.opacity = view === 'loop' ? '' : '0';
+            loop.style.strokeDasharray = '900';
+            loop.style.strokeDashoffset = String(view === 'loop' ? 900 * (1 - k) : 900);
+            nodes.forEach((g, i) => {
+                g.classList.toggle('is-loop', view === 'loop' && !!people[i].loop);
+                const p = people[i];
+                g.setAttribute('aria-label', p.proband ? 'IV-1, the proband, affected. Select to see their inbreeding coefficient.'
+                    : `${p.id}, IV-1’s ${p.rel}${p.affected ? ', affected' : ''}. Select to see their kinship with IV-1.`);
+            });
+            const who = people[picked];
+            halo.style.opacity = view === 'kin' ? '1' : '0';
+            halo.setAttribute('cx', who.x); halo.setAttribute('cy', who.y);
+            bars.forEach((b) => { b.g.style.opacity = view === 'mode' ? '1' : '0'; b.bar.setAttribute('width', v.f1(112 * b.p * (view === 'mode' ? k : 0))); });
+            show(small, '');
+            if (view === 'loop') {
+                show(title, 'Loops'); show(big, '1');
+                ['a loop from consanguinity:', 'III-1 and III-2 are cousins,', 'so their four children are', 'inbred, with F = 1/16'].forEach((s, i) => show(lines[i], s));
+                show(hint, '');
+            } else if (view === 'kin') {
+                if (who.proband) {
+                    show(title, 'Inbreeding of IV-1'); show(big, '0.0625');
+                    ['IV-1, the proband: F = 1/16', 'the chance that his two', 'copies of a gene came from', 'one ancestor, down both sides'].forEach((s, i) => show(lines[i], s));
+                } else {
+                    show(title, 'Kinship with IV-1'); show(big, who.kin < 0.2 ? who.kin.toString() : who.kin.toFixed(3));
+                    // the fraction after the number, wherever the number ends
+                    const width = big.getComputedTextLength ? big.getComputedTextLength() : 0;
+                    small.setAttribute('x', v.f1(X + (width || 80) + 10));
+                    show(small, who.frac);
+                    const why = who.why || ['', ''];
+                    [`${who.id} is IV-1’s ${who.rel}`, why[0], why[1], ''].forEach((s, i) => show(lines[i], s));
+                }
+                show(hint, 'Select anyone in the family');
+            } else {
+                show(title, 'Mode of inheritance'); show(big, '');
+                ['', 'From exact likelihoods. The', 'pattern of affected people', 'alone gives AR 0.94'].forEach((s, i) => show(lines[i], s));
+                show(hint, '');
+            }
+            // in the mode view the text goes below the bars
+            lines.forEach((el, i) => el.setAttribute('y', (view === 'mode' ? 166 : 124) + i * 19));
+        }
+        render();
+        const ORDER = ['loop', 'kin', 'mode'], LENGTH = { loop: 6, kin: 9, mode: 6 }, PICKS = [3, 6, 0, 9];
+        return {
+            frame(dt) {
+                since += dt;
+                if (v.auto()) {
+                    // the demo: each view in turn, and in the kinship view a few people one after another
+                    if (since > LENGTH[view]) setView(ORDER[(ORDER.indexOf(view) + 1) % ORDER.length]);
+                    if (view === 'kin') picked = PICKS[Math.min(PICKS.length - 1, Math.floor(since / (LENGTH.kin / PICKS.length)))];
+                }
+                render();
+            },
+            draw() { render(); },
         };
     });
 

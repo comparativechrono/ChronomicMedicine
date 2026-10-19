@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Software — Chronomic Medicine Group</title>
-    <meta name="description" content="Open-source software from the Chronomic Medicine Group: Pedigree Studio, the Pedigree workbench and their Python packages, nugap, the Bioinformatics workbench and software for teaching.">
+    <meta name="description" content="Open-source software from the Chronomic Medicine Group: Pedigree Studio, the Pedigree workbench and their Python packages, PedNet, nugap, the Bioinformatics workbench and software for teaching.">
     <meta name="theme-color" content="#060a14">
     <meta name="color-scheme" content="dark light">
     <script>
@@ -54,6 +54,7 @@
         </a>
         <div class="page-nav" aria-label="On this page">
             <a href="#pedigree-studio">Pedigree Studio</a>
+            <a href="#pednet">PedNet</a>
             <a href="#nugap">nugap</a>
             <a href="#bioinformatics-workbench">Bioinformatics workbench</a>
             <a href="#teaching">Teaching</a>
@@ -86,8 +87,25 @@
         <div class="pkg-grid" id="pkgPedigree"></div>
     </section>
 
+    <!-- PEDNET -->
+    <section class="sw sw--flip tone-violet reveal" id="pednet" aria-labelledby="pn-title">
+        <div class="sw-text">
+            <p class="sw-kicker">Clinical genetics</p>
+            <h2 class="sw-title" id="pn-title">PedNet</h2>
+            <p class="sw-lead">A Python package that analyses pedigrees as graphs. It finds a family’s loops, works out how closely everyone in it is related and how inbred they are, and reads the pattern of affected people for the mode of inheritance.</p>
+            <p class="sw-lead">With the pedigree as a Bayesian network, it also gives exact likelihoods: the probability of each mode of inheritance, and how well each candidate variant co-segregates with the condition, as evidence for variant classification.</p>
+            <p class="sw-note">PedNet grew out of Nick Taylor’s network analysis of pedigrees. Two of his packages work alongside it: <a href="https://github.com/comparativechrono/pedigree-generator" target="_blank" rel="noopener">PedGen</a> simulates realistic families, and <a href="https://github.com/comparativechrono/pedigree-interpreter" target="_blank" rel="noopener">PedInterp</a> reads a pedigree from a picture of one.</p>
+            <p class="sw-install"><span><span class="prompt">$ </span>pip install PedNet</span><button type="button" class="copy-btn" data-copy="pip install PedNet">Copy</button></p>
+            <p class="sw-actions">
+                <a class="sw-btn" href="https://pypi.org/project/PedNet/" target="_blank" rel="noopener">PyPI</a>
+                <a class="sw-btn" href="https://github.com/comparativechrono/PedNet" target="_blank" rel="noopener">GitHub</a>
+            </p>
+        </div>
+        <div class="sw-visual"><div data-viz="pednet"></div></div>
+    </section>
+
     <!-- NUGAP -->
-    <section class="sw sw--flip tone-teal reveal" id="nugap" aria-labelledby="ng-title">
+    <section class="sw tone-teal reveal" id="nugap" aria-labelledby="ng-title">
         <div class="sw-text">
             <p class="sw-kicker">Time-course data</p>
             <h2 class="sw-title" id="ng-title">nugap</h2>
@@ -104,7 +122,7 @@
     </section>
 
     <!-- BIOINFORMATICS WORKBENCH -->
-    <section class="sw tone-blue reveal" id="bioinformatics-workbench" aria-labelledby="wb-title">
+    <section class="sw sw--flip tone-blue reveal" id="bioinformatics-workbench" aria-labelledby="wb-title">
         <div class="sw-text">
             <p class="sw-kicker">Teaching</p>
             <h2 class="sw-title" id="wb-title">Bioinformatics workbench</h2>
